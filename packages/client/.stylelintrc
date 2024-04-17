@@ -1,0 +1,16 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": ["stylelint-scss"],
+  "rules": {
+      "at-rule-no-unknown": null,
+      "scss/at-rule-no-unknown": true,
+      "scss/dollar-variable-pattern": null,
+      "selector-class-pattern": null,
+      "import-notation": null
+
+  },
+  "ignoreFiles": [
+    "dist/*",
+    "node_modules"
+  ]
+}
