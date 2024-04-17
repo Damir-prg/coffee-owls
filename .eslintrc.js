@@ -15,6 +15,59 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    '@typescript-eslint/ban-ts-comment': 1,
+    'spaced-comment': 'error',
+    'quotes': ['error', 'single'],
+    'semi': 'error',
+    '@typescript-eslint/no-this-alias': 'warn',
+    '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-unused-vars': 'error',
+    'eol-last': 'error',
+    '@typescript-eslint/naming-convention': ['error', 
+    {
+      'selector': 'variable',
+      'format': ['camelCase', 'UPPER_CASE'],
+      'leadingUnderscore': 'allow'
+    },
+    {
+      'selector': 'function',
+      'format': ['camelCase', 'PascalCase'],
+      'leadingUnderscore': 'allow'
+    },
+    {
+      'selector': 'enum',
+      'format': ['PascalCase'],
+      'leadingUnderscore': 'forbid',
+      'trailingUnderscore': 'forbid',
+      'custom': {
+        'regex': '^E[A-Z][a-zA-Z]*$',
+        'match': true
+      }
+    },
+    {
+      'selector': 'interface',
+      'format': ['PascalCase'],
+      'leadingUnderscore': 'forbid',
+      'trailingUnderscore': 'forbid',
+      'custom': {
+        'regex': '^I[A-Z][a-zA-Z]*$',
+        'match': true
+      }
+    },
+    {
+      'selector': 'typeLike',
+      'format': ['PascalCase'],
+      'leadingUnderscore': 'forbid',
+      'trailingUnderscore': 'forbid',
+      'custom': {
+        'regex': '^T[A-Z][a-zA-Z]*$',
+        'match': true
+      }
+    }]
   },
-}
+  ignorePatterns:[
+    '**/*.min.js',
+    '*.d.ts',
+  ]
+};
