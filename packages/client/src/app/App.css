@@ -1,4 +1,7 @@
-:root {
+body {
+  margin: 0px;
+}
+.app {
   --primary-color: #f65e3b;
   --secondary-color: #f2ae78;
   --background-color: #e4c4ae;
@@ -7,6 +10,10 @@
   --grey-color: #a6a6a6;
   --element-color: #d9d9d9;
   --border-radius: 8px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 12px 20px;
+  box-sizing: border-box;
   background-color: var(--light-background-color);
   color: var(--text-color);
 }
