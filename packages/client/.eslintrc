@@ -4,7 +4,7 @@
     "node": true,
     "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier", "plugin:stylelint/recommended"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -15,10 +15,10 @@
     "spaced-comment": "error",
     "quotes": ["error", "single"],
     "semi": "error",
-    "@typescript-eslint/no-this-alias": 1,
-    "@typescript-eslint/no-explicit-any": 1,
-    "@typescript-eslint/no-var-requires": 1,
-    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-this-alias": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-var-requires": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "prettier/prettier": "error"
   },
   "settings": {
