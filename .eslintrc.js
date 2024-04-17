@@ -15,6 +15,19 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    '@typescript-eslint/ban-ts-comment': 1,
+    'spaced-comment': 'error',
+    'quotes': ['error', 'single'],
+    'semi': 'error',
+    '@typescript-eslint/no-this-alias': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
   },
-}
+  settings: {
+    ignorePatterns:[
+      '**/*.min.js',
+      '*.d.ts',
+    ]
+  }
+};
