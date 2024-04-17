@@ -1,5 +1,0 @@
-/build
-**/*.min.js
-/node_modules 
-*.d.ts
-/dist
