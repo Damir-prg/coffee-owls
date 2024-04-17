@@ -2,7 +2,6 @@
   "compilerOptions": {
     "composite": true,
     "target": "es2019",
-    "ignoreDeprecations": "5.0",
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
