@@ -1,0 +1,27 @@
+:root {
+  --primary-color: #f65e3b;
+  --secondary-color: #f2ae78;
+  --background-color: #e4c4ae;
+  --light-background-color: #f8e6cd;
+  --text-color: #333333;
+  --grey-color: #a6a6a6;
+  --element-color: #d9d9d9;
+  --border-radius: 8px;
+  background-color: var(--light-background-color);
+  color: var(--text-color);
+}
+nav a {
+  margin: 0 12px 0 0;
+  color: var(--text-color);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+nav a:last-of-type {
+  margin: 0;
+}
+nav a:hover {
+  color: var(--primary-color);
+}
