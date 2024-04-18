@@ -11,4 +11,5 @@ export default {
   moduleNameMapper: {
     '\\.(css)$': 'identity-obj-proxy',
   },
+  modulePaths: ['<rootDir>/src'],
 };
