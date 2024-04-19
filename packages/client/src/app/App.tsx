@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import './App.css';
+import WithRoutes from 'widgets/WithRoutes/WithRoutes';
+import Navigation from 'widgets/Navigation/Navigation';
 
 function App() {
   useEffect(() => {
@@ -12,7 +14,13 @@ function App() {
 
     fetchServerData();
   }, []);
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>;
+
+  return (
+    <div className="app">
+      <Navigation />
+      <WithRoutes />
+    </div>
+  );
 }
 
 export default App;
