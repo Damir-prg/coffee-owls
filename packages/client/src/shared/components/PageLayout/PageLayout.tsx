@@ -1,3 +1,4 @@
+import './PageLayout.css';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 import PageHeader from '../PageHeader/PageHeader';
@@ -8,15 +9,13 @@ function PageLayout({ children }: { children?: React.ReactNode }) {
 
   return (
     <Layout>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
+      <Header className="page-layout__header">
         <PageHeader />
       </Header>
 
-      <Content style={{ display: 'flex', flexDirection: 'column', padding: '0 48px' }}>
-        {children ? children : <Outlet />}
-      </Content>
+      <Content className="page-layout__main">{children ? children : <Outlet />}</Content>
 
-      <Footer style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Footer className="page-layout__footer">
         <PageFooter />
       </Footer>
     </Layout>

@@ -1,0 +1,15 @@
+.page-layout__header {
+  display: flex;
+  align-items: center;
+}
+.page-layout__main {
+  padding: 0 48px;
+  display: flex;
+  flex-direction: column;
+}
+.page-layout__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
