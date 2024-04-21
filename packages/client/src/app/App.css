@@ -1,3 +1,5 @@
+@import url('../shared/styles/fonts/fonts.css');
+
 :root {
   --primary-color: #f65e3b;
   --secondary-color: #f2ae78;
@@ -9,4 +11,15 @@
   --border-radius: 8px;
   background-color: var(--light-background-color);
   color: var(--text-color);
+  font-family: Nunito Sans, Arial, sans-serif;
+}
+body {
+  margin: 0;
+}
+.app {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

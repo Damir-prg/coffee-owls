@@ -1,5 +1,9 @@
+import { Typography } from 'antd';
+
 function Game() {
-  return <h1>Игра</h1>;
+  const { Title } = Typography;
+
+  return <Title>Игра</Title>;
 }
 
 export default Game;
