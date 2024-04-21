@@ -9,6 +9,7 @@ const appLightTheme = {
     colorPrimary: '#F65E3B',
     colorText: '#333333',
     borderRadius: 8,
+    fontSize: 24,
     fontFamily: 'Nunito Sans, Arial, sans-serif',
   },
   components: {
@@ -18,8 +19,8 @@ const appLightTheme = {
       footerBg: 'inherit',
     },
     Button: {
-      contentFontSizeLG: 20,
-      paddingInlineLG: 22,
+      contentFontSize: 14,
+      contentLineHeight: 1.5,
     },
   },
 };

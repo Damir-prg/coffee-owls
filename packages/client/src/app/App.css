@@ -1,4 +1,4 @@
-@import url('../styles/fonts/fonts.css');
+@import url('../shared/styles/fonts/fonts.css');
 
 :root {
   --primary-color: #f65e3b;
@@ -14,10 +14,10 @@
   font-family: Nunito Sans, Arial, sans-serif;
 }
 body {
-  margin: 0px;
+  margin: 0;
 }
 .app {
-  margin: 0px;
+  margin: 0;
   width: 100%;
   min-height: 100vh;
   display: flex;

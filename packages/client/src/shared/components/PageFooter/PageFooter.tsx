@@ -1,11 +1,16 @@
 import './PageFooter.css';
-import footerImg from '../../../images/footer-img.svg';
+import footerImg from 'images/footer-img.svg';
+import { Typography, Image } from 'antd';
 
 function PageFooter() {
+  const { Text } = Typography;
+
   return (
     <>
-      <img className="footer__img" src={footerImg} alt="Логотип команды"></img>
-      <p className="footer__copy">&copy;Coffee Owls, {new Date().getFullYear()}</p>
+      <Image width={64} src={footerImg} preview={false} alt="Логотип команды"></Image>
+      <Text className="footer__copy" strong>
+        &copy;Coffee Owls, {new Date().getFullYear()}
+      </Text>
     </>
   );
 }

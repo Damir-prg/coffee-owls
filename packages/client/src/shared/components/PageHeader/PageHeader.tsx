@@ -1,62 +1,66 @@
 import './PageHeader.css';
 import EROUTES from '../../../shared/RoutesEnum';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayCircleOutlined, HomeOutlined, TrophyOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
-import { Flex, Button } from 'antd';
+import type { MenuProps } from 'antd';
+import { Menu, Button } from 'antd';
+import { useEffect, useState } from 'react';
 
-const headerNavLinks = [
+const items: MenuProps['items'] = [
   {
-    link: EROUTES.GAME,
-    title: 'Играть',
-    icon: <PlayCircleOutlined className="header__nav-icon" />,
+    label: 'Играть',
+    key: EROUTES.GAME,
+    icon: <PlayCircleOutlined />,
   },
   {
-    link: EROUTES.HOME,
-    title: 'Главная',
-    icon: <HomeOutlined className="header__nav-icon" />,
+    label: 'Главная',
+    key: EROUTES.HOME,
+    icon: <HomeOutlined />,
   },
   {
-    link: EROUTES.RATING,
-    title: 'Рейтинг',
-    icon: <TrophyOutlined className="header__nav-icon" />,
+    label: 'Рейтинг',
+    key: EROUTES.RATING,
+    icon: <TrophyOutlined />,
   },
   {
-    link: EROUTES.PROFILE,
-    title: 'Профиль',
-    icon: <UserOutlined className="header__nav-icon" />,
+    label: 'Профиль',
+    key: EROUTES.PROFILE,
+    icon: <UserOutlined />,
   },
   {
-    link: EROUTES.FORUM,
-    title: 'Форум',
-    icon: <TeamOutlined className="header__nav-icon" />,
+    label: 'Форум',
+    key: EROUTES.FORUM,
+    icon: <TeamOutlined />,
   },
 ];
 
 function PageHeader() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const [currentKey, setCurrentKey] = useState('key');
 
   function handleLogout() {
     navigate('/' + EROUTES.SIGN_IN);
   }
 
+  const onClick: MenuProps['onClick'] = e => {
+    setCurrentKey(e.key);
+    navigate('/' + e.key);
+  };
+
+  useEffect(() => {
+    setCurrentKey(pathname.replace(/^\//, ''));
+    return () => {
+      setCurrentKey('key');
+    };
+  }, []);
+
   return (
     <nav className="header__nav">
-      <ul className="header__nav-list">
-        {headerNavLinks.map((item, i) => (
-          <li className="header__nav-item" key={i}>
-            <NavLink to={`/${item.link}`}>
-              {({ isActive }) => (
-                <Flex className={`header__nav-link ${isActive ? 'header__nav-link_type_active' : ''}`}>
-                  {item.icon}
-                  <span className="header__nav-text">{item.title}</span>
-                </Flex>
-              )}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-      <Button size="large" onClick={handleLogout} className="header__logout" type="primary">
-        Выйти
+      <Menu onClick={onClick} selectedKeys={[currentKey]} mode="horizontal" items={items} />
+      <Button onClick={handleLogout} className="header__logout" type="primary">
+        ВЫЙТИ
       </Button>
     </nav>
   );

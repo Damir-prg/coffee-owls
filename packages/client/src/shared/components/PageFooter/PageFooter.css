@@ -1,17 +1,4 @@
-.footer__img {
-  margin: 0px;
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  object-position: center;
-  user-select: none;
-  pointer-events: none;
-}
 .footer__copy {
   margin: 24px 0 0;
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: bold;
-  font-style: normal;
   color: var(--primary-color);
 }
