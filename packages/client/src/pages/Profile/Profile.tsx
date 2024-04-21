@@ -1,5 +1,9 @@
+import { Typography } from 'antd';
+
 function Profile() {
-  return <h1>Профиль</h1>;
+  const { Title } = Typography;
+
+  return <Title>Профиль</Title>;
 }
 
 export default Profile;

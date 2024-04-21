@@ -11,6 +11,9 @@ const appLightTheme = {
     borderRadius: 8,
     fontSize: 24,
     fontFamily: 'Nunito Sans, Arial, sans-serif',
+    fontSizeHeading1: 46,
+    fontSizeHeading2: 38,
+    fontSizeHeading3: 30,
   },
   components: {
     Layout: {

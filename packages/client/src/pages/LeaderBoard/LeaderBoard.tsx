@@ -1,5 +1,9 @@
+import { Typography } from 'antd';
+
 function LeaderBoard() {
-  return <h1>Рейтинг</h1>;
+  const { Title } = Typography;
+
+  return <Title>Рейтинг</Title>;
 }
 
 export default LeaderBoard;
