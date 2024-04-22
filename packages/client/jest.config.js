@@ -9,7 +9,7 @@ export default {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   moduleNameMapper: {
-    '\\.(css)$': 'identity-obj-proxy',
+    '\\.(css|svg)$': 'identity-obj-proxy',
   },
   modulePaths: ['<rootDir>/src'],
 };

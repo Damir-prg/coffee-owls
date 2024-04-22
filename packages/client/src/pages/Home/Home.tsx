@@ -1,5 +1,9 @@
+import { Typography } from 'antd';
+
 function Home() {
-  return <h1>Главная страница</h1>;
+  const { Title } = Typography;
+
+  return <Title>Главная страница</Title>;
 }
 
 export default Home;

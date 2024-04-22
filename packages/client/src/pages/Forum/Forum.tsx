@@ -1,5 +1,9 @@
+import { Typography } from 'antd';
+
 function Forum() {
-  return <h1>Форум</h1>;
+  const { Title } = Typography;
+
+  return <Title>Форум</Title>;
 }
 
 export default Forum;
