@@ -38,7 +38,7 @@ module.exports = {
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',
         custom: {
-          regex: '^E[A-Z]*$',
+          regex: '^E[A-Z_]*$',
           match: true,
         },
       },

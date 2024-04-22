@@ -14,6 +14,7 @@ const appLightTheme = {
     fontSizeHeading1: 46,
     fontSizeHeading2: 38,
     fontSizeHeading3: 30,
+    lineHeightHeading3: 1.3,
   },
   components: {
     Layout: {
@@ -24,6 +25,7 @@ const appLightTheme = {
     Button: {
       contentFontSize: 14,
       contentLineHeight: 1.5,
+      contentFontSizeLG: 24,
     },
   },
 };
