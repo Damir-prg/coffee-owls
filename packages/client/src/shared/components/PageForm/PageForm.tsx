@@ -43,7 +43,7 @@ const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, link }) =
           ))}
         </Flex>
         <Flex className="form__control" vertical align="center">
-          <Form.Item>
+          <Form.Item className="form__field">
             <Button type="primary" size="large" htmlType="submit" block>
               Зарегистрироваться
             </Button>
