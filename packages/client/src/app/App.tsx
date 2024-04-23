@@ -5,9 +5,9 @@ import WithRoutes from 'widgets/WithRoutes/WithRoutes';
 
 const appLightTheme = {
   token: {
-    colorBgContainer: '#f8e6cd',
     colorPrimary: '#F65E3B',
     colorText: '#333333',
+    colorError: '#F65E3B',
     borderRadius: 8,
     fontSize: 24,
     fontFamily: 'Nunito Sans, Arial, sans-serif',
@@ -21,9 +21,21 @@ const appLightTheme = {
       headerBg: 'inherit',
       footerBg: 'inherit',
     },
+    Menu: {
+      colorBgContainer: 'inherit',
+    },
     Button: {
       contentFontSize: 14,
       contentLineHeight: 1.5,
+      contentFontSizeLG: 24,
+    },
+    Typography: {
+      titleMarginBottom: 0,
+      titleMarginTop: 0,
+    },
+    Input: {
+      inputFontSizeLG: 16,
+      paddingBlockLG: 8,
     },
   },
 };

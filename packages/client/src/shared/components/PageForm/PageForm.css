@@ -1,0 +1,12 @@
+.form {
+  min-width: 440px;
+}
+.form__fields {
+  width: 100%;
+}
+.form__field {
+  width: 100%;
+}
+.form__control {
+  width: 100%;
+}

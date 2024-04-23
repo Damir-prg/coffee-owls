@@ -1,0 +1,9 @@
+.public-window {
+  background-color: var(--light-form-background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+.public-window__container {
+  padding: 40px 48px;
+  box-sizing: border-box;
+}
