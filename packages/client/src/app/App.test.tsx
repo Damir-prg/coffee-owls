@@ -2,7 +2,7 @@ import App from './App';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
-const appContent = 'Главная страница';
+const appContent = 'Добро пожаловать, дорогой друг!';
 
 // @ts-ignore
 global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve('hey') }));

@@ -21,7 +21,7 @@ export const PageErrorStub: FC<{
 
   const $infoBlock = (
     <Flex vertical align="center" gap={40}>
-      <Title level={3} className="page-error-stub__title">
+      <Title level={3} className="text__center-align text__pre-wrap">
         {STUB_TEXT[type]}
       </Title>
       <Button type="primary" size="large" onClick={handleBackButtonClick}>
