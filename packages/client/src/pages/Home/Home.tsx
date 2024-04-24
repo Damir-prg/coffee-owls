@@ -1,13 +1,20 @@
-import { Flex, Image, Typography } from 'antd';
+import { Button, Flex, Image, Typography } from 'antd';
 import './Home.css';
 import homeImg from 'images/home.jpeg';
 import React from 'react';
+import EROUTES from 'shared/RoutesEnum';
+import { useNavigate } from 'react-router-dom';
 
 const { Text, Title } = Typography;
 
 function Home() {
+  const navigate = useNavigate();
+  function handleStartGame() {
+    navigate(`/${EROUTES.GAME}`);
+  }
+
   return (
-    <Flex className="page-content" gap={36} vertical align="center">
+    <Flex className="page-content" gap={32} vertical align="center">
       <Title level={1} className="title__primary">
         Добро пожаловать, дорогой друг!
       </Title>
@@ -19,6 +26,9 @@ function Home() {
         {'\n'}
         Звучит просто? Попробуйте себя в этой игре и убедитесь, насколько она увлекательна.
       </Text>
+      <Button size="large" type="primary" onClick={handleStartGame}>
+        НАЧАТЬ ИГРУ
+      </Button>
       <Image height={400} width={575} src={homeImg} preview={false} alt="Превью картинки" />
     </Flex>
   );
