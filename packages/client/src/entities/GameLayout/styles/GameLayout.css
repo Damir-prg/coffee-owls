@@ -1,0 +1,9 @@
+.game__layout {
+  padding: 2rem;
+  width: 90vw;
+  max-width: 640px;
+  aspect-ratio: 1 / 1;
+  background-image: url('src/shared/images/backdrop.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
