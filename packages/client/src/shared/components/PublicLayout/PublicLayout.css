@@ -8,7 +8,7 @@
   right: 0;
   width: 60vw;
   height: 80vh;
-  background-image: url('../../images/public-layout-img.svg');
+  background-image: url('src/shared/images/public-layout-img.svg');
   background-position: right top;
   background-repeat: no-repeat;
   background-size: contain;
