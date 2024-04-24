@@ -1,6 +1,12 @@
 .title__primary.ant-typography {
   color: var(--primary-color);
 }
+.ant-input {
+  font-weight: bold;
+}
+.ant-form-item-explain-error {
+  font-size: 14px;
+}
 .text__center-align {
   text-align: center;
 }
