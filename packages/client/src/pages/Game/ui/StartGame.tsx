@@ -1,6 +1,10 @@
 import { GameContentContainer } from 'entities/GameContentContainer';
-import React from 'react';
+import { StartGameForm } from 'widgets/StartGameForm';
 
 export const StartGame = () => {
-  return <GameContentContainer>Start Game</GameContentContainer>;
+  return (
+    <GameContentContainer>
+      <StartGameForm />
+    </GameContentContainer>
+  );
 };

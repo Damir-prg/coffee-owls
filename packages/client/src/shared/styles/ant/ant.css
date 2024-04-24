@@ -10,3 +10,21 @@
 .numeric-font {
   font-family: 'Londrina Shadow', Arial, sans-serif;
 }
+
+.radio-gap .ant-radio-button-wrapper {
+  margin-inline: 1rem;
+}
+
+.radio-gap .ant-radio-button-wrapper:first-child {
+  margin-left: 0;
+}
+
+.radio-gap .ant-radio-button-wrapper:last-child {
+  margin-right: 0;
+}
+
+.zero-border-radius,
+.zero-border-radius .ant-radio-button-wrapper:first-child,
+.zero-border-radius .ant-radio-button-wrapper:last-child {
+  border-radius: 0;
+}

@@ -26,7 +26,9 @@ body {
 }
 h1,
 h2,
-h3.ant-typography {
+h3,
+h4,
+h5.ant-typography {
   margin-top: 0;
 }
 
