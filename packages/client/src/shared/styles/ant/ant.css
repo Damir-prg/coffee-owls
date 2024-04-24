@@ -1,9 +1,12 @@
 .title__primary.ant-typography {
   color: var(--primary-color);
 }
-.ant-input {
-  font-weight: bold;
+.text__center-align {
+  text-align: center;
 }
-.ant-form-item-explain-error {
-  font-size: 14px;
+.text__pre-wrap {
+  white-space: pre-wrap;
+}
+.numeric-font {
+  font-family: 'Londrina Shadow', Arial, sans-serif;
 }
