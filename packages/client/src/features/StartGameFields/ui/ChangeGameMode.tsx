@@ -1,6 +1,6 @@
-import { Flex, Typography, Radio, RadioChangeEvent } from 'antd';
-import { changeGameModeOptions } from '../lib/options';
 import { useCallback } from 'react';
+import { Flex, Typography, Radio, RadioChangeEvent } from 'antd';
+import { changeGameModeOptions } from 'shared/constants/game';
 
 const { Title } = Typography;
 
