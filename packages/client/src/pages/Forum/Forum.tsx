@@ -1,8 +1,9 @@
-import { Typography, Flex, Button, Table, Modal, Form, Input, type TableProps } from 'antd';
+import { Typography, Flex, Button, Table, Modal, type TableProps } from 'antd';
 import { PlusOutlined, CommentOutlined } from '@ant-design/icons';
 import { useCallback, useState } from 'react';
 
-import { TForumItem } from './Forum.models';
+import { ADD_FORUM_FORM_ID, TAddTopicFormValues, TForumItem } from './Forum.model';
+import { AddTopicForm } from './ui/AddTopicForm/AddTopicForm';
 
 import './Forum.css';
 
@@ -10,18 +11,22 @@ function Forum() {
   const { Title } = Typography;
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  const [form] = Form.useForm();
+  const [topics, setTopics] = useState<TForumItem[]>([]);
 
   const toggleModal = useCallback(() => setIsModalOpen(current => !current), []);
 
-  const dataSource: TForumItem[] = [];
+  const handleAddTopic = ({ title }: TAddTopicFormValues) => {
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+    setTopics(current => [...current, { key: current.length.toString(), color: randomColor, title, comments: 0 }]);
+  };
 
   const columns: TableProps['columns'] = [
     {
       title: 'Топики для обсуждения',
       dataIndex: 'title',
       key: 'title',
+      className: 'forum__table__cell-title',
       render: (text, record: TForumItem) => (
         <Flex justify="flex-start" gap={20} align="center">
           <div className="forum__table__cell-color" style={{ backgroundColor: record.color }} /> {text}
@@ -39,11 +44,7 @@ function Forum() {
       key: 'comments',
       align: 'center',
       width: 100,
-      onCell: () => {
-        return {
-          className: 'forum__table__cell-comments',
-        };
-      },
+      render: comments => <div className="forum__table__cell-comments">{comments} ответов</div>,
     },
   ];
 
@@ -57,9 +58,10 @@ function Forum() {
       </Flex>
 
       <Table
-        dataSource={dataSource}
+        dataSource={topics}
         columns={columns}
-        pagination={{ position: ['bottomCenter'] }}
+        locale={{ emptyText: 'Топиков для обсуждения не найдено.' }}
+        pagination={{ position: ['bottomCenter'], pageSize: 10 }}
         className="forum__table-wrapper"
       />
 
@@ -67,18 +69,17 @@ function Forum() {
         title="Добавить обсуждение"
         open={isModalOpen}
         onOk={toggleModal}
+        okButtonProps={{ form: ADD_FORUM_FORM_ID, htmlType: 'submit' }}
         okText="Добавить"
+        className="add__topic-modal"
         onCancel={toggleModal}
         footer={(_, { OkBtn }) => (
           <>
             <OkBtn />
           </>
-        )}>
-        <Form form={form}>
-          <Form.Item name="title">
-            <Input placeholder="Выберите название" />
-          </Form.Item>
-        </Form>
+        )}
+        centered>
+        <AddTopicForm onAddTopic={handleAddTopic} />
       </Modal>
     </div>
   );
