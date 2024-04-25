@@ -1,14 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { Flex, Typography, Radio, RadioChangeEvent } from 'antd';
 import { changeGameModeOptions } from 'shared/constants/game';
+import { GameContextInstance } from 'entities/GameContext';
 
 const { Title } = Typography;
 
 export const ChangeGameMode = () => {
-  const handleChange = useCallback((e: RadioChangeEvent) => {
-    // TODO: Добавить change mode на контекст игры
-    console.log(`Radio checked:${e.target.value}`);
-  }, []);
+  const { gameMode, setGameMode } = useContext(GameContextInstance);
+
+  const handleChange = useCallback(
+    (e: RadioChangeEvent) => {
+      setGameMode(e.target.value);
+    },
+    [setGameMode],
+  );
+
+  useEffect(() => {
+    console.log(`Выбранный режим игры: ${gameMode}`);
+  }, [gameMode]);
 
   return (
     <Flex vertical align="center" justify="center" gap={16}>
@@ -17,6 +26,7 @@ export const ChangeGameMode = () => {
       </Title>
       <Radio.Group
         onChange={handleChange}
+        value={gameMode}
         buttonStyle="solid"
         options={changeGameModeOptions}
         optionType="button"
