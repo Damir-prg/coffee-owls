@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { EGAME_SCREEN_VALUES } from 'shared/constants/game';
 import { useTimer } from 'shared/hooks';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
 export const GameCountdownForm = () => {
   const { setGameScreen } = useContext(GameContextInstance);
@@ -12,10 +12,12 @@ export const GameCountdownForm = () => {
 
   return (
     <Flex vertical align="center" justify="center" gap={16}>
-      <Title level={5} className="title__primary">
+      <Title level={4} className="title__primary">
         Игра начнётся через:
       </Title>
-      <Text className="numeric-font title__primary">{time}</Text>
+      <Title level={5} className="numeric-font title__primary">
+        {time}
+      </Title>
     </Flex>
   );
 };
