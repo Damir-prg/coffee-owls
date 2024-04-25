@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, useState } from 'react';
-import { EGAME_MODE_VALUES } from 'shared/constants/game';
-import { EGAME_SCREEN_VALUES } from 'shared/constants/game/types/ScreensEnum';
+import { EGAME_MODE_VALUES, EGAME_SCREEN_VALUES } from 'shared/constants/game';
 import { GameContextInstance } from '../lib/contextInstance';
 
 export const GameContextProvider: FC<PropsWithChildren> = ({ children }) => {

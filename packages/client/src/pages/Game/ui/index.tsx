@@ -1,12 +1,12 @@
 import { GameLayout } from 'entities/GameLayout';
-import { StartGame } from './StartGame';
+import { ScreenSwitcher } from './ScreenSwitcher';
 import { GameContextProvider } from 'entities/GameContext';
 
 export const Game = () => {
   return (
     <GameContextProvider>
       <GameLayout>
-        <StartGame />
+        <ScreenSwitcher />
       </GameLayout>
     </GameContextProvider>
   );
