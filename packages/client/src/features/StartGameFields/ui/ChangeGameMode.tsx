@@ -1,13 +1,14 @@
 import { Flex, Typography, Radio, RadioChangeEvent } from 'antd';
 import { changeGameModeOptions } from '../lib/options';
+import { useCallback } from 'react';
 
 const { Title } = Typography;
 
 export const ChangeGameMode = () => {
-  const handleChange = (e: RadioChangeEvent) => {
+  const handleChange = useCallback((e: RadioChangeEvent) => {
     // TODO: Добавить change mode на контекст игры
     console.log(`Radio checked:${e.target.value}`);
-  };
+  }, []);
 
   return (
     <Flex vertical align="center" justify="center" gap={16}>
