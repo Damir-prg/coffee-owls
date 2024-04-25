@@ -1,28 +1,19 @@
 import './PageForm.css';
 import type { FormProps } from 'antd';
-import { IPageFormProps, TFieldType } from './PageForm.model';
+import { IPageFormProps } from './PageForm.model';
 import { Flex, Form, Input, Button, Typography } from 'antd';
 import Link from '../Link/Link';
 
+const onFinish: FormProps['onFinish'] = values => {
+  console.log('Success:', values);
+};
+
+const onFinishFailed: FormProps['onFinishFailed'] = errorInfo => {
+  console.log('Failed:', errorInfo);
+};
+
 const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, link }) => {
   const { Title } = Typography;
-
-  const onFinish: FormProps['onFinish'] = values => {
-    console.log('Success:', values);
-  };
-
-  const onFinishFailed: FormProps['onFinishFailed'] = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
-
-  function defineInput(field: TFieldType) {
-    switch (field.type) {
-      case 'password':
-        return <Input.Password size="large" placeholder={field.placeholder} />;
-      default:
-        return <Input size="large" placeholder={field.placeholder} />;
-    }
-  }
 
   return (
     <Form name={formName} className="form" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
@@ -38,7 +29,11 @@ const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, link }) =
               name={field.name}
               dependencies={field.dependencies}
               rules={field.rules}>
-              {defineInput(field)}
+              {field.type === 'password' ? (
+                <Input.Password size="large" placeholder={field.placeholder} />
+              ) : (
+                <Input size="large" placeholder={field.placeholder} />
+              )}
             </Form.Item>
           ))}
         </Flex>

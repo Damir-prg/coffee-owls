@@ -9,7 +9,7 @@ function PublicLayout({ children }: { children?: React.ReactNode }) {
     <Layout className="public-layout">
       <div className="public-layout__background-img"></div>
       <div className="public-layout__background-overlay"></div>
-      <Content className="public-layout__main">{children ? children : <Outlet />}</Content>
+      <Content className="public-layout__main">{children ?? <Outlet />}</Content>
     </Layout>
   );
 }
