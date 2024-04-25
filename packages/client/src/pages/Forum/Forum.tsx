@@ -1,9 +1,10 @@
-import { Typography, Flex, Button, Table, Modal, type TableProps } from 'antd';
+import { Typography, Flex, Table, Modal, type TableProps } from 'antd';
 import { PlusOutlined, CommentOutlined } from '@ant-design/icons';
 import { useCallback, useState } from 'react';
 
 import { ADD_FORUM_FORM_ID, TAddTopicFormValues, TForumItem } from './Forum.model';
 import { AddTopicForm } from './ui/AddTopicForm/AddTopicForm';
+import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 
 import './Forum.css';
 
@@ -52,9 +53,9 @@ function Forum() {
     <div className="forum__container">
       <Flex justify="space-between" align="center" className="forum__container-header">
         <Title>Форум 2048</Title>
-        <Button type="dashed" onClick={toggleModal}>
+        <ButtonSecondary onClick={toggleModal}>
           <PlusOutlined /> Добавить Топик
-        </Button>
+        </ButtonSecondary>
       </Flex>
 
       <Table
