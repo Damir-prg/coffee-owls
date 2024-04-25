@@ -8,4 +8,4 @@ export type TGameContext = {
   setGameScreen: (screen: EGAME_SCREEN_VALUES) => void;
 };
 
-export type TGameContextConsumer = { children: (value: TGameContext | null) => React.ReactNode };
+export type TGameContextConsumer = { children: (value: TGameContext) => React.ReactNode };

@@ -1,13 +1,13 @@
 import { GameLayout } from 'entities/GameLayout';
 import { StartGame } from './StartGame';
-import { GameContext } from 'entities/GameContext';
+import { GameContextProvider } from 'entities/GameContext';
 
 export const Game = () => {
   return (
-    <GameContext>
+    <GameContextProvider>
       <GameLayout>
         <StartGame />
       </GameLayout>
-    </GameContext>
+    </GameContextProvider>
   );
 };
