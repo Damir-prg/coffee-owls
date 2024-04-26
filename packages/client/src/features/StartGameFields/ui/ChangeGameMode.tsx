@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { Flex, Typography, Radio, RadioChangeEvent } from 'antd';
-import { changeGameModeOptions } from 'shared/constants/game';
+import { EGAME_SCREEN_VALUES, changeGameModeOptions } from 'shared/constants/game';
 import { GameContextInstance } from 'entities/GameContext';
 
 const { Title } = Typography;
@@ -30,7 +30,7 @@ export const ChangeGameMode = () => {
         buttonStyle="solid"
         options={changeGameModeOptions}
         optionType="button"
-        defaultValue={'free-play'}
+        defaultValue={EGAME_SCREEN_VALUES.START_GAME}
         className="zero-border-radius radio-gap"
       />
     </Flex>

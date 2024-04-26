@@ -4,7 +4,7 @@ import { GameCountdownForm } from 'widgets/GameCountdownForm';
 import { StartGameForm } from 'widgets/StartGameForm';
 
 export const GameScreens: Record<EGAME_SCREEN_VALUES, ReactNode> = {
-  'start-game': <StartGameForm />,
-  timer: <GameCountdownForm />,
-  settings: <></>,
+  [EGAME_SCREEN_VALUES.START_GAME]: <StartGameForm />,
+  [EGAME_SCREEN_VALUES.TIMER]: <GameCountdownForm />,
+  [EGAME_SCREEN_VALUES.SETTINGS]: <></>,
 };
