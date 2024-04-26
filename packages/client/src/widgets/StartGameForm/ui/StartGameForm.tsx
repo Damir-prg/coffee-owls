@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { SettingOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { GameContextInstance } from 'entities/GameContext';
 import { ChangeGameMode } from 'features/StartGameFields';
@@ -12,8 +12,8 @@ export const StartGameForm = () => {
   return (
     <Flex vertical align="center" justify="center" gap={32}>
       <ChangeGameMode />
-      <Button className="zero-border-radius" size="large" icon={<SearchOutlined />}>
-        Управление
+      <Button className="game__start-button" size="large" icon={<SettingOutlined />}>
+        Настройки управление
       </Button>
       <Button
         type="primary"
