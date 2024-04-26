@@ -14,7 +14,7 @@
 }
 
 .radio-gap .ant-radio-button-wrapper {
-  margin-inline: 1rem;
+  margin-inline: 16px;
 }
 
 .radio-gap .ant-radio-button-wrapper:first-child {
