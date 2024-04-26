@@ -1,4 +1,5 @@
-.title__primary.ant-typography {
+.title__primary.ant-typography,
+.title__primary.ant-statistic .ant-statistic-content {
   color: var(--primary-color);
 }
 .text__center-align {
@@ -7,7 +8,8 @@
 .text__pre-wrap {
   white-space: pre-wrap;
 }
-.numeric-font {
+.numeric-font,
+.numeric-font.ant-statistic .ant-statistic-content {
   font-family: 'Londrina Shadow', Arial, sans-serif;
 }
 
