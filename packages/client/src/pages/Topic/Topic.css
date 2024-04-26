@@ -1,0 +1,64 @@
+.topic__container {
+  min-width: 700px;
+  padding: 40px;
+}
+
+.topic__container-header {
+  margin-bottom: 24px;
+}
+
+.topic__info-header {
+  background-color: var(--secondary-color);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 12px;
+}
+
+.topic__container_header-back {
+  color: black;
+  font-size: 24px;
+}
+
+.topic__info-tag {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin: auto 10px auto auto;
+}
+
+.topic__info-description {
+  background-color: var(--white-color);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 12px;
+  font-size: 16px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.topic__info-title {
+  margin: auto 0;
+}
+
+.topic__info-text.ant-typography {
+  margin-bottom: 0;
+  line-height: 14px;
+  font-size: 16px;
+}
+
+.topic__comments {
+  margin-top: 24px;
+  padding-left: 8px;
+}
+
+.topic__comments-title.ant-typography {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.topic__comments-content {
+  width: 100%;
+  font-size: 16px;
+  max-height: 100px;
+  overflow-y: auto;
+}

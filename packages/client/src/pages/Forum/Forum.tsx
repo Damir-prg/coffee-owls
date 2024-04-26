@@ -7,6 +7,8 @@ import { AddTopicForm } from './ui/AddTopicForm/AddTopicForm';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 
 import './Forum.css';
+import { useNavigate } from 'react-router-dom';
+import EROUTES from 'shared/RoutesEnum';
 
 function Forum() {
   const { Title } = Typography;
@@ -14,12 +16,20 @@ function Forum() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [topics, setTopics] = useState<TForumItem[]>([]);
 
+  const navigate = useNavigate();
+
   const toggleModal = useCallback(() => setIsModalOpen(current => !current), []);
 
   const handleAddTopic = ({ title }: TAddTopicFormValues) => {
     const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
     setTopics(current => [...current, { key: current.length.toString(), color: randomColor, title, comments: 0 }]);
+  };
+
+  const handleTopicRedirect = (record: TForumItem) => {
+    return {
+      onClick: () => navigate('/' + EROUTES.FORUM + '/topic/' + record.key),
+    };
   };
 
   const columns: TableProps['columns'] = [
@@ -63,6 +73,7 @@ function Forum() {
         columns={columns}
         locale={{ emptyText: 'Топиков для обсуждения не найдено.' }}
         pagination={{ position: ['bottomCenter'], pageSize: 10 }}
+        onRow={handleTopicRedirect}
         className="forum__table-wrapper"
       />
 

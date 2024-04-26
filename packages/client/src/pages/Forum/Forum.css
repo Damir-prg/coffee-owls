@@ -1,5 +1,6 @@
 .forum__container {
   min-width: 700px;
+  padding-top: 48px;
 }
 
 .forum__container-header {

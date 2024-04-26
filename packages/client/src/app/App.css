@@ -8,6 +8,7 @@
   --light-background-color: #f8e6cd;
   --text-color: #333333;
   --grey-color: #a6a6a6;
+  --white-color: #ffffff;
   --element-color: #d9d9d9;
   --border-radius: 8px;
   background-color: var(--light-background-color);
