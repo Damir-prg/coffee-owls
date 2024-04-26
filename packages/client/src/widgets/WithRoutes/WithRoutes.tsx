@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import EROUTES from 'shared/RoutesEnum';
+import PublicLayout from 'shared/components/PublicLayout/PublicLayout';
 import PageLayout from 'shared/components/PageLayout/PageLayout';
 import Login from '../../pages/Login/Login';
 import Registration from '../../pages/Registration/Registration';
@@ -15,8 +16,10 @@ import NotFound from '../../pages/NotFound/NotFound';
 function WithRoutes() {
   return (
     <Routes>
-      <Route path={EROUTES.SIGN_IN} element={<Login />} />
-      <Route path={EROUTES.SIGN_UP} element={<Registration />} />
+      <Route element={<PublicLayout />}>
+        <Route path={EROUTES.SIGN_IN} element={<Login />} />
+        <Route path={EROUTES.SIGN_UP} element={<Registration />} />
+      </Route>
 
       <Route
         path={EROUTES.HOME}

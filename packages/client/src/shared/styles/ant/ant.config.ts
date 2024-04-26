@@ -2,6 +2,7 @@ export const appLightThemeConfig = {
   token: {
     colorPrimary: '#F65E3B',
     colorText: '#333333',
+    colorError: '#F65E3B',
     borderRadius: 8,
     fontSize: 24,
     fontFamily: 'Nunito Sans, Arial, sans-serif',
@@ -26,6 +27,10 @@ export const appLightThemeConfig = {
     Typography: {
       titleMarginBottom: 0,
       titleMarginTop: 0,
+    },
+    Input: {
+      inputFontSizeLG: 16,
+      paddingBlockLG: 8,
     },
   },
 };
