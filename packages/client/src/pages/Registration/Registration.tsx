@@ -12,6 +12,7 @@ function Registration() {
           formName="registration"
           title="Регистрация"
           fields={registrationFormFields}
+          button={{ type: 'primary', text: 'Зарегистрироваться' }}
           link={{ text: 'Уже есть аккаует? - Войти', path: 'sign-in' }}
         />
       </Flex>

@@ -12,7 +12,7 @@ const onFinishFailed: FormProps['onFinishFailed'] = errorInfo => {
   console.log('Failed:', errorInfo);
 };
 
-const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, link }) => {
+const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, link }) => {
   const { Title } = Typography;
 
   return (
@@ -39,8 +39,8 @@ const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, link }) =
         </Flex>
         <Flex className="form__control" vertical align="center">
           <Form.Item className="form__field">
-            <Button type="primary" size="large" htmlType="submit" block>
-              Зарегистрироваться
+            <Button type={button.type} size="large" htmlType="submit" block>
+              {button.text}
             </Button>
           </Form.Item>
           {link && <Link text={link.text} path={link.path} />}
