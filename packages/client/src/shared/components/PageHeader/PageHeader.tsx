@@ -53,7 +53,7 @@ function PageHeader() {
     return () => {
       setCurrentKey('key');
     };
-  }, [navigate]);
+  }, [pathname]);
 
   return (
     <nav className="header__nav">

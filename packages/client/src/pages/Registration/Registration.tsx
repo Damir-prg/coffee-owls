@@ -1,4 +1,3 @@
-import './Registration.css';
 import { registrationFormFields } from './Registration.models';
 import { Flex } from 'antd';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';

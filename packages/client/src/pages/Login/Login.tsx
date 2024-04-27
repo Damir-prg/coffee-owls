@@ -1,4 +1,3 @@
-import './Login.css';
 import loginImg from 'images/public-person-img.svg';
 import { loginFormFields } from './Login.models';
 import { Flex, Divider, Image, Typography } from 'antd';
