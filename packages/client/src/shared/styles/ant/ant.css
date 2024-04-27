@@ -1,4 +1,5 @@
-.title__primary.ant-typography {
+.title__primary.ant-typography,
+.title__primary.ant-statistic .ant-statistic-content {
   color: var(--primary-color);
 }
 .ant-input {
@@ -13,6 +14,25 @@
 .text__pre-wrap {
   white-space: pre-wrap;
 }
-.numeric-font {
+.numeric-font,
+.numeric-font.ant-statistic .ant-statistic-content {
   font-family: 'Londrina Shadow', Arial, sans-serif;
+}
+
+.radio-gap .ant-radio-button-wrapper {
+  margin-inline: 16px;
+}
+
+.radio-gap .ant-radio-button-wrapper:first-child {
+  margin-left: 0;
+}
+
+.radio-gap .ant-radio-button-wrapper:last-child {
+  margin-right: 0;
+}
+
+.zero-border-radius,
+.zero-border-radius .ant-radio-button-wrapper:first-child,
+.zero-border-radius .ant-radio-button-wrapper:last-child {
+  border-radius: 0;
 }
