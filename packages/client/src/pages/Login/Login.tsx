@@ -3,6 +3,7 @@ import { loginFormFields } from './Login.models';
 import { Flex, Divider, Image, Typography } from 'antd';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
 import PageForm from 'shared/components/PageForm/PageForm';
+import EROUTES from 'shared/RoutesEnum';
 
 function Login() {
   const { Title, Text } = Typography;
@@ -25,7 +26,7 @@ function Login() {
           title="Войти"
           fields={loginFormFields}
           button={{ type: 'primary', text: 'Войти' }}
-          link={{ text: 'Нет аккаунта? - зарегестрируйся, мы тебя ждём:)', path: 'sign-up' }}
+          link={{ text: 'Нет аккаунта? - зарегестрируйся, мы тебя ждём:)', path: EROUTES.SIGN_UP }}
         />
       </Flex>
     </PublicWindow>
