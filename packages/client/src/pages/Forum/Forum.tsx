@@ -1,50 +1,20 @@
-import { Typography, Flex, Table, Modal, type TableProps } from 'antd';
-import { PlusOutlined, CommentOutlined } from '@ant-design/icons';
+import { Typography, Flex, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useCallback, useState } from 'react';
 
-import { ADD_FORUM_FORM_ID, TAddTopicFormValues, TForumItem } from './Forum.model';
-import { AddTopicForm } from './ui/AddTopicForm/AddTopicForm';
+import { ADD_FORUM_FORM_ID, TAddTopicFormValues, TForumItem } from 'shared/constants/forum';
+import { AddTopicForm } from 'features/AddForumTopic';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 import { generateRandomColor } from 'shared/utils/RandomColorGenerator';
+import { ForumTopicsTable } from 'widgets/ForumTopicsTable';
 
 import './Forum.css';
-import { useNavigate } from 'react-router-dom';
-import EROUTES from 'shared/RoutesEnum';
-
-const TABLE_COLUMNS: TableProps['columns'] = [
-  {
-    title: 'Топики для обсуждения',
-    dataIndex: 'title',
-    key: 'title',
-    className: 'forum__table__cell-title',
-    render: (text, record: TForumItem) => (
-      <Flex justify="flex-start" gap={20} align="center">
-        <div className="forum__table__cell-color" style={{ backgroundColor: record.color }} /> {text}
-      </Flex>
-    ),
-    onCell: () => {
-      return {
-        className: 'forum__table__cell-title',
-      };
-    },
-  },
-  {
-    title: <CommentOutlined />,
-    dataIndex: 'comments',
-    key: 'comments',
-    align: 'center',
-    width: 100,
-    render: comments => <div className="forum__table__cell-comments">{comments} ответов</div>,
-  },
-];
 
 function Forum() {
   const { Title } = Typography;
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [topics, setTopics] = useState<TForumItem[]>([]);
-
-  const navigate = useNavigate();
 
   const handleOpenModal = useCallback(() => setIsModalOpen(true), []);
 
@@ -53,19 +23,8 @@ function Forum() {
   const handleAddTopic = ({ title }: TAddTopicFormValues) => {
     const randomColor = generateRandomColor();
 
-    if (title) {
-      setTopics(current => [...current, { key: current.length.toString(), color: randomColor, title, comments: 0 }]);
-    }
+    setTopics(current => [...current, { key: current.length.toString(), color: randomColor, title, comments: 0 }]);
   };
-
-  const handleTopicRedirect = useCallback(
-    (record: TForumItem) => {
-      return {
-        onClick: () => navigate('/' + EROUTES.FORUM + '/topic/' + record.key),
-      };
-    },
-    [navigate],
-  );
 
   return (
     <div className="forum__container">
@@ -76,15 +35,7 @@ function Forum() {
         </ButtonSecondary>
       </Flex>
 
-      <Table
-        dataSource={topics}
-        columns={TABLE_COLUMNS}
-        locale={{ emptyText: 'Топиков для обсуждения не найдено.' }}
-        pagination={{ position: ['bottomCenter'], pageSize: 10 }}
-        onRow={handleTopicRedirect}
-        className="forum__table-wrapper"
-        rowClassName="forum__table-row"
-      />
+      <ForumTopicsTable topics={topics} />
 
       <Modal
         title="Добавить обсуждение"

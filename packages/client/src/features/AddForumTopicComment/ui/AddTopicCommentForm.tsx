@@ -1,14 +1,14 @@
 import { Flex, Form, Input } from 'antd';
-import { TTopicComment } from '../Topic.model';
+import { TTopicComment } from 'shared/constants/forum';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 
-import './AddCommentForm.css';
+import './AddTopicCommentForm.css';
 
 type TProps = {
   onAddComment: (coment: TTopicComment) => void;
 };
 
-export function AddCommentForm({ onAddComment }: TProps) {
+export function AddTopicCommentForm({ onAddComment }: TProps) {
   const [form] = Form.useForm();
 
   const handleSubmit = ({ message }: { message: string }) => {

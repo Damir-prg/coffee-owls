@@ -3,22 +3,6 @@
   padding: 40px;
 }
 
-.topic__container-header {
-  margin-bottom: 24px;
-}
-
-.topic__info-header {
-  background-color: var(--secondary-color);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  padding: 12px;
-}
-
-.topic__container_header-back {
-  color: black;
-  font-size: 24px;
-}
-
 .topic__info-tag {
   width: 16px;
   height: 16px;
@@ -44,21 +28,4 @@
   margin-bottom: 0;
   line-height: 14px;
   font-size: 16px;
-}
-
-.topic__comments {
-  margin-top: 24px;
-  padding-left: 8px;
-}
-
-.topic__comments-title.ant-typography {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.topic__comments-content {
-  width: 100%;
-  font-size: 16px;
-  max-height: 100px;
-  overflow-y: auto;
 }

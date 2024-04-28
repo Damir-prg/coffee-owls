@@ -1,5 +1,5 @@
 import { Form, Input } from 'antd';
-import { ADD_FORUM_FORM_ID, TAddTopicFormValues } from 'pages/Forum/Forum.model';
+import { ADD_FORUM_FORM_ID, TAddTopicFormValues } from 'shared/constants/forum';
 
 import './AddTopicForm.css';
 
@@ -10,9 +10,11 @@ type TProps = {
 export const AddTopicForm = ({ onAddTopic }: TProps) => {
   const [form] = Form.useForm();
 
-  const handleSubmit = (values: TAddTopicFormValues) => {
-    onAddTopic(values);
-    form.resetFields();
+  const handleSubmit = ({ title }: TAddTopicFormValues) => {
+    if (title) {
+      onAddTopic({ title });
+      form.resetFields();
+    }
   };
 
   return (

@@ -1,0 +1,27 @@
+.ant-table .ant-table-container .ant-table-content table thead.ant-table-thead .ant-table-cell {
+  background-color: var(--secondary-color);
+}
+
+.forum__table-wrapper .ant-table {
+  border-radius: 12px;
+}
+
+.forum__table-row:hover {
+  cursor: pointer;
+}
+
+.forum__table__cell-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid var(--element-color);
+}
+
+.forum__table__cell-title {
+  font-size: 18px;
+}
+
+.forum__table__cell-comments {
+  font-size: 16px;
+  line-height: 1;
+}
