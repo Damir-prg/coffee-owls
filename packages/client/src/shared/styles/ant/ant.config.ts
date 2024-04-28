@@ -9,6 +9,7 @@ export const appLightThemeConfig = {
     fontSizeHeading1: 46,
     fontSizeHeading2: 38,
     fontSizeHeading3: 30,
+    colorSplit: '#F65E3B',
   },
   components: {
     Layout: {

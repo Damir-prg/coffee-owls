@@ -8,6 +8,10 @@
 .ant-form-item-explain-error {
   font-size: 14px;
 }
+.ant-divider-vertical {
+  height: 100%;
+  border-inline-width: 2px;
+}
 .text__center-align {
   text-align: center;
 }

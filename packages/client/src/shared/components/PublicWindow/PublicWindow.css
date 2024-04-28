@@ -6,4 +6,5 @@
 .public-window__container {
   padding: 40px 48px;
   box-sizing: border-box;
+  min-width: 400px;
 }
