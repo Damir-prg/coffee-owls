@@ -6,6 +6,7 @@
   --secondary-color: #f2ae78;
   --background-color: #e4c4ae;
   --light-background-color: #f8e6cd;
+  --light-form-background-color: #fdf9f8;
   --text-color: #333333;
   --grey-color: #a6a6a6;
   --white-color: #ffffff;
@@ -14,6 +15,11 @@
   background-color: var(--light-background-color);
   color: var(--text-color);
   font-family: Nunito Sans, Arial, sans-serif;
+}
+h1,
+h2,
+h3.ant-typography {
+  margin-top: 0;
 }
 body {
   margin: 0;
@@ -27,7 +33,9 @@ body {
 }
 h1,
 h2,
-h3.ant-typography {
+h3,
+h4,
+h5.ant-typography {
   margin-top: 0;
 }
 

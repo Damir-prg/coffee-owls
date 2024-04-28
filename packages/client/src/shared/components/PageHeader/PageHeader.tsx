@@ -45,7 +45,6 @@ function PageHeader() {
   }
 
   const onClick: MenuProps['onClick'] = e => {
-    setCurrentKey(e.key);
     navigate('/' + e.key);
   };
 
@@ -54,7 +53,7 @@ function PageHeader() {
     return () => {
       setCurrentKey('key');
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <nav className="header__nav">
