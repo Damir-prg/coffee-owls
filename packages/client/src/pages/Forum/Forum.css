@@ -15,10 +15,15 @@
   border-radius: 12px;
 }
 
+.forum__table-row:hover {
+  cursor: pointer;
+}
+
 .forum__table__cell-color {
   width: 12px;
   height: 12px;
   border-radius: 50%;
+  border: 0.5px solid var(--element-color);
 }
 
 .forum__table__cell-title {

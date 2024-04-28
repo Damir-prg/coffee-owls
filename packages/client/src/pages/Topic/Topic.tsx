@@ -1,28 +1,40 @@
 import { Button, Flex, Typography, Avatar } from 'antd';
 import { LeftOutlined, UserOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import EROUTES from 'shared/RoutesEnum';
 import { TTopicComment, TTopicInfo, TopicInfo } from './Topic.model';
+import { AddCommentForm } from './ui/AddCommentForm';
 
 import './Topic.css';
-import { AddCommentForm } from './ui/AddCommentForm';
 
 export function Topic() {
   const { Title, Paragraph } = Typography;
 
   const [topicInfo, setTopicInfo] = useState<TTopicInfo>(TopicInfo);
 
-  const handleAddComment = (comment: TTopicComment) => {
-    setTopicInfo(current => ({ ...current, comments: [...topicInfo.comments, comment] }));
-  };
+  const navigate = useNavigate();
+
+  const handleAddComment = useCallback(
+    (comment: TTopicComment) => {
+      setTopicInfo(current => ({ ...current, comments: [...topicInfo.comments, comment] }));
+    },
+    [topicInfo],
+  );
+
+  const handleNavigateForum = useCallback(() => {
+    navigate('/' + EROUTES.FORUM);
+  }, [navigate]);
 
   return (
     <div className="topic__container">
       <Flex gap={8} justify="flex-start" align="center" className="topic__container-header">
-        <Button type="link" href={'/' + EROUTES.FORUM}>
-          <LeftOutlined className="topic__container_header-back" />
-        </Button>
+        <Button
+          onClick={handleNavigateForum}
+          type="text"
+          icon={<LeftOutlined className="topic__container_header-back" />}
+        />
         <Title level={3}>{topicInfo.title}</Title>
       </Flex>
 
@@ -46,7 +58,7 @@ export function Topic() {
         {topicInfo.comments.length ? (
           topicInfo.comments.map(comment => {
             return (
-              <>
+              <div key={comment.id}>
                 <Flex align="center" gap={16}>
                   <Avatar shape="circle" size={36} icon={<UserOutlined />} />
                   <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
@@ -55,7 +67,7 @@ export function Topic() {
                   </Flex>
                 </Flex>
                 <Paragraph className="topic__comments-content">{comment.content}</Paragraph>
-              </>
+              </div>
             );
           })
         ) : (

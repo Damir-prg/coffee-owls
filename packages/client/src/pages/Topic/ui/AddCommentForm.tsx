@@ -12,16 +12,18 @@ export function AddCommentForm({ onAddComment }: TProps) {
   const [form] = Form.useForm();
 
   const handleSubmit = ({ message }: { message: string }) => {
-    onAddComment({
-      id: 1,
-      content: message,
-      author: {
-        username: 'user1',
-        avatar: '',
-      },
-      created_at: '10.02.2021',
-    });
-    form.resetFields();
+    if (message) {
+      onAddComment({
+        id: 1,
+        content: message,
+        author: {
+          username: 'user1',
+          avatar: '',
+        },
+        created_at: '10.02.2021',
+      });
+      form.resetFields();
+    }
   };
 
   return (
