@@ -19,7 +19,7 @@ export const GameCountdownForm = () => {
       <Countdown
         format="mm:ss"
         value={deadline}
-        onFinish={() => setGameScreen(EGAME_SCREEN_VALUES.START_GAME)}
+        onFinish={() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME)}
         className="numeric-font title__primary"
       />
     </Flex>
