@@ -1,5 +1,7 @@
+.title__primary,
 .title__primary.ant-typography,
-.title__primary.ant-statistic .ant-statistic-content {
+.title__primary.ant-statistic .ant-statistic-content,
+.title__primary.ant-typography a {
   color: var(--primary-color);
 }
 .ant-input {
@@ -18,6 +20,11 @@
 .text__pre-wrap {
   white-space: pre-wrap;
 }
+
+.full-width {
+  width: 100%;
+}
+
 .numeric-font,
 .numeric-font.ant-statistic .ant-statistic-content {
   font-family: 'Londrina Shadow', Arial, sans-serif;
