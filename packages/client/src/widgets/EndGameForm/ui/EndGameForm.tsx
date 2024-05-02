@@ -15,15 +15,16 @@ export const EndGameForm = () => {
   return (
     <Flex vertical align="center" justify="center" gap={24}>
       <Flex vertical align="center" justify="flex-start">
-        <Title level={5} className="title__primary">
+        <Title level={3} className="title__primary">
           Спасибо за игру!
         </Title>
         <Text className="text__center-align">К сожалению, больше нет ходов</Text>
       </Flex>
       <Flex vertical align="center" justify="center" gap={8}>
         <Text className="text__center-align">
-          Вы можете ознакомиться с{' '}
-          <Link to={`/${EROUTES.RATING}`} relative="route">
+          Вы можете ознакомиться с
+          <br />
+          <Link to={`/${EROUTES.RATING}`}>
             <Text className="title__primary">рейтингом&nbsp;участников</Text>
           </Link>
           <br />
