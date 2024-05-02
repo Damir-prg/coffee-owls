@@ -8,6 +8,13 @@
   flex-direction: column;
   align-items: center;
 }
+.page-layout__error {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .page-layout__footer {
   display: flex;
   flex-direction: column;
