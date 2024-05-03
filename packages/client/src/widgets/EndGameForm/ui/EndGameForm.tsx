@@ -1,8 +1,8 @@
 import { Button, Flex, Typography } from 'antd';
 import { GameContextInstance } from 'entities/GameContext';
 import { useCallback, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import EROUTES from 'shared/RoutesEnum';
+import Link from 'shared/components/Link/Link';
 import { EGAME_SCREEN_VALUES } from 'shared/constants/game';
 
 const { Title, Text } = Typography;
@@ -24,18 +24,14 @@ export const EndGameForm = () => {
         <Text className="text__center-align">
           Вы можете ознакомиться с
           <br />
-          <Link to={`/${EROUTES.RATING}`}>
-            <Text className="title__primary">рейтингом&nbsp;участников</Text>
-          </Link>
+          <Link path={EROUTES.RATING} text="рейтингом&nbsp;участников" size="large" weight="normal" />
           <br />
           или
         </Text>
         <Button type="primary" size="large" className="full-width" onClick={handleStartNewGame}>
           Повторить игру
         </Button>
-        <Link to={`/${EROUTES.HOME}`}>
-          <Text className="title__primary">Вернуться на главную страницу</Text>
-        </Link>
+        <Link path={EROUTES.HOME} text="Вернуться на главную страницу" size="small" weight="lighter" />
       </Flex>
     </Flex>
   );
