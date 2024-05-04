@@ -1,0 +1,6 @@
+.game__content-container {
+  padding: 32px 64px;
+  background-color: var(--light-background-color);
+  border: 4px solid var(--primary-color);
+  border-radius: var(--border-radius);
+}

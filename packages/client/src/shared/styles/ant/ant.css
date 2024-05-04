@@ -1,3 +1,49 @@
-.title__primary.ant-typography {
+.title__primary,
+.title__primary.ant-typography,
+.title__primary.ant-statistic .ant-statistic-content,
+.title__primary.ant-typography a {
   color: var(--primary-color);
+}
+.ant-input {
+  font-weight: bold;
+}
+.ant-form-item-explain-error {
+  font-size: 14px;
+}
+.ant-divider-vertical {
+  height: 100%;
+  border-inline-width: 2px;
+}
+.text__center-align {
+  text-align: center;
+}
+.text__pre-wrap {
+  white-space: pre-wrap;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.numeric-font,
+.numeric-font.ant-statistic .ant-statistic-content {
+  font-family: 'Londrina Shadow', Arial, sans-serif;
+}
+
+.radio-gap .ant-radio-button-wrapper {
+  margin-inline: 16px;
+}
+
+.radio-gap .ant-radio-button-wrapper:first-child {
+  margin-left: 0;
+}
+
+.radio-gap .ant-radio-button-wrapper:last-child {
+  margin-right: 0;
+}
+
+.zero-border-radius,
+.zero-border-radius .ant-radio-button-wrapper:first-child,
+.zero-border-radius .ant-radio-button-wrapper:last-child {
+  border-radius: 0;
 }

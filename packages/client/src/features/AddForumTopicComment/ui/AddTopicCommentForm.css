@@ -1,0 +1,9 @@
+.topic__comment-form {
+  border-top: 1px solid var(--element-color);
+  padding-top: 18px;
+}
+
+.topic__comment-input {
+  font-size: 16px;
+  padding: 12px;
+}

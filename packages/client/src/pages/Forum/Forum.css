@@ -1,0 +1,12 @@
+.forum__container {
+  min-width: 700px;
+  padding-top: 48px;
+}
+
+.forum__container-header {
+  margin-bottom: 30px;
+}
+
+.add__topic-modal .ant-modal-title {
+  font-size: 24px;
+}

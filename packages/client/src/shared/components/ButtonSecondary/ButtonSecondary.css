@@ -1,0 +1,8 @@
+.button__secondary.ant-btn-primary {
+  background-color: var(--text-color);
+
+  &:hover {
+    background-color: var(--text-color) !important;
+    opacity: 0.9;
+  }
+}

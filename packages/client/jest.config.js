@@ -9,7 +9,13 @@ export default {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   moduleNameMapper: {
-    '\\.(css|svg|png)$': 'identity-obj-proxy',
+    '\\.(css|svg|png|jpeg)$': 'identity-obj-proxy',
+    '^pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^widgets/(.*)$': '<rootDir>/src/widgets/$1',
+    '^features/(.*)$': '<rootDir>/src/features/$1',
+    '^entities/(.*)$': '<rootDir>/src/entities/$1',
+    '^shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^images/(.*)$': '<rootDir>/src/shared/images/$1',
   },
   modulePaths: ['<rootDir>/src'],
 };

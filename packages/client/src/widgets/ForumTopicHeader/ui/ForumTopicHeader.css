@@ -1,0 +1,15 @@
+.topic__container-header {
+  margin-bottom: 24px;
+}
+
+.topic__info-header {
+  background-color: var(--secondary-color);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 12px;
+}
+
+.topic__container_header-back {
+  color: black;
+  font-size: 24px;
+}
