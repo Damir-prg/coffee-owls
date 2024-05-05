@@ -8,5 +8,6 @@ export const ScreenSwitcher = () => {
   useEffect(() => {
     console.log(`Активный экран игры: ${gameScreen}`);
   }, [gameScreen]);
+
   return <GameContextConsumer>{({ gameScreen }) => GameScreens[gameScreen]}</GameContextConsumer>;
 };
