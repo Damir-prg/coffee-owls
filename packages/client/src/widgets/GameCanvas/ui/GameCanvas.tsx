@@ -10,7 +10,7 @@ export const GameCanvas = () => {
   const { gameMode } = useContext(GameContextInstance);
 
   const selectedGameMode = useMemo(() => gameModeTranslate[gameMode].toLowerCase(), [gameMode]);
-  const handleClear = useCallback(() => Board.clear(), []);
+  const handleClear = useCallback(() => Board.clear(), [Board.isHasInstance]);
 
   return (
     <>

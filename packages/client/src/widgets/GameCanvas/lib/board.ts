@@ -89,11 +89,38 @@ export class Board {
     if (this.ctx === null || this.ctx === undefined) {
       throw new Error('Canvas is not defined');
     }
+
+    const cornerRadius = 8;
+    const x = cell.coordX;
+    const y = cell.coordY;
+    const width = this.cellWidth;
+    const height = this.cellWidth;
+
     this.ctx.beginPath();
-    this.ctx.rect(cell.coordX, cell.coordY, this.cellWidth, this.cellWidth);
+    // this.ctx.rect(cell.coordX, cell.coordY, this.cellWidth, this.cellWidth);
+
+    this.ctx.moveTo(x + cornerRadius, y);
+    this.ctx.lineTo(x + width - cornerRadius, y);
+    this.ctx.quadraticCurveTo(x + width, y, x + width, y + cornerRadius);
+    this.ctx.lineTo(x + width, y + height - cornerRadius);
+    this.ctx.quadraticCurveTo(x + width, y + height, x + width - cornerRadius, y + height);
+    this.ctx.lineTo(x + cornerRadius, y + height);
+    this.ctx.quadraticCurveTo(x, y + height, x, y + height - cornerRadius);
+    this.ctx.lineTo(x, y + cornerRadius);
+    this.ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+    this.ctx.closePath();
+
     this.ctx.fillStyle = cellColors[cell.value];
 
     this.ctx.fill();
+
+    if (cell.value) {
+      const fontSize = width / 2;
+      this.ctx.font = fontSize + 'px';
+      this.ctx.fillStyle = 'black';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(String(cell.value), cell.coordX + width / 2, cell.coordY + width / 1.5);
+    }
   }
 
   /**
