@@ -20,5 +20,5 @@ export const GameBoard: FC = () => {
     };
   }, []);
 
-  return <canvas ref={ref} className="numeric-font" />;
+  return <canvas ref={ref} />;
 };

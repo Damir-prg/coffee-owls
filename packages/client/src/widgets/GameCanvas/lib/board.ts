@@ -1,4 +1,5 @@
 import { IBoardProps } from '../types/boardTypes';
+import { ICellProps } from '../types/cellTypes';
 import { Cell } from './cell';
 import { cellColors } from './cellColors';
 
@@ -91,23 +92,34 @@ export class Board {
     }
 
     const cornerRadius = 8;
-    const x = cell.coordX;
-    const y = cell.coordY;
-    const width = this.cellWidth;
-    const height = this.cellWidth;
 
     this.ctx.beginPath();
     // this.ctx.rect(cell.coordX, cell.coordY, this.cellWidth, this.cellWidth);
 
-    this.ctx.moveTo(x + cornerRadius, y);
-    this.ctx.lineTo(x + width - cornerRadius, y);
-    this.ctx.quadraticCurveTo(x + width, y, x + width, y + cornerRadius);
-    this.ctx.lineTo(x + width, y + height - cornerRadius);
-    this.ctx.quadraticCurveTo(x + width, y + height, x + width - cornerRadius, y + height);
-    this.ctx.lineTo(x + cornerRadius, y + height);
-    this.ctx.quadraticCurveTo(x, y + height, x, y + height - cornerRadius);
-    this.ctx.lineTo(x, y + cornerRadius);
-    this.ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+    this.ctx.moveTo(cell.coordX + cornerRadius, cell.coordY);
+    this.ctx.lineTo(cell.coordX + this.cellWidth - cornerRadius, cell.coordY);
+    this.ctx.quadraticCurveTo(
+      cell.coordX + this.cellWidth,
+      cell.coordY,
+      cell.coordX + this.cellWidth,
+      cell.coordY + cornerRadius,
+    );
+    this.ctx.lineTo(cell.coordX + this.cellWidth, cell.coordY + this.cellWidth - cornerRadius);
+    this.ctx.quadraticCurveTo(
+      cell.coordX + this.cellWidth,
+      cell.coordY + this.cellWidth,
+      cell.coordX + this.cellWidth - cornerRadius,
+      cell.coordY + this.cellWidth,
+    );
+    this.ctx.lineTo(cell.coordX + cornerRadius, cell.coordY + this.cellWidth);
+    this.ctx.quadraticCurveTo(
+      cell.coordX,
+      cell.coordY + this.cellWidth,
+      cell.coordX,
+      cell.coordY + this.cellWidth - cornerRadius,
+    );
+    this.ctx.lineTo(cell.coordX, cell.coordY + cornerRadius);
+    this.ctx.quadraticCurveTo(cell.coordX, cell.coordY, cell.coordX + cornerRadius, cell.coordY);
     this.ctx.closePath();
 
     this.ctx.fillStyle = cellColors[cell.value];
@@ -115,11 +127,11 @@ export class Board {
     this.ctx.fill();
 
     if (cell.value) {
-      const fontSize = width / 2;
-      this.ctx.font = fontSize + 'px';
+      const fontSize = this.cellWidth / 2;
+      this.ctx.font = fontSize + 'px Londrina Shadow';
       this.ctx.fillStyle = 'black';
       this.ctx.textAlign = 'center';
-      this.ctx.fillText(String(cell.value), cell.coordX + width / 2, cell.coordY + width / 1.5);
+      this.ctx.fillText(String(cell.value), cell.coordX + this.cellWidth / 2, cell.coordY + this.cellWidth / 1.5);
     }
   }
 
@@ -137,6 +149,32 @@ export class Board {
     }
   }
 
+  private pasteNewCell() {
+    let countFree = 0;
+    for (let i = 0; i < this.cellCount; i++) {
+      for (let j = 0; j < this.cellCount; j++) {
+        if (!this.cells[i][j].value) {
+          countFree++;
+        }
+      }
+    }
+    if (!countFree) {
+      console.log('Game is over');
+      return;
+    }
+
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const col = Math.floor(Math.random() * this.cellCount);
+      const row = Math.floor(Math.random() * this.cellCount);
+      if (!this.cells[col][row].value) {
+        this.cells[col][row].value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
+        this.drawAllCells();
+        return;
+      }
+    }
+  }
+
   /**
    * Начинает игру, инициализируя холст и рисуя клетки.
    */
@@ -147,6 +185,8 @@ export class Board {
       Board.instance.ctx.fillRect(0, 0, width, height);
       Board.instance.createCells();
       Board.instance.drawAllCells();
+      Board.instance.pasteNewCell();
+      Board.instance.pasteNewCell();
     } else {
       throw new Error('Canvas is not defined');
     }
