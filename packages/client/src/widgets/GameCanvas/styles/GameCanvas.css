@@ -1,0 +1,15 @@
+.game__info {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: calc(100% + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game__info > li {
+  list-style: none;
+  white-space: nowrap;
+}

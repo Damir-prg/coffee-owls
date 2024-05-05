@@ -9,7 +9,7 @@ const { Title } = Typography;
 export const GameCountdownForm = () => {
   const { setGameScreen } = useContext(GameContextInstance);
 
-  const deadline = Date.now() + 1000 * 7;
+  const deadline = Date.now() + 1000 * 1;
 
   const handleEndTimer = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.GAME), []);
 
