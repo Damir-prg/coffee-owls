@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { TLinkType } from './Link.models';
 
-function Link({ text, path }: TLinkType) {
+function Link({ text, path, size = 'medium', weight = 'normal' }: TLinkType) {
   const navigate = useNavigate();
 
   const { Text } = Typography;
@@ -13,7 +13,7 @@ function Link({ text, path }: TLinkType) {
   }
 
   return (
-    <Text className="link" onClick={onClick}>
+    <Text className={`link link-${weight} link-${size}`} onClick={onClick}>
       {text}
     </Text>
   );
