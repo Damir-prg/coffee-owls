@@ -19,5 +19,9 @@ export const GameScreens: Record<EGAME_SCREEN_VALUES, ReactNode> = {
   ),
   [EGAME_SCREEN_VALUES.GAME]: <GameCanvas />,
   [EGAME_SCREEN_VALUES.SETTINGS]: <></>,
-  [EGAME_SCREEN_VALUES.END_GAME]: <EndGameForm />,
+  [EGAME_SCREEN_VALUES.END_GAME]: (
+    <GameContentContainer>
+      <EndGameForm />
+    </GameContentContainer>
+  ),
 };
