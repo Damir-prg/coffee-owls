@@ -15,7 +15,7 @@ export class Board {
 
   private constructor({ ctx, size }: IBoardProps) {
     if (!ctx) {
-      throw new Error('Canvas is not defined');
+      throw new Error('Canvas не инициализирован');
     }
 
     // Определяем ссылку на canvas внутри класса
@@ -88,7 +88,7 @@ export class Board {
    */
   private drawCell(cell: Cell) {
     if (this.ctx === null || this.ctx === undefined) {
-      throw new Error('Canvas is not defined');
+      throw new Error('Canvas не инициализирован');
     }
 
     const cornerRadius = 8;
@@ -190,7 +190,7 @@ export class Board {
       Board.instance.pasteNewCell();
       Board.instance.pasteNewCell();
     } else {
-      throw new Error('Canvas is not defined');
+      throw new Error('Canvas не инициализирован');
     }
   }
 

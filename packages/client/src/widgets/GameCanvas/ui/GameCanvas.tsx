@@ -3,14 +3,13 @@ import '../styles/GameCanvas.css';
 import { GameBoard } from './GameBoard';
 import { useCallback, useContext, useMemo } from 'react';
 import { GameContextInstance } from 'entities/GameContext';
-import { gameModeTranslate } from 'shared/constants/game';
-import { Board } from '../lib/board';
+import { EGAME_SCREEN_VALUES, gameModeTranslate } from 'shared/constants/game';
 
 export const GameCanvas = () => {
-  const { gameMode } = useContext(GameContextInstance);
+  const { gameMode, setGameScreen } = useContext(GameContextInstance);
 
   const selectedGameMode = useMemo(() => gameModeTranslate[gameMode].toLowerCase(), [gameMode]);
-  const handleClear = useCallback(() => Board.clear(), [Board.isHasInstance]);
+  const handleClear = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME), [setGameScreen]);
 
   return (
     <>
@@ -21,7 +20,7 @@ export const GameCanvas = () => {
         <li>Лучший счет: 0</li>
         <li>
           <Button size="large" onClick={handleClear}>
-            Очистить доску
+            Завершить игру
           </Button>
         </li>
       </ul>

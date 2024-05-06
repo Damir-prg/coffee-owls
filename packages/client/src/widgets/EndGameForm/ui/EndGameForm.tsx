@@ -10,7 +10,7 @@ const { Title, Text } = Typography;
 export const EndGameForm = () => {
   const { setGameScreen } = useContext(GameContextInstance);
 
-  const handleStartNewGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.START_GAME), []);
+  const handleStartNewGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.GAME), []);
 
   return (
     <Flex vertical align="center" justify="center" gap={24}>
