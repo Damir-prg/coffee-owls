@@ -171,7 +171,7 @@ export class Board {
       const row = Math.floor(Math.random() * this.cellCount);
       if (!this.cells[col][row].value) {
         this.cells[col][row].value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
-        this.drawAllCells();
+        this.drawCell(this.cells[col][row]);
         return;
       }
     }
