@@ -149,6 +149,9 @@ export class Board {
     }
   }
 
+  /**
+   * Вставляет новую ячейку на доске, если хотя бы одна ячейка свободна.
+   */
   private pasteNewCell() {
     let countFree = 0;
     for (let i = 0; i < this.cellCount; i++) {
@@ -159,12 +162,11 @@ export class Board {
       }
     }
     if (!countFree) {
-      console.log('Game is over');
+      console.log('Игра закончена, ходов больше нет :(');
       return;
     }
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
+    for (let i = 0; i < this.cellCount * this.cellCount; i++) {
       const col = Math.floor(Math.random() * this.cellCount);
       const row = Math.floor(Math.random() * this.cellCount);
       if (!this.cells[col][row].value) {
