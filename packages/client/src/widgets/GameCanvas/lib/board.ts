@@ -36,7 +36,7 @@ export class Board {
    *
    * @return {boolean} Возвращает true, если экземпляр класса Board был создан, в противном случае возвращает false.
    */
-  public static isHasInstance() {
+  public static hasInstance() {
     return !!Board.instance;
   }
 
@@ -87,7 +87,7 @@ export class Board {
    * @param {Cell} cell - Ячейка, которую нужно нарисовать.
    */
   private drawCell(cell: Cell) {
-    if (this.ctx === null || this.ctx === undefined) {
+    if (!this.ctx) {
       throw new Error('Canvas не инициализирован');
     }
 
