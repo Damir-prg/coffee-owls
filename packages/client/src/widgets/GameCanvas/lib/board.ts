@@ -1,11 +1,10 @@
 import { IBoardProps } from '../types/boardTypes';
 import { ICellProps } from '../types/cellTypes';
 import { Cell } from './cell';
-import { cellColors } from './cellColors';
 
 export class Board {
   private static instance: Board | null = null;
-  private ctx: CanvasRenderingContext2D | null = null;
+  private ctx: CanvasRenderingContext2D;
   /**
    * Можно будет изменять количество ячеек на доске.
    */
@@ -16,10 +15,6 @@ export class Board {
   private cells: Array<Array<Cell>> = [];
 
   private constructor({ ctx, size }: IBoardProps) {
-    if (!ctx) {
-      throw new Error('Canvas не инициализирован');
-    }
-
     // Определяем ссылку на canvas внутри класса
     this.ctx = ctx;
 
@@ -31,6 +26,13 @@ export class Board {
 
     // Считаем ширину ячейки как отношение ширины холста к количеству ячеек в доске
     this.cellWidth = size / this.cellCount - this.boardSizeCorrector;
+  }
+
+  private static checkIsBoard(instance: Board | null): instance is Board {
+    if (instance) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -78,62 +80,8 @@ export class Board {
         const coordX = col * this.cellWidth + this.boardGap * (col + 1);
         const coordY = row * this.cellWidth + this.boardGap * (row + 1);
 
-        this.cells[col][row] = new Cell({ coordX, coordY });
+        this.cells[col][row] = new Cell({ coordX, coordY, width: this.cellWidth, parentCtx: this.ctx });
       }
-    }
-  }
-
-  /**
-   * Рисует ячейку на холсте.
-   *
-   * @param {Cell} cell - Ячейка, которую нужно нарисовать.
-   */
-  private drawCell(cell: Cell) {
-    if (!this.ctx) {
-      throw new Error('Canvas не инициализирован');
-    }
-
-    const cornerRadius = 8;
-
-    this.ctx.beginPath();
-    // this.ctx.rect(cell.coordX, cell.coordY, this.cellWidth, this.cellWidth);
-
-    this.ctx.moveTo(cell.coordX + cornerRadius, cell.coordY);
-    this.ctx.lineTo(cell.coordX + this.cellWidth - cornerRadius, cell.coordY);
-    this.ctx.quadraticCurveTo(
-      cell.coordX + this.cellWidth,
-      cell.coordY,
-      cell.coordX + this.cellWidth,
-      cell.coordY + cornerRadius,
-    );
-    this.ctx.lineTo(cell.coordX + this.cellWidth, cell.coordY + this.cellWidth - cornerRadius);
-    this.ctx.quadraticCurveTo(
-      cell.coordX + this.cellWidth,
-      cell.coordY + this.cellWidth,
-      cell.coordX + this.cellWidth - cornerRadius,
-      cell.coordY + this.cellWidth,
-    );
-    this.ctx.lineTo(cell.coordX + cornerRadius, cell.coordY + this.cellWidth);
-    this.ctx.quadraticCurveTo(
-      cell.coordX,
-      cell.coordY + this.cellWidth,
-      cell.coordX,
-      cell.coordY + this.cellWidth - cornerRadius,
-    );
-    this.ctx.lineTo(cell.coordX, cell.coordY + cornerRadius);
-    this.ctx.quadraticCurveTo(cell.coordX, cell.coordY, cell.coordX + cornerRadius, cell.coordY);
-    this.ctx.closePath();
-
-    this.ctx.fillStyle = cellColors[cell.value];
-
-    this.ctx.fill();
-
-    if (cell.value) {
-      const fontSize = this.cellWidth / 2;
-      this.ctx.font = fontSize + 'px Londrina Shadow';
-      this.ctx.fillStyle = 'black';
-      this.ctx.textAlign = 'center';
-      this.ctx.fillText(String(cell.value), cell.coordX + this.cellWidth / 2, cell.coordY + this.cellWidth / 1.5);
     }
   }
 
@@ -146,7 +94,7 @@ export class Board {
   private drawAllCells() {
     for (let col = 0; col < this.cellCount; col++) {
       for (let row = 0; row < this.cellCount; row++) {
-        this.drawCell(this.cells[col][row]);
+        this.cells[col][row].drawCell();
       }
     }
   }
@@ -166,33 +114,35 @@ export class Board {
     const newCell = emptyCells[index];
 
     newCell.value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
-    this.drawCell(newCell);
+    newCell.drawCell();
   }
 
   /**
    * Начинает игру, инициализируя холст и рисуя клетки.
    */
   public static startGame() {
-    if (Board.instance && Board.instance.ctx) {
-      const { width, height } = Board.instance.ctx.canvas;
-      Board.instance.ctx.fillStyle = 'black';
-      Board.instance.ctx.fillRect(0, 0, width, height);
-      Board.instance.createCells();
-      Board.instance.drawAllCells();
-      Board.instance.pasteNewCell();
-      Board.instance.pasteNewCell();
-    } else {
-      throw new Error('Canvas не инициализирован');
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board уже существует');
     }
+
+    const { width, height } = Board.instance.ctx.canvas;
+    Board.instance.ctx.fillStyle = 'black';
+    Board.instance.ctx.fillRect(0, 0, width, height);
+    Board.instance.createCells();
+    Board.instance.drawAllCells();
+    Board.instance.pasteNewCell();
+    Board.instance.pasteNewCell();
   }
 
   /**
    * Очищает холст canvas, удаляя все его содержимое.
    */
   public static clear() {
-    if (Board.instance && Board.instance.ctx) {
-      const { width, height } = Board.instance.ctx.canvas;
-      Board.instance.ctx.clearRect(0, 0, width, height);
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board уже существует');
     }
+
+    const { width, height } = Board.instance.ctx.canvas;
+    Board.instance.ctx.clearRect(0, 0, width, height);
   }
 }
