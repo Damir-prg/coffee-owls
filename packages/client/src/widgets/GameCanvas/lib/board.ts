@@ -11,6 +11,8 @@ export class Board {
    */
   private cellCount = 4;
   private cellWidth = 0;
+  private boardGap = 5;
+  private boardSizeCorrector = this.boardGap + Math.floor(this.boardGap / 5);
   private cells: Array<Array<Cell>> = [];
 
   private constructor({ ctx, size }: IBoardProps) {
@@ -28,7 +30,7 @@ export class Board {
     this.ctx.canvas.height = size;
 
     // Считаем ширину ячейки как отношение ширины холста к количеству ячеек в доске
-    this.cellWidth = size / this.cellCount - 6;
+    this.cellWidth = size / this.cellCount - this.boardSizeCorrector;
   }
 
   /**
@@ -73,8 +75,8 @@ export class Board {
     for (let col = 0; col < this.cellCount; col++) {
       this.cells[col] = [];
       for (let row = 0; row < this.cellCount; row++) {
-        const coordX = col * this.cellWidth + 5 * (col + 1);
-        const coordY = row * this.cellWidth + 5 * (row + 1);
+        const coordX = col * this.cellWidth + this.boardGap * (col + 1);
+        const coordY = row * this.cellWidth + this.boardGap * (row + 1);
 
         this.cells[col][row] = new Cell({ coordX, coordY });
       }
