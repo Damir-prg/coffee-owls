@@ -7,10 +7,16 @@ export const GameBoard: FC = () => {
   useEffect(() => {
     if (ref.current) {
       const ctx = ref.current.getContext('2d');
-      const height = ref.current.parentElement?.offsetHeight ?? 640;
+      let size = 640;
+
+      if (ref.current.parentElement) {
+        const { offsetHeight, offsetWidth } = ref.current.parentElement;
+
+        size = Math.min(offsetHeight, offsetWidth);
+      }
 
       if (ctx) {
-        Board.getInstance({ ctx: ctx, size: height });
+        Board.getInstance({ ctx: ctx, size });
         Board.startGame();
       }
     }
