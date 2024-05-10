@@ -153,28 +153,18 @@ export class Board {
    * Вставляет новую ячейку на доске, если хотя бы одна ячейка свободна.
    */
   private pasteNewCell() {
-    let countFree = 0;
-    for (let i = 0; i < this.cellCount; i++) {
-      for (let j = 0; j < this.cellCount; j++) {
-        if (!this.cells[i][j].value) {
-          countFree++;
-        }
-      }
-    }
-    if (!countFree) {
+    const emptyCells = this.cells.flat().filter(cell => !cell.value);
+
+    if (!emptyCells.length) {
       console.log('Игра закончена, ходов больше нет :(');
       return;
     }
 
-    for (let i = 0; i < this.cellCount * this.cellCount; i++) {
-      const col = Math.floor(Math.random() * this.cellCount);
-      const row = Math.floor(Math.random() * this.cellCount);
-      if (!this.cells[col][row].value) {
-        this.cells[col][row].value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
-        this.drawCell(this.cells[col][row]);
-        return;
-      }
-    }
+    const index = Math.floor(Math.random() * emptyCells.length);
+    const newCell = emptyCells[index];
+
+    newCell.value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
+    this.drawCell(newCell);
   }
 
   /**
