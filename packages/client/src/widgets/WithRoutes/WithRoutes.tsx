@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import EROUTES from 'shared/lib/RoutesEnum';
-import { getUser } from 'shared/api/authApi';
 import { useAuth } from 'shared/context/AuthContext';
+import { getUser } from 'shared/api/authApi';
 import { Spin } from 'antd';
 import PublicLayout from 'shared/components/PublicLayout/PublicLayout';
 import PageLayout from 'shared/components/PageLayout/PageLayout';
@@ -35,7 +35,7 @@ function WithRoutes() {
   }, []);
 
   if (isLoadingData) {
-    return <Spin />;
+    return <Spin>Загрузка..</Spin>;
   }
 
   return (
