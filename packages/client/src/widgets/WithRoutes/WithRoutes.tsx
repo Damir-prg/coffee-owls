@@ -1,5 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
-import EROUTES from 'shared/RoutesEnum';
+import { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import EROUTES from 'shared/lib/RoutesEnum';
+import { getUser } from 'shared/api/authApi';
+import { useAuth } from 'shared/context/AuthContext';
+import { Spin } from 'antd';
 import PublicLayout from 'shared/components/PublicLayout/PublicLayout';
 import PageLayout from 'shared/components/PageLayout/PageLayout';
 import Login from '../../pages/Login/Login';
@@ -14,52 +18,46 @@ import InternalError from '../../pages/InternalError/InternalError';
 import NotFound from '../../pages/NotFound/NotFound';
 
 function WithRoutes() {
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
+
+  useEffect(() => {
+    getUser()
+      .then(() => {
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setIsLoadingData(false);
+      });
+  }, []);
+
+  if (isLoadingData) {
+    return <Spin />;
+  }
+
   return (
     <Routes>
-      <Route element={<PublicLayout />}>
-        <Route path={EROUTES.SIGN_IN} element={<Login />} />
-        <Route path={EROUTES.SIGN_UP} element={<Registration />} />
-      </Route>
-
-      <Route
-        path={EROUTES.HOME}
-        element={
-          <PageLayout>
-            <Home />
-          </PageLayout>
-        }
-      />
-      <Route
-        path={EROUTES.PROFILE}
-        element={
-          <PageLayout>
-            <Profile />
-          </PageLayout>
-        }
-      />
-      <Route
-        path={EROUTES.GAME}
-        element={
-          <PageLayout>
-            <Game />
-          </PageLayout>
-        }
-      />
-      <Route
-        path={EROUTES.RATING}
-        element={
-          <PageLayout>
-            <LeaderBoard />
-          </PageLayout>
-        }
-      />
-      <Route path={EROUTES.FORUM} element={<PageLayout />}>
-        <Route index element={<Forum />} />
-        <Route path="topic/:id" element={<Topic />} />
-      </Route>
-
+      {isLoggedIn ? (
+        <Route element={<PageLayout />}>
+          <Route path={EROUTES.HOME} element={<Home />} />
+          <Route path={EROUTES.PROFILE} element={<Profile />} />
+          <Route path={EROUTES.GAME} element={<Game />} />
+          <Route path={EROUTES.RATING} element={<LeaderBoard />} />
+          <Route path={EROUTES.FORUM} element={<Forum />} />
+          <Route path={`${EROUTES.FORUM}/topic/:id`} element={<Topic />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      ) : (
+        <Route element={<PublicLayout />}>
+          <Route path={EROUTES.SIGN_IN} element={<Login />} />
+          <Route path={EROUTES.SIGN_UP} element={<Registration />} />
+          <Route path="*" element={<Navigate to={EROUTES.SIGN_IN} />} />
+        </Route>
+      )}
       <Route path={EROUTES.INTERNAL_ERROR} element={<InternalError />} />
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

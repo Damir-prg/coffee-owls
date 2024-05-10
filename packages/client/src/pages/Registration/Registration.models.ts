@@ -1,9 +1,9 @@
-import { validationRules, requiredField, validatePasswordRepeat } from 'shared/ValidationRules';
+import { validationRules, requiredField, validatePasswordRepeat } from 'shared/lib/ValidationRules';
 
 export type TRegistrationFormFields = {
-  firstName: string;
-  secondName: string;
-  mail: string;
+  first_name: string;
+  second_name: string;
+  email: string;
   phone: string;
   login: string;
   password: string;

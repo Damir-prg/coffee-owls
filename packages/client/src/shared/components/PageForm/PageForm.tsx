@@ -3,20 +3,17 @@ import type { FormProps } from 'antd';
 import { IPageFormProps } from './PageForm.model';
 import { Flex, Form, Input, Button, Typography } from 'antd';
 import Link from '../Link/Link';
+import getErrorMessage from 'shared/lib/ErrorMessage';
 
-const onFinish: FormProps['onFinish'] = values => {
-  console.log('Success:', values);
-};
+const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, formError, link, onSubmit }) => {
+  const { Title, Text } = Typography;
 
-const onFinishFailed: FormProps['onFinishFailed'] = errorInfo => {
-  console.log('Failed:', errorInfo);
-};
-
-const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, link }) => {
-  const { Title } = Typography;
+  const onFinish: FormProps['onFinish'] = values => {
+    onSubmit(values);
+  };
 
   return (
-    <Form name={formName} className="form" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+    <Form name={formName} className="form" onFinish={onFinish} autoComplete="off">
       <Flex vertical align="center" gap={48}>
         <Title className="title__primary" level={2}>
           {title}
@@ -38,6 +35,7 @@ const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, l
           ))}
         </Flex>
         <Flex className="form__control" vertical align="center">
+          {formError?.isShow && <Text className="form_error">{getErrorMessage(formError.status)}</Text>}
           <Form.Item className="form__field">
             <Button type={button.type} size="large" htmlType="submit" block>
               {button.text}

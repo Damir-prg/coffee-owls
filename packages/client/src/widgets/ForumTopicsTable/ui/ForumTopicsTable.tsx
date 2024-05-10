@@ -3,7 +3,7 @@ import { Flex, Table, TableProps } from 'antd';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import EROUTES from 'shared/RoutesEnum';
+import EROUTES from 'shared/lib/RoutesEnum';
 import { TForumItem } from 'shared/constants/forum';
 
 import './ForumTopicsTable.css';

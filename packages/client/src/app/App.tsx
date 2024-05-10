@@ -3,6 +3,7 @@ import './App.css';
 import { ConfigProvider } from 'antd';
 import WithRoutes from 'widgets/WithRoutes/WithRoutes';
 import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
+import { AuthProvider } from 'shared/context/AuthContext';
 
 function App() {
   useEffect(() => {
@@ -18,9 +19,11 @@ function App() {
 
   return (
     <ConfigProvider theme={appLightThemeConfig}>
-      <div className="app">
-        <WithRoutes />
-      </div>
+      <AuthProvider>
+        <div className="app">
+          <WithRoutes />
+        </div>
+      </AuthProvider>
     </ConfigProvider>
   );
 }
