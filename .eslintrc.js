@@ -62,6 +62,10 @@ module.exports = {
           match: true,
         },
       },
+      {
+        selector: 'class',
+        format: ['PascalCase'],
+      },
     ],
   },
   ignorePatterns: ['**/*.min.js', '*.d.ts'],
