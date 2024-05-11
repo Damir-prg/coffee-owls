@@ -9,10 +9,13 @@ type TAuthContext = {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
+const emptyFunc = () => {
+  // Установка пустой функции для setIsLoggedIn, чтобы предотвратить ошибки
+};
+
 const AuthContext = createContext<TAuthContext>({
   isLoggedIn: false,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setIsLoggedIn: () => {},
+  setIsLoggedIn: emptyFunc,
 });
 
 export const useAuth = () => useContext(AuthContext);
