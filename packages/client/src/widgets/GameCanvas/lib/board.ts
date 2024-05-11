@@ -10,7 +10,7 @@ export class Board {
    */
   private cellCount = 4;
   private cellWidth = 0;
-  private boardGap = 5;
+  private boardGap = 10;
   private boardSizeCorrector = this.boardGap + Math.floor(this.boardGap / 5);
   private cells: Array<Array<Cell>> = [];
 
@@ -126,7 +126,7 @@ export class Board {
     }
 
     const { width, height } = Board.instance.ctx.canvas;
-    Board.instance.ctx.fillStyle = 'black';
+    Board.instance.ctx.fillStyle = '#BBAEA0';
     Board.instance.ctx.fillRect(0, 0, width, height);
     Board.instance.createCells();
     Board.instance.drawAllCells();
