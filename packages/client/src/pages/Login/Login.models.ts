@@ -1,4 +1,4 @@
-import { validationRules, requiredField } from 'shared/ValidationRules';
+import { validationRules, requiredField } from 'shared/lib/ValidationRules';
 
 export type TLoginFormFields = {
   login: string;

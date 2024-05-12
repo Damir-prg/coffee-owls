@@ -16,8 +16,13 @@ export interface IPageFormProps {
     type: 'primary' | 'default';
     text: string;
   };
+  formError?: {
+    isShow: boolean;
+    text: string;
+  };
   link?: {
     text: string;
     path: string;
   };
+  onSubmit: (formData: Record<string, unknown>) => void;
 }

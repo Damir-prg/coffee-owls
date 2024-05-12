@@ -2,7 +2,7 @@ import { Button, Flex, Typography } from 'antd';
 import { GameContentContainer } from 'entities/GameContentContainer';
 import { GameContextInstance } from 'entities/GameContext';
 import { useCallback, useContext } from 'react';
-import EROUTES from 'shared/RoutesEnum';
+import EROUTES from 'shared/lib/RoutesEnum';
 import Link from 'shared/components/Link/Link';
 import { EGAME_SCREEN_VALUES } from 'shared/constants/game';
 

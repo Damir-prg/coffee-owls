@@ -1,10 +1,12 @@
 import './PageHeader.css';
-import EROUTES from '../../../shared/RoutesEnum';
+import EROUTES from '../../../shared/lib/RoutesEnum';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayCircleOutlined, HomeOutlined, TrophyOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu, Button } from 'antd';
+import { Menu, Button, Typography } from 'antd';
 import { useEffect, useState } from 'react';
+import { logout } from 'shared/api/authApi';
+import { useAuth } from 'shared/context/AuthContext';
 
 const items: MenuProps['items'] = [
   {
@@ -38,10 +40,22 @@ function PageHeader() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [currentKey, setCurrentKey] = useState('key');
+  const { Text } = Typography;
 
-  function handleLogout() {
-    navigate('/' + EROUTES.SIGN_IN);
+  const [logoutError, setLogoutError] = useState(false);
+  const [currentKey, setCurrentKey] = useState('key');
+  const { setIsLoggedIn } = useAuth();
+
+  async function onLogout() {
+    try {
+      setLogoutError(false);
+      await logout();
+      document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      setIsLoggedIn(false);
+      navigate('/' + EROUTES.SIGN_IN);
+    } catch (error) {
+      setLogoutError(true);
+    }
   }
 
   const onClick: MenuProps['onClick'] = e => {
@@ -58,9 +72,10 @@ function PageHeader() {
   return (
     <nav className="header__nav">
       <Menu onClick={onClick} selectedKeys={[currentKey]} mode="horizontal" items={items} />
-      <Button onClick={handleLogout} className="header__logout" type="primary">
+      <Button onClick={onLogout} className="header__logout" type="primary">
         ВЫЙТИ
       </Button>
+      {logoutError && <Text className="header__error">К сожалению, произошла ошибка</Text>}
     </nav>
   );
 }
