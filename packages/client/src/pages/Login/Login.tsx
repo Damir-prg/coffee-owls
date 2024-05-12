@@ -8,34 +8,32 @@ import { TLoginFormFields, loginFormFields } from './Login.models';
 import loginImg from 'images/public-person-img.svg';
 import { useAuth } from 'shared/context/AuthContext';
 import { login, getUser } from 'shared/api/authApi';
+import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Login() {
   const { Title, Text } = Typography;
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuth();
 
-  const [errorMessage, setErrorMessage] = useState({ isShow: false, status: 0 });
+  const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
 
-  const onSubmit = useCallback((formData: Record<string, unknown>) => {
-    setErrorMessage({ isShow: false, status: 0 });
-    const loginData: TLoginFormFields = {
-      login: formData.login as string,
-      password: formData.password as string,
-    };
-    login(loginData)
-      .then(() => {
-        getUser()
-          .then(() => {
-            setIsLoggedIn(true);
-            navigate('/');
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      })
-      .catch(err => {
-        setErrorMessage({ isShow: true, status: err.status });
-      });
+  const onSubmit = useCallback(async (formData: Record<string, unknown>) => {
+    try {
+      setErrorMessage({ isShow: false, text: '' });
+
+      const loginData: TLoginFormFields = {
+        login: formData.login as string,
+        password: formData.password as string,
+      };
+
+      await login(loginData);
+      await getUser();
+
+      setIsLoggedIn(true);
+      navigate('/' + EROUTES.HOME);
+    } catch (err) {
+      setErrorMessage({ isShow: true, text: getErrorMessage(err) });
+    }
   }, []);
 
   return (

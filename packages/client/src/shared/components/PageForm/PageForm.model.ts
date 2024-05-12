@@ -18,7 +18,7 @@ export interface IPageFormProps {
   };
   formError?: {
     isShow: boolean;
-    status: number;
+    text: string;
   };
   link?: {
     text: string;

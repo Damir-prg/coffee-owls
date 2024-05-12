@@ -22,16 +22,17 @@ function WithRoutes() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
 
   useEffect(() => {
-    getUser()
-      .then(() => {
+    const fetchData = async () => {
+      try {
+        await getUser();
         setIsLoggedIn(true);
-      })
-      .catch(() => {
+      } catch (error) {
         setIsLoggedIn(false);
-      })
-      .finally(() => {
+      } finally {
         setIsLoadingData(false);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   if (isLoadingData) {

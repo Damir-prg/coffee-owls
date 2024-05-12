@@ -3,7 +3,6 @@ import type { FormProps } from 'antd';
 import { IPageFormProps } from './PageForm.model';
 import { Flex, Form, Input, Button, Typography } from 'antd';
 import Link from '../Link/Link';
-import getErrorMessage from 'shared/lib/ErrorMessage';
 
 const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, formError, link, onSubmit }) => {
   const { Title, Text } = Typography;
@@ -35,7 +34,7 @@ const PageForm: React.FC<IPageFormProps> = ({ formName, title, fields, button, f
           ))}
         </Flex>
         <Flex className="form__control" vertical align="center">
-          {formError?.isShow && <Text className="form_error">{getErrorMessage(formError.status)}</Text>}
+          {formError?.isShow && <Text className="form_error">{formError.text}</Text>}
           <Form.Item className="form__field">
             <Button type={button.type} size="large" htmlType="submit" block>
               {button.text}

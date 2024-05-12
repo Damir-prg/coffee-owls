@@ -46,17 +46,16 @@ function PageHeader() {
   const [currentKey, setCurrentKey] = useState('key');
   const { setIsLoggedIn } = useAuth();
 
-  function onLogout() {
-    setLogoutError(false);
-    logout()
-      .then(() => {
-        document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        setIsLoggedIn(false);
-        navigate('/' + EROUTES.SIGN_IN);
-      })
-      .catch(() => {
-        setLogoutError(true);
-      });
+  async function onLogout() {
+    try {
+      setLogoutError(false);
+      await logout();
+      document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      setIsLoggedIn(false);
+      navigate('/' + EROUTES.SIGN_IN);
+    } catch (error) {
+      setLogoutError(true);
+    }
   }
 
   const onClick: MenuProps['onClick'] = e => {

@@ -1,31 +1,8 @@
 import { BaseUrlApi } from 'shared/config/config';
+import { EMETHOD, defaultOptions } from './types';
+import type { TOptions, TRequestFunction } from './types';
 
-enum EMETHOD {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
-}
-
-type TOptions = {
-  method: EMETHOD;
-  data?: unknown;
-  headers?: Record<string, string>;
-  timeout?: number;
-  withCredentials?: boolean;
-  responseType?: 'json';
-};
-
-const defaultOptions: TOptions = {
-  method: EMETHOD.GET,
-  headers: { 'Content-Type': 'application/json' },
-  timeout: 60000,
-  withCredentials: true,
-  responseType: 'json',
-};
-
-const apiRequest = (url: string, options: TOptions = defaultOptions): Promise<unknown> => {
+const apiRequest = async (url: string, options: TOptions = defaultOptions): Promise<unknown> => {
   const { headers = {}, method, data, withCredentials, responseType } = { ...defaultOptions, ...options };
 
   const requestOptions: RequestInit = {
@@ -38,7 +15,12 @@ const apiRequest = (url: string, options: TOptions = defaultOptions): Promise<un
     credentials: withCredentials ? 'include' : 'same-origin',
   };
 
-  return fetch(BaseUrlApi + url, requestOptions).then(response => handleResponse(response, responseType));
+  try {
+    const response = await fetch(BaseUrlApi + url, requestOptions);
+    return handleResponse(response, responseType);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const handleResponse = (res: Response, responseType?: 'json' | undefined) => {
@@ -53,19 +35,17 @@ const handleResponse = (res: Response, responseType?: 'json' | undefined) => {
   }
 };
 
-const apiGet = (url: string, options?: Omit<TOptions, 'method'>): Promise<unknown> =>
-  apiRequest(url, { ...options, method: EMETHOD.GET });
+const createApiMethod =
+  (method: EMETHOD): TRequestFunction =>
+  (url, options) =>
+    apiRequest(url, { ...options, method });
 
-const apiPost = (url: string, options?: Omit<TOptions, 'method'>): Promise<unknown> =>
-  apiRequest(url, { ...options, method: EMETHOD.POST });
+const api: Record<string, TRequestFunction> = {
+  get: createApiMethod(EMETHOD.GET),
+  post: createApiMethod(EMETHOD.POST),
+  put: createApiMethod(EMETHOD.PUT),
+  patch: createApiMethod(EMETHOD.PATCH),
+  delete: createApiMethod(EMETHOD.DELETE),
+};
 
-const apiPut = (url: string, options?: Omit<TOptions, 'method'>): Promise<unknown> =>
-  apiRequest(url, { ...options, method: EMETHOD.PUT });
-
-const apiPatch = (url: string, options?: Omit<TOptions, 'method'>): Promise<unknown> =>
-  apiRequest(url, { ...options, method: EMETHOD.PATCH });
-
-const apiDelete = (url: string, options?: Omit<TOptions, 'method'>): Promise<unknown> =>
-  apiRequest(url, { ...options, method: EMETHOD.DELETE });
-
-export { apiRequest, apiGet, apiPost, apiPut, apiPatch, apiDelete };
+export default api;
