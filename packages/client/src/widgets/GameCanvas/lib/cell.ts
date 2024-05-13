@@ -1,5 +1,5 @@
 import { ICellProps } from '../types/cellTypes';
-import { cellColors, cellTextColors } from './cellColors';
+import { ECELL_TEXT_COLOR, cellColors } from './cellColors';
 
 export class Cell implements ICellProps {
   public value: ICellProps['value'] = 0;
@@ -59,7 +59,7 @@ export class Cell implements ICellProps {
     if (this.value) {
       const fontSize = this.width / 2;
       this.parentCtx.font = fontSize + 'px Londrina Shadow';
-      this.parentCtx.fillStyle = cellTextColors[this.value];
+      this.parentCtx.fillStyle = this.value < 16 ? ECELL_TEXT_COLOR.BLACK : ECELL_TEXT_COLOR.WHITE;
       this.parentCtx.textAlign = 'center';
       this.parentCtx.fillText(String(this.value), this.coordX + this.width / 2, this.coordY + this.width / 1.5);
     }
