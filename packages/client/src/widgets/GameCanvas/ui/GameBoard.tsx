@@ -1,5 +1,6 @@
 import { useRef, useEffect, FC } from 'react';
 import { Board } from '../lib/board';
+import '../styles/GameBoard.css';
 
 export const GameBoard: FC = () => {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -26,5 +27,5 @@ export const GameBoard: FC = () => {
     };
   }, []);
 
-  return <canvas ref={ref} />;
+  return <canvas ref={ref} className="game__board" />;
 };
