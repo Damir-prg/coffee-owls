@@ -176,6 +176,9 @@ export class Board {
     if (event.key === controls.down) {
       Board.moveDown();
     }
+    if (event.key === controls.up) {
+      Board.moveUp();
+    }
   }
 
   private static moveDown() {
@@ -186,6 +189,8 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let row = 0; row < cellCount; row++) {
+      const test = cells[row].map(cell => cell.value);
+      console.table(test);
       for (let col = 0; col < cellCount; col++) {
         if (cells[row][col].value) {
           let nextCol = col + 1;
@@ -218,14 +223,14 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let row = 0; row < cellCount; row++) {
-      for (let col = 0; col < cellCount; col++) {
+      for (let col = cellCount - 1; col >= 0; col--) {
         if (cells[row][col].value) {
-          let nextCol = col + 1;
-          while (nextCol < cellCount) {
+          let nextCol = col - 1;
+          while (nextCol >= 0) {
             if (!cells[row][nextCol].value && cells[row][col].value) {
               cells[row][nextCol].value = cells[row][col].value;
               cells[row][col].value = 0;
-              nextCol++;
+              nextCol--;
             } else if (cells[row][col].value === cells[row][nextCol].value) {
               cells[row][nextCol].value *= 2;
               cells[row][col].value = 0;
