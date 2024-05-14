@@ -20,6 +20,7 @@ export class Board {
     this.ctx = ctx;
 
     this.controls = controls;
+    document.addEventListener('keydown', Board.eventHandler);
 
     // Задаём размеры canvas относительно переданного размера (Родительского элемента)
     // Не учитывается изменение размера родительского элемента,
@@ -66,6 +67,10 @@ export class Board {
    * Удаляет экземпляр класса Board.
    */
   public static deleteInstance() {
+    if (Board.checkIsBoard(Board.instance)) {
+      document.removeEventListener('keydown', Board.eventHandler);
+    }
+
     Board.instance = null;
   }
 
@@ -77,13 +82,13 @@ export class Board {
    * рассчитываются на основе текущих индексов столбца и строки.
    */
   private createCells() {
-    for (let col = 0; col < this.cellCount; col++) {
-      this.cells[col] = [];
-      for (let row = 0; row < this.cellCount; row++) {
-        const coordX = col * this.cellWidth + this.boardGap * (col + 1);
-        const coordY = row * this.cellWidth + this.boardGap * (row + 1);
+    for (let row = 0; row < this.cellCount; row++) {
+      this.cells[row] = [];
+      for (let col = 0; col < this.cellCount; col++) {
+        const coordX = row * this.cellWidth + this.boardGap * (row + 1);
+        const coordY = col * this.cellWidth + this.boardGap * (col + 1);
 
-        this.cells[col][row] = new Cell({ coordX, coordY, width: this.cellWidth, parentCtx: this.ctx });
+        this.cells[row][col] = new Cell({ coordX, coordY, width: this.cellWidth, parentCtx: this.ctx });
       }
     }
   }
@@ -94,10 +99,16 @@ export class Board {
    * Эта функция итерируется по каждой клетке на доске и вызывает метод `drawCell`,
    * чтобы нарисовать клетку на холсте.
    */
-  private drawAllCells() {
-    for (let col = 0; col < this.cellCount; col++) {
-      for (let row = 0; row < this.cellCount; row++) {
-        this.cells[col][row].drawCell();
+  private static drawAllCells() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Board is not created');
+    }
+
+    const { cellCount, cells } = Board.instance;
+
+    for (let row = 0; row < cellCount; row++) {
+      for (let col = 0; col < cellCount; col++) {
+        cells[row][col].drawCell();
       }
     }
   }
@@ -105,8 +116,14 @@ export class Board {
   /**
    * Вставляет новую ячейку на доске, если хотя бы одна ячейка свободна.
    */
-  private pasteNewCell() {
-    const emptyCells = this.cells.flat().filter(cell => !cell.value);
+  private static pasteNewCell() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Board is not created');
+    }
+
+    const { cells } = Board.instance;
+
+    const emptyCells = cells.flat().filter(cell => !cell.value);
 
     if (!emptyCells.length) {
       console.log('Игра закончена, ходов больше нет :(');
@@ -132,9 +149,9 @@ export class Board {
     Board.instance.ctx.fillStyle = '#BBAEA0';
     Board.instance.ctx.fillRect(0, 0, width, height);
     Board.instance.createCells();
-    Board.instance.drawAllCells();
-    Board.instance.pasteNewCell();
-    Board.instance.pasteNewCell();
+    Board.drawAllCells();
+    Board.pasteNewCell();
+    Board.pasteNewCell();
   }
 
   /**
@@ -147,5 +164,81 @@ export class Board {
 
     const { width, height } = Board.instance.ctx.canvas;
     Board.instance.ctx.clearRect(0, 0, width, height);
+  }
+
+  private static eventHandler(event: KeyboardEvent) {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board уже существует');
+    }
+
+    const { controls } = Board.instance;
+
+    if (event.key === controls.down) {
+      Board.moveDown();
+    }
+  }
+
+  private static moveDown() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board уже существует');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    for (let row = 0; row < cellCount; row++) {
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value) {
+          let nextCol = col + 1;
+          while (nextCol < cellCount) {
+            if (!cells[row][nextCol].value && cells[row][col].value) {
+              cells[row][nextCol].value = cells[row][col].value;
+              cells[row][col].value = 0;
+              nextCol++;
+            } else if (cells[row][col].value === cells[row][nextCol].value) {
+              cells[row][nextCol].value *= 2;
+              cells[row][col].value = 0;
+              break;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    Board.drawAllCells();
+    Board.pasteNewCell();
+  }
+
+  private static moveUp() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board уже существует');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    for (let row = 0; row < cellCount; row++) {
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value) {
+          let nextCol = col + 1;
+          while (nextCol < cellCount) {
+            if (!cells[row][nextCol].value && cells[row][col].value) {
+              cells[row][nextCol].value = cells[row][col].value;
+              cells[row][col].value = 0;
+              nextCol++;
+            } else if (cells[row][col].value === cells[row][nextCol].value) {
+              cells[row][nextCol].value *= 2;
+              cells[row][col].value = 0;
+              break;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    Board.drawAllCells();
+    Board.pasteNewCell();
   }
 }
