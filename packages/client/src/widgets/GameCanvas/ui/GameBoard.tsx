@@ -1,6 +1,14 @@
 import { useRef, useEffect, FC } from 'react';
 import { Board } from '../lib/board';
+import { IBoardProps } from '../types/boardTypes';
 import '../styles/GameBoard.css';
+
+const controls: IBoardProps['controls'] = {
+  up: 'ArrowUp',
+  down: 'ArrowDown',
+  left: 'ArrowLeft',
+  right: 'ArrowRight',
+};
 
 export const GameBoard: FC = () => {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -17,7 +25,7 @@ export const GameBoard: FC = () => {
       }
 
       if (ctx) {
-        Board.getInstance({ ctx: ctx, size });
+        Board.getInstance({ ctx: ctx, size, controls });
         Board.startGame();
       }
     }

@@ -13,10 +13,13 @@ export class Board {
   private boardGap = 10;
   private boardSizeCorrector = this.boardGap + Math.floor(this.boardGap / 5);
   private cells: Array<Array<Cell>> = [];
+  private controls: IBoardProps['controls'];
 
-  private constructor({ ctx, size }: IBoardProps) {
+  private constructor({ ctx, size, controls }: IBoardProps) {
     // Определяем ссылку на canvas внутри класса
     this.ctx = ctx;
+
+    this.controls = controls;
 
     // Задаём размеры canvas относительно переданного размера (Родительского элемента)
     // Не учитывается изменение размера родительского элемента,
