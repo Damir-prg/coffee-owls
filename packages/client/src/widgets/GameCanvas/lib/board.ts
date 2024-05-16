@@ -195,22 +195,35 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let row = 0; row < cellCount; row++) {
-      for (let col = 0; col < cellCount; col++) {
-        if (cells[row][col].value) {
-          let nextCol = col + 1;
-          while (nextCol < cellCount) {
-            if (!cells[row][nextCol].value && cells[row][col].value) {
-              cells[row][nextCol].value = cells[row][col].value;
-              cells[row][col].value = 0;
-              nextCol++;
-            } else if (cells[row][col].value === cells[row][nextCol].value) {
-              cells[row][nextCol].value *= 2;
-              cells[row][col].value = 0;
-              break;
-            } else {
-              break;
-            }
+      let currentCol = cellCount - 1;
+      // Перемещение всех ненулевых ячеек
+      for (let col = cellCount - 1; col >= 0; col--) {
+        if (cells[row][col].value !== 0) {
+          cells[row][currentCol].value = cells[row][col].value;
+          if (col !== currentCol) {
+            cells[row][col].value = 0;
           }
+          currentCol--;
+        }
+      }
+
+      // Объединение ячеек с одинаковым значением
+      for (let col = cellCount - 1; col > 0; col--) {
+        if (cells[row][col].value === cells[row][col - 1].value) {
+          cells[row][col].value *= 2;
+          cells[row][col - 1].value = 0;
+        }
+      }
+
+      currentCol = cellCount - 1;
+      // Перемещение всех ненулевых ячеек после объединения
+      for (let col = cellCount - 1; col >= 0; col--) {
+        if (cells[row][col].value !== 0) {
+          cells[row][currentCol].value = cells[row][col].value;
+          if (col !== currentCol) {
+            cells[row][col].value = 0;
+          }
+          currentCol--;
         }
       }
     }
@@ -226,23 +239,33 @@ export class Board {
 
     const { cells, cellCount } = Board.instance;
 
-    for (let row = 0; row < cellCount; row++) {
-      for (let col = cellCount - 1; col >= 0; col--) {
-        if (cells[row][col].value) {
-          let nextCol = col - 1;
-          while (nextCol >= 0) {
-            if (!cells[row][nextCol].value && cells[row][col].value) {
-              cells[row][nextCol].value = cells[row][col].value;
-              cells[row][col].value = 0;
-              nextCol--;
-            } else if (cells[row][col].value === cells[row][nextCol].value) {
-              cells[row][nextCol].value *= 2;
-              cells[row][col].value = 0;
-              break;
-            } else {
-              break;
-            }
+    for (let row = cellCount - 1; row >= 0; row--) {
+      let currentCol = 0;
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value !== 0) {
+          cells[row][currentCol].value = cells[row][col].value;
+          if (col !== currentCol) {
+            cells[row][col].value = 0;
           }
+          currentCol++;
+        }
+      }
+
+      for (let col = 0; col < cellCount - 1; col++) {
+        if (cells[row][col].value === cells[row][col + 1].value) {
+          cells[row][col].value *= 2;
+          cells[row][col + 1].value = 0;
+        }
+      }
+
+      currentCol = 0;
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value !== 0) {
+          cells[row][currentCol].value = cells[row][col].value;
+          if (col !== currentCol) {
+            cells[row][col].value = 0;
+          }
+          currentCol++;
         }
       }
     }
@@ -258,23 +281,33 @@ export class Board {
 
     const { cells, cellCount } = Board.instance;
 
-    for (let row = 0; row < cellCount - 1; row++) {
-      for (let col = 0; col < cellCount; col++) {
-        if (cells[row][col].value) {
-          let nextRow = row + 1;
-          while (nextRow < cellCount) {
-            if (!cells[nextRow][col].value && cells[row][col].value) {
-              cells[nextRow][col].value = cells[row][col].value;
-              cells[row][col].value = 0;
-              nextRow++;
-            } else if (cells[nextRow][col].value === cells[row][col].value) {
-              cells[nextRow][col].value *= 2;
-              cells[row][col].value = 0;
-              break;
-            } else {
-              break;
-            }
+    for (let col = 0; col < cellCount; col++) {
+      let currentRow = cellCount - 1;
+      for (let row = cellCount - 1; row >= 0; row--) {
+        if (cells[row][col].value !== 0) {
+          cells[currentRow][col].value = cells[row][col].value;
+          if (row !== currentRow) {
+            cells[row][col].value = 0;
           }
+          currentRow--;
+        }
+      }
+
+      for (let row = cellCount - 1; row > 0; row--) {
+        if (cells[row][col].value === cells[row - 1][col].value) {
+          cells[row][col].value *= 2;
+          cells[row - 1][col].value = 0;
+        }
+      }
+
+      currentRow = cellCount - 1;
+      for (let row = cellCount - 1; row >= 0; row--) {
+        if (cells[row][col].value !== 0) {
+          cells[currentRow][col].value = cells[row][col].value;
+          if (row !== currentRow) {
+            cells[row][col].value = 0;
+          }
+          currentRow--;
         }
       }
     }
@@ -290,23 +323,33 @@ export class Board {
 
     const { cells, cellCount } = Board.instance;
 
-    for (let row = cellCount - 1; row >= 0; row--) {
-      for (let col = 0; col < cellCount; col++) {
-        if (cells[row][col].value) {
-          let nextRow = row - 1;
-          while (nextRow >= 0) {
-            if (!cells[nextRow][col].value && cells[row][col].value) {
-              cells[nextRow][col].value = cells[row][col].value;
-              cells[row][col].value = 0;
-              nextRow--;
-            } else if (cells[nextRow][col].value === cells[row][col].value) {
-              cells[nextRow][col].value *= 2;
-              cells[row][col].value = 0;
-              break;
-            } else {
-              break;
-            }
+    for (let col = cellCount - 1; col >= 0; col--) {
+      let currentRow = 0;
+      for (let row = 0; row < cellCount; row++) {
+        if (cells[row][col].value !== 0) {
+          cells[currentRow][col].value = cells[row][col].value;
+          if (row !== currentRow) {
+            cells[row][col].value = 0;
           }
+          currentRow++;
+        }
+      }
+
+      for (let row = 0; row < cellCount - 1; row++) {
+        if (cells[row][col].value === cells[row + 1][col].value) {
+          cells[row][col].value *= 2;
+          cells[row + 1][col].value = 0;
+        }
+      }
+
+      currentRow = 0;
+      for (let row = 0; row < cellCount; row++) {
+        if (cells[row][col].value !== 0) {
+          cells[currentRow][col].value = cells[row][col].value;
+          if (row !== currentRow) {
+            cells[row][col].value = 0;
+          }
+          currentRow++;
         }
       }
     }
