@@ -179,18 +179,22 @@ export class Board {
     if (event.key === controls.up) {
       Board.moveUp();
     }
+    if (event.key === controls.right) {
+      Board.moveRight();
+    }
+    if (event.key === controls.left) {
+      Board.moveLeft();
+    }
   }
 
   private static moveDown() {
     if (!Board.checkIsBoard(Board.instance)) {
-      throw new Error('Экземпляр Board уже существует');
+      throw new Error('Экземпляр Board не инициализирован');
     }
 
     const { cells, cellCount } = Board.instance;
 
     for (let row = 0; row < cellCount; row++) {
-      const test = cells[row].map(cell => cell.value);
-      console.table(test);
       for (let col = 0; col < cellCount; col++) {
         if (cells[row][col].value) {
           let nextCol = col + 1;
@@ -217,7 +221,7 @@ export class Board {
 
   private static moveUp() {
     if (!Board.checkIsBoard(Board.instance)) {
-      throw new Error('Экземпляр Board уже существует');
+      throw new Error('Экземпляр Board не инициализирован');
     }
 
     const { cells, cellCount } = Board.instance;
@@ -233,6 +237,70 @@ export class Board {
               nextCol--;
             } else if (cells[row][col].value === cells[row][nextCol].value) {
               cells[row][nextCol].value *= 2;
+              cells[row][col].value = 0;
+              break;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    Board.drawAllCells();
+    Board.pasteNewCell();
+  }
+
+  private static moveRight() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board не инициализирован');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    for (let row = 0; row < cellCount - 1; row++) {
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value) {
+          let nextRow = row + 1;
+          while (nextRow < cellCount) {
+            if (!cells[nextRow][col].value && cells[row][col].value) {
+              cells[nextRow][col].value = cells[row][col].value;
+              cells[row][col].value = 0;
+              nextRow++;
+            } else if (cells[nextRow][col].value === cells[row][col].value) {
+              cells[nextRow][col].value *= 2;
+              cells[row][col].value = 0;
+              break;
+            } else {
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    Board.drawAllCells();
+    Board.pasteNewCell();
+  }
+
+  private static moveLeft() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board не инициализирован');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    for (let row = cellCount - 1; row >= 0; row--) {
+      for (let col = 0; col < cellCount; col++) {
+        if (cells[row][col].value) {
+          let nextRow = row - 1;
+          while (nextRow >= 0) {
+            if (!cells[nextRow][col].value && cells[row][col].value) {
+              cells[nextRow][col].value = cells[row][col].value;
+              cells[row][col].value = 0;
+              nextRow--;
+            } else if (cells[nextRow][col].value === cells[row][col].value) {
+              cells[nextRow][col].value *= 2;
               cells[row][col].value = 0;
               break;
             } else {
