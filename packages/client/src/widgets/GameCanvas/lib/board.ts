@@ -114,6 +114,42 @@ export class Board {
   }
 
   /**
+   * Проверяет, завершена ли игра путем проверки наличия пустых ячеек и соседних ячеек с одинаковыми значениями.
+   */
+  private static checkIsGameOver(): boolean {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Board is not created');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    // Проверяем наличие пустых ячеек
+    const hasEmptyCells = cells.flat().some(cell => !cell.value);
+    if (hasEmptyCells) {
+      return false;
+    }
+
+    // Проверяем наличие рядом стоящих ячеек с одинаковыми значениями
+    for (let row = 0; row < cellCount; row++) {
+      for (let col = 0; col < cellCount - 1; col++) {
+        if (cells[row][col].value === cells[row][col + 1].value) {
+          return false; // Игра не закончена, есть рядом стоящие ячейки с одинаковыми значениями
+        }
+      }
+    }
+
+    for (let col = 0; col < cellCount; col++) {
+      for (let row = 0; row < cellCount - 1; row++) {
+        if (cells[row][col].value === cells[row + 1][col].value) {
+          return false; // Игра не закончена, есть рядом стоящие ячейки с одинаковыми значениями
+        }
+      }
+    }
+
+    return true; // Игра закончена, нет пустых ячеек и нет рядом стоящих ячеек с одинаковыми значениями
+  }
+
+  /**
    * Вставляет новую ячейку на доске, если хотя бы одна ячейка свободна.
    */
   private static pasteNewCell() {
@@ -125,8 +161,12 @@ export class Board {
 
     const emptyCells = cells.flat().filter(cell => !cell.value);
 
-    if (!emptyCells.length) {
+    if (Board.checkIsGameOver()) {
       console.log('Игра закончена, ходов больше нет :(');
+      return;
+    }
+
+    if (!emptyCells.length) {
       return;
     }
 
@@ -166,6 +206,12 @@ export class Board {
     Board.instance.ctx.clearRect(0, 0, width, height);
   }
 
+  /**
+   * Обрабатывает нажатие клавиш клавиатуры, проверяя экземпляр доски,
+   * определяя направление на основе нажатой клавиши и перемещая доску соответственно.
+   *
+   * @param {KeyboardEvent} event - Нажатие клавиши для обработки
+   */
   private static eventHandler(event: KeyboardEvent) {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board уже существует');
@@ -187,6 +233,9 @@ export class Board {
     }
   }
 
+  /**
+   * Перемещает ячейки вниз, объединяя одинаковые значения.
+   */
   private static moveDown() {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board не инициализирован');
@@ -232,6 +281,9 @@ export class Board {
     Board.pasteNewCell();
   }
 
+  /**
+   * Перемещает ячейки вверх, объединяя одинаковые значения.
+   */
   private static moveUp() {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board не инициализирован');
@@ -274,6 +326,9 @@ export class Board {
     Board.pasteNewCell();
   }
 
+  /**
+   * Перемещает ячейки вправо, объединяя одинаковые значения.
+   */
   private static moveRight() {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board не инициализирован');
@@ -316,6 +371,9 @@ export class Board {
     Board.pasteNewCell();
   }
 
+  /**
+   * Перемещает ячейки влево, объединяя одинаковые значения.
+   */
   private static moveLeft() {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board не инициализирован');
