@@ -6,6 +6,26 @@ export const GameBoard: FC = () => {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    const handleFullscreen = async (event: KeyboardEvent) => {
+      if (event.code !== 'Escape') {
+        return;
+      }
+      if (!ref || !(ref.current instanceof HTMLCanvasElement)) {
+        return;
+      }
+      if (!document.fullscreenElement) {
+        await ref.current.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    };
+    document.addEventListener('keyup', handleFullscreen);
+    return () => {
+      document.removeEventListener('keyup', handleFullscreen);
+    };
+  }, []);
+
+  useEffect(() => {
     if (ref.current) {
       const ctx = ref.current.getContext('2d');
       let size = 640;
