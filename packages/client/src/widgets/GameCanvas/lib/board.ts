@@ -3,17 +3,62 @@ import { ICellProps } from '../types/cellTypes';
 import { Cell } from './cell';
 
 export class Board {
+  /**
+   * Экземпляр Board
+   */
   private static instance: Board | null = null;
+  /**
+   * Ссылка на canvas
+   */
   private ctx: CanvasRenderingContext2D;
   /**
-   * Можно будет изменять количество ячеек на доске.
+   * Количество ячеек в одной строке.
    */
   private cellCount = 4;
+  /**
+   * Ширина ячейки
+   */
   private cellWidth = 0;
+  /**
+   * Отступ между ячейками
+   */
   private boardGap = 10;
+  /**
+   *  Отступ от правой и нижней границы доски
+   */
   private boardSizeCorrector = this.boardGap + Math.floor(this.boardGap / 5);
+  /**
+   * Матрица ячеек
+   */
   private cells: Array<Array<Cell>> = [];
+  /**
+   * Клавиши управления
+   */
   private controls: IBoardProps['controls'];
+  /**
+   * Callback для передачи функции подсчета очков
+   */
+  private static scoreHandler: (points: number) => void | null;
+  /**
+   * Функция для установки callback'а для передачи функции подсчета очков
+   *
+   * @param {(points: number) => void} scoreHandler - Функция, которая будет вызываться для подсчета очков
+   */
+  public static setScoreHandler(scoreHandler: (points: number) => void) {
+    Board.scoreHandler = scoreHandler;
+  }
+  /**
+   * Callback для передачи функции подсчета очков
+   */
+  private static gameOverHandler: () => void | null;
+  /**
+   * Функция для установки callback'а для передачи функции подсчета очков
+   *
+   * @param {() => void} gameOverHandler - Функция, которая будет вызываться при завершении игры
+   */
+  public static setGameOverHandler(gameOverHandler: () => void) {
+    Board.gameOverHandler = gameOverHandler;
+  }
 
   private constructor({ ctx, size, controls }: IBoardProps) {
     // Определяем ссылку на canvas внутри класса
@@ -162,7 +207,12 @@ export class Board {
     const emptyCells = cells.flat().filter(cell => !cell.value);
 
     if (Board.checkIsGameOver()) {
-      console.log('Игра закончена, ходов больше нет :(');
+      if (Board?.gameOverHandler) {
+        Board.gameOverHandler();
+      } else {
+        console.log('Игра закончена, ходов больше нет :(');
+      }
+
       return;
     }
 
@@ -260,6 +310,7 @@ export class Board {
       for (let col = cellCount - 1; col > 0; col--) {
         if (cells[row][col].value === cells[row][col - 1].value) {
           cells[row][col].value *= 2;
+          Board?.scoreHandler(cells[row][col].value);
           cells[row][col - 1].value = 0;
         }
       }
@@ -306,6 +357,7 @@ export class Board {
       for (let col = 0; col < cellCount - 1; col++) {
         if (cells[row][col].value === cells[row][col + 1].value) {
           cells[row][col].value *= 2;
+          Board?.scoreHandler(cells[row][col].value);
           cells[row][col + 1].value = 0;
         }
       }
@@ -351,6 +403,7 @@ export class Board {
       for (let row = cellCount - 1; row > 0; row--) {
         if (cells[row][col].value === cells[row - 1][col].value) {
           cells[row][col].value *= 2;
+          Board?.scoreHandler(cells[row][col].value);
           cells[row - 1][col].value = 0;
         }
       }
@@ -396,6 +449,7 @@ export class Board {
       for (let row = 0; row < cellCount - 1; row++) {
         if (cells[row][col].value === cells[row + 1][col].value) {
           cells[row][col].value *= 2;
+          Board?.scoreHandler(cells[row][col].value);
           cells[row + 1][col].value = 0;
         }
       }
