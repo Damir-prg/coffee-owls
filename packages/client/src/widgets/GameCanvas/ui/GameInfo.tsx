@@ -4,14 +4,15 @@ import { useCallback, useContext, useMemo } from 'react';
 import { GameContextInstance } from 'entities/GameContext';
 import { EGAME_SCREEN_VALUES, gameModeTranslate } from 'shared/constants/game';
 
-const HINT_TEXT = 'Для перехода в полноэкранный режим нажмите ESC';
+const HINT_TEXT = 'Для перехода в полноэкранный режим нажмите ENTER';
 const LIST_ITEMS_TITLE = ['Режим', 'Счет', 'Лучший счет'];
 
 export const GameInfo = () => {
   const { gameMode, setGameScreen } = useContext(GameContextInstance);
 
   const selectedGameMode = useMemo(() => gameModeTranslate[gameMode].toLowerCase(), [gameMode]);
-  const handleClear = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME), [setGameScreen]);
+
+  const handleFinishGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME), [setGameScreen]);
 
   return (
     <>
@@ -19,7 +20,7 @@ export const GameInfo = () => {
         size="small"
         header={<Alert message={HINT_TEXT} type="warning" />}
         footer={
-          <Button size="large" onClick={handleClear}>
+          <Button size="large" onClick={handleFinishGame}>
             Завершить игру
           </Button>
         }

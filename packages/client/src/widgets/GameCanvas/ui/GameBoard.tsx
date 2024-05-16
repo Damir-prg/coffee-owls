@@ -5,20 +5,21 @@ import '../styles/GameBoard.css';
 export const GameBoard: FC = () => {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
+  const handleFullscreen = async (event: KeyboardEvent) => {
+    if (event.code !== 'Enter') {
+      return;
+    }
+    if (!ref || !(ref.current instanceof HTMLCanvasElement)) {
+      return;
+    }
+    if (!document.fullscreenElement) {
+      await ref.current.requestFullscreen();
+      return;
+    }
+    await document.exitFullscreen();
+  };
+
   useEffect(() => {
-    const handleFullscreen = async (event: KeyboardEvent) => {
-      if (event.code !== 'Escape') {
-        return;
-      }
-      if (!ref || !(ref.current instanceof HTMLCanvasElement)) {
-        return;
-      }
-      if (!document.fullscreenElement) {
-        await ref.current.requestFullscreen();
-      } else {
-        await document.exitFullscreen();
-      }
-    };
     document.addEventListener('keyup', handleFullscreen);
     return () => {
       document.removeEventListener('keyup', handleFullscreen);
