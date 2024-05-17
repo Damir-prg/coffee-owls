@@ -3,7 +3,7 @@ import { IUserState } from './user.models';
 
 const initialState: IUserState = {
   userData: null,
-  isLoadingUserData: true,
+  isLoadingUserData: false,
   isLoggedIn: false,
 };
 
@@ -11,13 +11,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserData(state, action: PayloadAction<Record<string, unknown> | null>) {
+    setUserData(state, action: PayloadAction<IUserState['userData']>) {
       state.userData = action.payload;
     },
-    setIsLoadingUserData(state, action: PayloadAction<boolean>) {
+    setIsLoadingUserData(state, action: PayloadAction<IUserState['isLoadingUserData']>) {
       state.isLoadingUserData = action.payload;
     },
-    setIsLoggedIn(state, action: PayloadAction<boolean>) {
+    setIsLoggedIn(state, action: PayloadAction<IUserState['isLoggedIn']>) {
       state.isLoggedIn = action.payload;
     },
   },

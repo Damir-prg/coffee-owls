@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getUserData } from 'shared/store/user/userActions';
-import { TAppDispatch } from 'shared/store/store';
+import type { TAppDispatch } from 'shared/store/store';
 import { Flex, Divider, Image, Typography } from 'antd';
 import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
@@ -20,11 +20,11 @@ function Login() {
 
   const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
 
-  const onSubmit = useCallback(async (formData: Record<string, unknown>) => {
+  const onSubmit = useCallback(async (formData: Record<string, string>) => {
     setErrorMessage({ isShow: false, text: '' });
     const loginData: TLoginFormFields = {
-      login: formData.login as string,
-      password: formData.password as string,
+      login: formData.login,
+      password: formData.password,
     };
     try {
       await login(loginData);

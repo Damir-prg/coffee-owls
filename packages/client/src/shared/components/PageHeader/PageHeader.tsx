@@ -2,7 +2,7 @@ import './PageHeader.css';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutAction } from 'shared/store/user/userActions';
-import { TAppDispatch } from 'shared/store/store';
+import type { TAppDispatch } from 'shared/store/store';
 import EROUTES from '../../../shared/lib/RoutesEnum';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayCircleOutlined, HomeOutlined, TrophyOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
