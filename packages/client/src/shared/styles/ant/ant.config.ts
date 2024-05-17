@@ -10,6 +10,8 @@ export const appLightThemeConfig = {
     fontSizeHeading2: 38,
     fontSizeHeading3: 30,
     colorSplit: '#F65E3B',
+    colorWarningBorder: '#F65E3B',
+    colorWarningBg: '#FDF9F8',
   },
   components: {
     Layout: {
@@ -32,6 +34,9 @@ export const appLightThemeConfig = {
     Input: {
       inputFontSizeLG: 16,
       paddingBlockLG: 8,
+    },
+    List: {
+      itemPaddingSM: '8px 0',
     },
   },
 };
