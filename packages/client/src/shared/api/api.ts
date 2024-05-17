@@ -23,10 +23,10 @@ const apiRequest = async (url: string, options: TOptions = defaultOptions): Prom
   }
 };
 
-const handleResponse = (res: Response, responseType?: 'json' | undefined) => {
+const handleResponse = async (res: Response, responseType?: 'json' | undefined) => {
   if (res.ok) {
-    const contentType = responseType || res.headers.get('Content-Type');
-    if (contentType && contentType.includes('application/json')) {
+    const contentType = res.headers.get('Content-Type') || responseType;
+    if (contentType && contentType.includes('json')) {
       return res.json();
     }
     return res.text();

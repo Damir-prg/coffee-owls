@@ -1,12 +1,13 @@
 import './PageHeader.css';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logoutAction } from 'shared/store/user/userActions';
+import { TAppDispatch } from 'shared/store/store';
 import EROUTES from '../../../shared/lib/RoutesEnum';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayCircleOutlined, HomeOutlined, TrophyOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu, Button, Typography } from 'antd';
-import { useEffect, useState } from 'react';
-import { logout } from 'shared/api/authApi';
-import { useAuth } from 'shared/context/AuthContext';
 
 const items: MenuProps['items'] = [
   {
@@ -44,16 +45,13 @@ function PageHeader() {
 
   const [logoutError, setLogoutError] = useState(false);
   const [currentKey, setCurrentKey] = useState('key');
-  const { setIsLoggedIn } = useAuth();
+
+  const dispatch = useDispatch<TAppDispatch>();
 
   async function onLogout() {
-    try {
-      setLogoutError(false);
-      await logout();
-      document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      setIsLoggedIn(false);
-      navigate('/' + EROUTES.SIGN_IN);
-    } catch (error) {
+    setLogoutError(false);
+    const resultAction = await dispatch(logoutAction());
+    if (logoutAction.rejected.match(resultAction)) {
       setLogoutError(true);
     }
   }
