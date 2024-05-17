@@ -1,0 +1,17 @@
+.game__info {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: calc(100% + 24px);
+}
+
+@media screen and (min-width: 1000px) {
+  .game__info {
+    width: 340px;
+  }
+}
+
+canvas::backdrop {
+  background-image: linear-gradient(to bottom, var(--light-background-color), var(--primary-color));
+}

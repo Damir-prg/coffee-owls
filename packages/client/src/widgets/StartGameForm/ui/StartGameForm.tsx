@@ -15,7 +15,7 @@ export const StartGameForm = () => {
       <Flex vertical align="center" justify="center" gap={32}>
         <ChangeGameMode />
         <Button className="game__start-button" size="large" icon={<SettingOutlined />}>
-          Настройки управление
+          Настройки управления
         </Button>
         <Button
           type="primary"
