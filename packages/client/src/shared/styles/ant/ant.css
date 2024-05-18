@@ -47,3 +47,8 @@
 .zero-border-radius .ant-radio-button-wrapper:last-child {
   border-radius: 0;
 }
+
+.test {
+  display: flex;
+  justify-content: space-between;
+}

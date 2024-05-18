@@ -1,0 +1,17 @@
+.info-list {
+  width: 100%;
+}
+
+.info-list-item {
+  gap: 16px;
+  background-color: #ffffff;
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+}
+
+.info-list-item:not(:first-child) {
+  margin-top: 12px;
+}
+.title_content {
+  flex-grow: 1;
+}

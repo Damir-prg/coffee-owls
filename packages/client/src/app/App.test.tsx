@@ -9,7 +9,7 @@ const appContent = 'Загрузка..';
 // @ts-ignore
 global.fetch = jest.fn(() => Promise.resolve({ json: () => Promise.resolve('hey') }));
 
-jest.mock('shared/api/authApi', () => ({
+jest.mock('shared/api/authApi/authApi', () => ({
   getUser: jest.fn().mockResolvedValueOnce('mockedUserResponse'),
 }));
 

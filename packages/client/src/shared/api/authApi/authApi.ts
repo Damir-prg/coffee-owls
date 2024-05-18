@@ -1,9 +1,10 @@
 import { ILoginRequest, IRegistrationRequest } from 'shared/interfaces/IAuthData';
-import api from './api';
+import api from '../api';
+import { IUser } from 'shared/api/authApi/auth.interface';
 
 const authUrl = '/auth';
 
-export const getUser = (): Promise<unknown> => {
+export const getUser = (): Promise<IUser | null> => {
   return api.get(`${authUrl}/user`);
 };
 

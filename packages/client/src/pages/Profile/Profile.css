@@ -1,0 +1,20 @@
+.profile-wrapper {
+  max-width: 660px;
+  width: 100%;
+}
+.tabs-wrapper {
+  width: 100%;
+}
+.ant-tabs-nav::before {
+  border-bottom: none !important;
+}
+
+.ant-tabs-nav-list {
+  width: 100%;
+  gap: 32px;
+}
+
+.ant-tabs-tab {
+  width: 50%;
+  justify-content: center;
+}
