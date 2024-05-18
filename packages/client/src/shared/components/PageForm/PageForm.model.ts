@@ -24,5 +24,5 @@ export interface IPageFormProps {
     text: string;
     path: string;
   };
-  onSubmit: (formData: Record<string, unknown>) => void;
+  onSubmit: (formData: Record<string, string>) => void;
 }

@@ -1,6 +1,7 @@
 import './PublicLayout.css';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
+import WithPublic from 'widgets/WithPublic/WithPublic';
 
 function PublicLayout({ children }: { children?: React.ReactNode }) {
   const { Content } = Layout;
@@ -14,4 +15,4 @@ function PublicLayout({ children }: { children?: React.ReactNode }) {
   );
 }
 
-export default PublicLayout;
+export default WithPublic(PublicLayout);

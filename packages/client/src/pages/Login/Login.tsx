@@ -1,36 +1,35 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUserData } from 'shared/store/user/userActions';
+import type { TAppDispatch } from 'shared/store/store';
 import { Flex, Divider, Image, Typography } from 'antd';
 import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
 import PageForm from 'shared/components/PageForm/PageForm';
 import { TLoginFormFields, loginFormFields } from './Login.models';
 import loginImg from 'images/public-person-img.svg';
-import { useAuth } from 'shared/context/AuthContext';
-import { login, getUser } from 'shared/api/authApi';
+import { login } from 'shared/api/authApi';
 import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Login() {
   const { Title, Text } = Typography;
   const navigate = useNavigate();
-  const { setIsLoggedIn } = useAuth();
+
+  const dispatch = useDispatch<TAppDispatch>();
 
   const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
 
-  const onSubmit = useCallback(async (formData: Record<string, unknown>) => {
+  const onSubmit = useCallback(async (formData: Record<string, string>) => {
+    setErrorMessage({ isShow: false, text: '' });
+    const loginData: TLoginFormFields = {
+      login: formData.login,
+      password: formData.password,
+    };
     try {
-      setErrorMessage({ isShow: false, text: '' });
-
-      const loginData: TLoginFormFields = {
-        login: formData.login as string,
-        password: formData.password as string,
-      };
-
       await login(loginData);
-      await getUser();
-
-      setIsLoggedIn(true);
       navigate('/' + EROUTES.HOME);
+      await dispatch(getUserData());
     } catch (err) {
       setErrorMessage({ isShow: true, text: getErrorMessage(err) });
     }
