@@ -15,14 +15,14 @@ export const EndGameForm = () => {
 
   return (
     <GameContentContainer>
-      <Flex vertical align="center" justify="center" gap={24}>
-        <Flex vertical align="center" justify="flex-start">
+      <Flex vertical align="center" justify="center" gap={40}>
+        <Flex vertical align="center" justify="flex-start" gap={12}>
           <Title level={3} className="title__primary">
             Спасибо за игру!
           </Title>
           <Text className="text__center-align">К сожалению, больше нет ходов</Text>
         </Flex>
-        <Flex vertical align="center" justify="center" gap={8}>
+        <Flex vertical align="center" justify="center" gap={12} className="full-width">
           <Text className="text__center-align">
             Вы можете ознакомиться с
             <br />

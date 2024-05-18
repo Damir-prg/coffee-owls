@@ -13,6 +13,27 @@ const controls: IBoardProps['controls'] = {
 export const GameBoard: FC = () => {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
+  const handleFullscreen = async (event: KeyboardEvent) => {
+    if (event.code !== 'Enter') {
+      return;
+    }
+    if (!ref || !(ref.current instanceof HTMLCanvasElement)) {
+      return;
+    }
+    if (!document.fullscreenElement) {
+      await ref.current.requestFullscreen();
+      return;
+    }
+    await document.exitFullscreen();
+  };
+
+  useEffect(() => {
+    document.addEventListener('keyup', handleFullscreen);
+    return () => {
+      document.removeEventListener('keyup', handleFullscreen);
+    };
+  }, []);
+
   useEffect(() => {
     if (ref.current) {
       const ctx = ref.current.getContext('2d');
