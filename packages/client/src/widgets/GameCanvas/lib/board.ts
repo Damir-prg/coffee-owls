@@ -1,4 +1,4 @@
-import { IBoardProps } from '../types/boardTypes';
+import { IBoardProps, TUnionCells } from '../types/boardTypes';
 import { ICellProps } from '../types/cellTypes';
 import { Cell } from './cell';
 
@@ -283,6 +283,73 @@ export class Board {
     }
   }
 
+  private static unionCells(params: TUnionCells) {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board не инициализирован');
+    }
+
+    const { cells, cellCount } = Board.instance;
+
+    switch (params.direction) {
+      case 'down': {
+        const { row } = params;
+        let currentCol = cellCount - 1;
+        for (let col = cellCount - 1; col >= 0; col--) {
+          if (cells[row][col].value !== 0) {
+            cells[row][currentCol].value = cells[row][col].value;
+            if (col !== currentCol) {
+              cells[row][col].value = 0;
+            }
+            currentCol--;
+          }
+        }
+        return;
+      }
+      case 'up': {
+        const { row } = params;
+        let currentCol = 0;
+        for (let col = 0; col < cellCount; col++) {
+          if (cells[row][col].value !== 0) {
+            cells[row][currentCol].value = cells[row][col].value;
+            if (col !== currentCol) {
+              cells[row][col].value = 0;
+            }
+            currentCol++;
+          }
+        }
+        return;
+      }
+      case 'right': {
+        const { col } = params;
+        let currentRow = cellCount - 1;
+        for (let row = cellCount - 1; row >= 0; row--) {
+          if (cells[row][col].value !== 0) {
+            cells[currentRow][col].value = cells[row][col].value;
+            if (row !== currentRow) {
+              cells[row][col].value = 0;
+            }
+            currentRow--;
+          }
+        }
+        return;
+      }
+      case 'left': {
+        const { col } = params;
+        let currentRow = 0;
+        for (let row = 0; row < cellCount; row++) {
+          if (cells[row][col].value !== 0) {
+            cells[currentRow][col].value = cells[row][col].value;
+            if (row !== currentRow) {
+              cells[row][col].value = 0;
+            }
+            currentRow++;
+          }
+        }
+        return;
+      }
+    }
+  }
+
   /**
    * Перемещает ячейки вниз, объединяя одинаковые значения.
    */
@@ -294,17 +361,7 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let row = 0; row < cellCount; row++) {
-      let currentCol = cellCount - 1;
-      // Перемещение всех ненулевых ячеек
-      for (let col = cellCount - 1; col >= 0; col--) {
-        if (cells[row][col].value !== 0) {
-          cells[row][currentCol].value = cells[row][col].value;
-          if (col !== currentCol) {
-            cells[row][col].value = 0;
-          }
-          currentCol--;
-        }
-      }
+      Board.unionCells({ direction: 'down', row });
 
       // Объединение ячеек с одинаковым значением
       for (let col = cellCount - 1; col > 0; col--) {
@@ -315,17 +372,7 @@ export class Board {
         }
       }
 
-      currentCol = cellCount - 1;
-      // Перемещение всех ненулевых ячеек после объединения
-      for (let col = cellCount - 1; col >= 0; col--) {
-        if (cells[row][col].value !== 0) {
-          cells[row][currentCol].value = cells[row][col].value;
-          if (col !== currentCol) {
-            cells[row][col].value = 0;
-          }
-          currentCol--;
-        }
-      }
+      Board.unionCells({ direction: 'down', row });
     }
 
     Board.drawAllCells();
@@ -343,16 +390,7 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let row = cellCount - 1; row >= 0; row--) {
-      let currentCol = 0;
-      for (let col = 0; col < cellCount; col++) {
-        if (cells[row][col].value !== 0) {
-          cells[row][currentCol].value = cells[row][col].value;
-          if (col !== currentCol) {
-            cells[row][col].value = 0;
-          }
-          currentCol++;
-        }
-      }
+      Board.unionCells({ direction: 'up', row });
 
       for (let col = 0; col < cellCount - 1; col++) {
         if (cells[row][col].value === cells[row][col + 1].value) {
@@ -362,16 +400,7 @@ export class Board {
         }
       }
 
-      currentCol = 0;
-      for (let col = 0; col < cellCount; col++) {
-        if (cells[row][col].value !== 0) {
-          cells[row][currentCol].value = cells[row][col].value;
-          if (col !== currentCol) {
-            cells[row][col].value = 0;
-          }
-          currentCol++;
-        }
-      }
+      Board.unionCells({ direction: 'up', row });
     }
 
     Board.drawAllCells();
@@ -389,16 +418,7 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let col = 0; col < cellCount; col++) {
-      let currentRow = cellCount - 1;
-      for (let row = cellCount - 1; row >= 0; row--) {
-        if (cells[row][col].value !== 0) {
-          cells[currentRow][col].value = cells[row][col].value;
-          if (row !== currentRow) {
-            cells[row][col].value = 0;
-          }
-          currentRow--;
-        }
-      }
+      Board.unionCells({ direction: 'right', col });
 
       for (let row = cellCount - 1; row > 0; row--) {
         if (cells[row][col].value === cells[row - 1][col].value) {
@@ -408,16 +428,7 @@ export class Board {
         }
       }
 
-      currentRow = cellCount - 1;
-      for (let row = cellCount - 1; row >= 0; row--) {
-        if (cells[row][col].value !== 0) {
-          cells[currentRow][col].value = cells[row][col].value;
-          if (row !== currentRow) {
-            cells[row][col].value = 0;
-          }
-          currentRow--;
-        }
-      }
+      Board.unionCells({ direction: 'right', col });
     }
 
     Board.drawAllCells();
@@ -435,16 +446,7 @@ export class Board {
     const { cells, cellCount } = Board.instance;
 
     for (let col = cellCount - 1; col >= 0; col--) {
-      let currentRow = 0;
-      for (let row = 0; row < cellCount; row++) {
-        if (cells[row][col].value !== 0) {
-          cells[currentRow][col].value = cells[row][col].value;
-          if (row !== currentRow) {
-            cells[row][col].value = 0;
-          }
-          currentRow++;
-        }
-      }
+      Board.unionCells({ direction: 'left', col });
 
       for (let row = 0; row < cellCount - 1; row++) {
         if (cells[row][col].value === cells[row + 1][col].value) {
@@ -454,16 +456,7 @@ export class Board {
         }
       }
 
-      currentRow = 0;
-      for (let row = 0; row < cellCount; row++) {
-        if (cells[row][col].value !== 0) {
-          cells[currentRow][col].value = cells[row][col].value;
-          if (row !== currentRow) {
-            cells[row][col].value = 0;
-          }
-          currentRow++;
-        }
-      }
+      Board.unionCells({ direction: 'left', col });
     }
 
     Board.drawAllCells();

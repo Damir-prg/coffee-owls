@@ -8,3 +8,13 @@ export interface IBoardProps {
     right: string;
   };
 }
+
+export type TUnionCells =
+  | {
+      direction: 'left' | 'right';
+      col: number;
+    }
+  | {
+      direction: 'up' | 'down';
+      row: number;
+    };
