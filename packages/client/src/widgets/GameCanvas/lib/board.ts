@@ -283,69 +283,42 @@ export class Board {
     }
   }
 
+  /**
+   *  Объединение ячеек в зависимости от переданного направления
+   * @param {string} direction - Направление движения `up`, `down`, `left`, `right`
+   * @param {number} row - Строка ячейки, если направление `up` или `down`
+   * @param {number} col - Столбец ячейки, если направление `left` или `right`
+   */
   private static unionCells(params: TUnionCells) {
     if (!Board.checkIsBoard(Board.instance)) {
-      throw new Error('Экземпляр Board не инициализирован');
+      throw new Error('Board instance is not initialized');
     }
 
     const { cells, cellCount } = Board.instance;
+    const { direction } = params;
 
-    switch (params.direction) {
-      case 'down': {
-        const { row } = params;
-        let currentCol = cellCount - 1;
-        for (let col = cellCount - 1; col >= 0; col--) {
-          if (cells[row][col].value !== 0) {
-            cells[row][currentCol].value = cells[row][col].value;
-            if (col !== currentCol) {
-              cells[row][col].value = 0;
-            }
-            currentCol--;
-          }
+    let paramIndex = 0;
+    if (direction === 'up' || direction === 'down') {
+      paramIndex = params.row;
+    } else if (direction === 'left' || direction === 'right') {
+      paramIndex = params.col;
+    }
+
+    const isRowDirection = direction === 'down' || direction === 'up';
+    const isIncreasingDirection = direction === 'down' || direction === 'right';
+    const startIndex = isIncreasingDirection ? cellCount - 1 : 0;
+    const endIndex = isIncreasingDirection ? -1 : cellCount;
+    const increment = isIncreasingDirection ? -1 : 1;
+
+    let currentIndex = startIndex;
+    for (let index = startIndex; index !== endIndex; index += increment) {
+      if (cells[isRowDirection ? paramIndex : index][isRowDirection ? index : paramIndex].value !== 0) {
+        cells[isRowDirection ? paramIndex : currentIndex][isRowDirection ? currentIndex : paramIndex].value =
+          cells[isRowDirection ? paramIndex : index][isRowDirection ? index : paramIndex].value;
+        if (index !== currentIndex) {
+          cells[isRowDirection ? paramIndex : index][isRowDirection ? index : paramIndex].value = 0;
         }
-        return;
-      }
-      case 'up': {
-        const { row } = params;
-        let currentCol = 0;
-        for (let col = 0; col < cellCount; col++) {
-          if (cells[row][col].value !== 0) {
-            cells[row][currentCol].value = cells[row][col].value;
-            if (col !== currentCol) {
-              cells[row][col].value = 0;
-            }
-            currentCol++;
-          }
-        }
-        return;
-      }
-      case 'right': {
-        const { col } = params;
-        let currentRow = cellCount - 1;
-        for (let row = cellCount - 1; row >= 0; row--) {
-          if (cells[row][col].value !== 0) {
-            cells[currentRow][col].value = cells[row][col].value;
-            if (row !== currentRow) {
-              cells[row][col].value = 0;
-            }
-            currentRow--;
-          }
-        }
-        return;
-      }
-      case 'left': {
-        const { col } = params;
-        let currentRow = 0;
-        for (let row = 0; row < cellCount; row++) {
-          if (cells[row][col].value !== 0) {
-            cells[currentRow][col].value = cells[row][col].value;
-            if (row !== currentRow) {
-              cells[row][col].value = 0;
-            }
-            currentRow++;
-          }
-        }
-        return;
+        currentIndex += increment;
       }
     }
   }
