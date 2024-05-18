@@ -1,28 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUserData, setIsLoadingUserData, setIsLoggedIn } from './userSlice';
 import { getUser, logout } from 'shared/api/authApi';
+import { deleteCookie } from 'shared/utils/cookieUtils';
+import { IUserState } from './user.models';
 
-export const getUserData = createAsyncThunk('user/getUserData', async (_, { dispatch }) => {
-  dispatch(setIsLoadingUserData(true));
-  try {
-    const userData = await getUser();
-    dispatch(setUserData(userData as Record<string, unknown>));
-    dispatch(setIsLoggedIn(true));
-  } catch {
-    dispatch(setUserData(null));
-    dispatch(setIsLoggedIn(false));
-  } finally {
-    dispatch(setIsLoadingUserData(false));
-  }
-});
+export const getUserData = createAsyncThunk<IUserState['userData'], void, { rejectValue: string }>(
+  'user/getUserData',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getUser();
+      return response as IUserState['userData'];
+    } catch (error) {
+      return rejectWithValue('Ошибка при получении данных пользователя');
+    }
+  },
+);
 
-export const logoutAction = createAsyncThunk('user/logoutAction', async (_, { dispatch }) => {
-  try {
-    await logout();
-    document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    dispatch(setIsLoggedIn(false));
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-});
+export const logoutAction = createAsyncThunk<void, void, { rejectValue: string }>(
+  'user/logoutAction',
+  async (_, { rejectWithValue }) => {
+    try {
+      await logout();
+      deleteCookie('authToken');
+    } catch (error) {
+      return rejectWithValue('Ошибка при выходе из системы');
+    }
+  },
+);
