@@ -2,7 +2,7 @@ import { Button, Flex, Image, Typography } from 'antd';
 import './Home.css';
 import homeImg from 'images/home.jpeg';
 import React from 'react';
-import EROUTES from 'shared/RoutesEnum';
+import EROUTES from 'shared/lib/RoutesEnum';
 import { useNavigate } from 'react-router-dom';
 
 const { Text, Title } = Typography;

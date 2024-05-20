@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageHeader from '../PageHeader/PageHeader';
 import PageFooter from '../PageFooter/PageFooter';
+import WithAuth from 'widgets/WithAuth/WithAuth';
 
 function PageLayout({ children }: { children?: React.ReactNode }) {
   const { Header, Content, Footer } = Layout;
@@ -28,4 +29,4 @@ function PageLayout({ children }: { children?: React.ReactNode }) {
   );
 }
 
-export default PageLayout;
+export default WithAuth(PageLayout);

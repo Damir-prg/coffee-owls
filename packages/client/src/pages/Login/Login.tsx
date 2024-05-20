@@ -1,12 +1,39 @@
-import loginImg from 'images/public-person-img.svg';
-import { loginFormFields } from './Login.models';
+import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUserData } from 'shared/store/user/userActions';
+import type { TAppDispatch } from 'shared/store/store';
 import { Flex, Divider, Image, Typography } from 'antd';
+import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
 import PageForm from 'shared/components/PageForm/PageForm';
-import EROUTES from 'shared/RoutesEnum';
+import { TLoginFormFields, loginFormFields } from './Login.models';
+import loginImg from 'images/public-person-img.svg';
+import { login } from 'shared/api/authApi';
+import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Login() {
   const { Title, Text } = Typography;
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch<TAppDispatch>();
+
+  const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
+
+  const onSubmit = useCallback(async (formData: Record<string, string>) => {
+    setErrorMessage({ isShow: false, text: '' });
+    const loginData: TLoginFormFields = {
+      login: formData.login,
+      password: formData.password,
+    };
+    try {
+      await login(loginData);
+      navigate('/' + EROUTES.HOME);
+      await dispatch(getUserData());
+    } catch (err) {
+      setErrorMessage({ isShow: true, text: getErrorMessage(err) });
+    }
+  }, []);
 
   return (
     <PublicWindow>
@@ -26,7 +53,9 @@ function Login() {
           title="Войти"
           fields={loginFormFields}
           button={{ type: 'primary', text: 'Войти' }}
+          formError={errorMessage}
           link={{ text: 'Нет аккаунта? - зарегестрируйся, мы тебя ждём:)', path: EROUTES.SIGN_UP }}
+          onSubmit={onSubmit}
         />
       </Flex>
     </PublicWindow>

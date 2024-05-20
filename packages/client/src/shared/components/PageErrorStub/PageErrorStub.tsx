@@ -4,7 +4,7 @@ import { Typography, Flex, Layout, Button, Image } from 'antd';
 import { ESTUB_TYPE, STUB_ICON, STUB_TEXT } from 'shared/components/PageErrorStub/PageErrorStub.models';
 import './PageErrorStub.css';
 import { useNavigate } from 'react-router-dom';
-import EROUTES from 'shared/RoutesEnum';
+import EROUTES from 'shared/lib/RoutesEnum';
 
 const { Content } = Layout;
 const { Title } = Typography;

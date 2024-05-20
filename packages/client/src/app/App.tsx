@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import './App.css';
 import { ConfigProvider } from 'antd';
-import WithRoutes from 'widgets/WithRoutes/WithRoutes';
 import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
+import WithRoutes from 'widgets/WithRoutes/WithRoutes';
 
 function App() {
   useEffect(() => {
@@ -12,7 +12,6 @@ function App() {
       const data = await response.json();
       console.log(data);
     };
-
     fetchServerData();
   }, []);
 
