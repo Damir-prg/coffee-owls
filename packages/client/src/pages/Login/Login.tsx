@@ -54,7 +54,7 @@ function Login() {
           fields={loginFormFields}
           button={{ type: 'primary', text: 'Войти' }}
           formError={errorMessage}
-          link={{ text: 'Нет аккаунта? - зарегестрируйся, мы тебя ждём:)', path: EROUTES.SIGN_UP }}
+          link={{ text: 'Нет аккаунта? - зарегистрируйся, мы тебя ждём:)', path: EROUTES.SIGN_UP }}
           onSubmit={onSubmit}
         />
       </Flex>
