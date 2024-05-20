@@ -1,4 +1,4 @@
-import { IBoardProps, TUnionCells } from '../types/boardTypes';
+import { IBoardProps, IPasteCellParams, TUnionCells } from '../types/boardTypes';
 import { ICellProps } from '../types/cellTypes';
 import { Cell } from './cell';
 
@@ -35,6 +35,8 @@ export class Board {
    * Клавиши управления
    */
   private controls: IBoardProps['controls'];
+
+  private isTest;
   /**
    * Callback для передачи функции подсчета очков
    */
@@ -60,7 +62,7 @@ export class Board {
     Board.gameOverHandler = gameOverHandler;
   }
 
-  private constructor({ ctx, size, controls }: IBoardProps) {
+  private constructor({ ctx, size, controls, isTest }: IBoardProps) {
     // Определяем ссылку на canvas внутри класса
     this.ctx = ctx;
 
@@ -75,6 +77,8 @@ export class Board {
 
     // Считаем ширину ячейки как отношение ширины холста к количеству ячеек в доске
     this.cellWidth = size / this.cellCount - this.boardSizeCorrector;
+
+    this.isTest = isTest || false;
   }
 
   private static checkIsBoard(instance: Board | null): instance is Board {
@@ -117,6 +121,11 @@ export class Board {
     }
 
     Board.instance = null;
+  }
+
+  /** Добавлено для тестирования */
+  public get Cells(): Array<Array<Cell>> {
+    return Board.instance?.cells || [];
   }
 
   /**
@@ -196,8 +205,10 @@ export class Board {
 
   /**
    * Вставляет новую ячейку на доске, если хотя бы одна ячейка свободна.
+   *
+   * @param {IPasteCellParams} params Параметр для тестирования, чтобы избежать рандомного выбора ячейка
    */
-  private static pasteNewCell() {
+  private static pasteNewCell(params?: IPasteCellParams) {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Board is not created');
     }
@@ -221,16 +232,22 @@ export class Board {
     }
 
     const index = Math.floor(Math.random() * emptyCells.length);
-    const newCell = emptyCells[index];
+    const newCell = (() => {
+      if (params) {
+        return cells.flat()[params.staticIndex];
+      }
+      return emptyCells[index];
+    })();
 
-    newCell.value = (2 * Math.ceil(Math.random() * 2)) as ICellProps['value'];
+    newCell.value = params ? params.value : ((2 * Math.ceil(Math.random() * 2)) as ICellProps['value']);
     newCell.drawCell();
   }
 
   /**
    * Начинает игру, инициализируя холст и рисуя клетки.
+   * @param {ReadonlyArray<IPasteCellParams>} params Параметр для тестирования, чтобы избежать рандомного выбора ячейка
    */
-  public static startGame() {
+  public static startGame(params?: ReadonlyArray<IPasteCellParams>) {
     if (!Board.checkIsBoard(Board.instance)) {
       throw new Error('Экземпляр Board уже существует');
     }
@@ -240,8 +257,8 @@ export class Board {
     Board.instance.ctx.fillRect(0, 0, width, height);
     Board.instance.createCells();
     Board.drawAllCells();
-    Board.pasteNewCell();
-    Board.pasteNewCell();
+    Board.pasteNewCell(params ? params[0] : undefined);
+    Board.pasteNewCell(params ? params[1] : undefined);
   }
 
   /**
@@ -348,8 +365,7 @@ export class Board {
       Board.unionCells({ direction: 'down', row });
     }
 
-    Board.drawAllCells();
-    Board.pasteNewCell();
+    Board.updateBoardCells();
   }
 
   /**
@@ -376,8 +392,7 @@ export class Board {
       Board.unionCells({ direction: 'up', row });
     }
 
-    Board.drawAllCells();
-    Board.pasteNewCell();
+    Board.updateBoardCells();
   }
 
   /**
@@ -404,8 +419,7 @@ export class Board {
       Board.unionCells({ direction: 'right', col });
     }
 
-    Board.drawAllCells();
-    Board.pasteNewCell();
+    Board.updateBoardCells();
   }
 
   /**
@@ -432,7 +446,19 @@ export class Board {
       Board.unionCells({ direction: 'left', col });
     }
 
+    Board.updateBoardCells();
+  }
+
+  private static updateBoardCells() {
+    if (!Board.checkIsBoard(Board.instance)) {
+      throw new Error('Экземпляр Board не инициализирован');
+    }
+
     Board.drawAllCells();
-    Board.pasteNewCell();
+
+    const { isTest } = Board.instance;
+    if (!isTest) {
+      Board.pasteNewCell();
+    }
   }
 }
