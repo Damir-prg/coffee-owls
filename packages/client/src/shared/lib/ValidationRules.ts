@@ -15,6 +15,22 @@ export const validatePasswordRepeat: RuleRender = ({ getFieldValue }) => ({
   },
 });
 
+export const validatePasswordUpdate: RuleRender = ({ getFieldValue }) => ({
+  validator(_, value) {
+    if (!value) {
+      if (getFieldValue('oldPassword')) {
+        return Promise.reject(new Error('Необходимо заполнить новый пароль!'));
+      } else {
+        return Promise.resolve();
+      }
+    }
+    if (getFieldValue('oldPassword') !== value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error('Пароли совпадают!'));
+  },
+});
+
 export const validationRules = {
   firstName: {
     pattern: VALIDATION_PATTERNS.FIRST_NAME,

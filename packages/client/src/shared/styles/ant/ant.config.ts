@@ -26,6 +26,7 @@ export const appLightThemeConfig = {
       contentFontSize: 14,
       contentLineHeight: 1.5,
       contentFontSizeLG: 24,
+      onlyIconSize: 24,
     },
     Typography: {
       titleMarginBottom: 0,
@@ -37,6 +38,11 @@ export const appLightThemeConfig = {
     },
     List: {
       itemPaddingSM: '8px 0',
+      itemPaddingLG: '24px',
+    },
+    Tabs: {
+      titleFontSizeLG: 30,
+      horizontalMargin: '0 0 24px',
     },
   },
 };

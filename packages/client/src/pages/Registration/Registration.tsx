@@ -8,7 +8,7 @@ import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
 import PageForm from 'shared/components/PageForm/PageForm';
 import { TRegistrationFormFields, registrationFormFields } from './Registration.models';
-import { registration } from 'shared/api/authApi';
+import { registration } from 'shared/api/authApi/authApi';
 import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Registration() {

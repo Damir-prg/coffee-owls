@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getUser, logout } from 'shared/api/authApi';
+
 import { deleteCookie } from 'shared/utils/cookieUtils';
 import { IUserState } from './user.models';
+import { getUser, logout } from 'shared/api/authApi/authApi';
 
 export const getUserData = createAsyncThunk<IUserState['userData'], void, { rejectValue: string }>(
   'user/getUserData',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await getUser();
-      return response as IUserState['userData'];
+      return await getUser();
     } catch (error) {
       return rejectWithValue('Ошибка при получении данных пользователя');
     }

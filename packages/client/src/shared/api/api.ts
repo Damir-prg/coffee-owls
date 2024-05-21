@@ -2,7 +2,7 @@ import { BaseUrlApi } from 'shared/config/config';
 import { EMETHOD, defaultOptions } from './types';
 import type { TOptions, TRequestFunction } from './types';
 
-const apiRequest = async (url: string, options: TOptions = defaultOptions): Promise<unknown> => {
+const apiRequest = async <TResult>(url: string, options: TOptions = defaultOptions): Promise<TResult | null> => {
   const { headers = {}, method, data, withCredentials, responseType } = { ...defaultOptions, ...options };
 
   const requestOptions: RequestInit = {
@@ -15,11 +15,17 @@ const apiRequest = async (url: string, options: TOptions = defaultOptions): Prom
     credentials: withCredentials ? 'include' : 'same-origin',
   };
 
+  if (data && data instanceof FormData) {
+    requestOptions.headers = {};
+    requestOptions.body = data;
+  }
+
   try {
     const response = await fetch(BaseUrlApi + url, requestOptions);
     return handleResponse(response, responseType);
   } catch (err) {
     console.error(err);
+    return null;
   }
 };
 

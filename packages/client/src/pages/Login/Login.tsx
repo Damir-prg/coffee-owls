@@ -9,7 +9,7 @@ import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
 import PageForm from 'shared/components/PageForm/PageForm';
 import { TLoginFormFields, loginFormFields } from './Login.models';
 import loginImg from 'images/public-person-img.svg';
-import { login } from 'shared/api/authApi';
+import { login } from 'shared/api/authApi/authApi';
 import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Login() {

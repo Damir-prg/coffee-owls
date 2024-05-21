@@ -1,5 +1,7 @@
+import { IUser } from 'shared/api/authApi/auth.interface';
+
 export interface IUserState {
-  userData: Record<string, unknown> | null;
+  userData: IUser | null;
   isLoadingUserData: boolean;
   isLoggedIn: boolean;
 }

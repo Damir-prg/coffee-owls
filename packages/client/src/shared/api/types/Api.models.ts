@@ -9,7 +9,7 @@ export type TOptions = {
   responseType?: 'json';
 };
 
-export type TRequestFunction = (url: string, options?: Omit<TOptions, 'method'>) => Promise<unknown>;
+export type TRequestFunction = <TResult>(url: string, options?: Omit<TOptions, 'method'>) => Promise<TResult | null>;
 
 export const defaultOptions: TOptions = {
   method: EMETHOD.GET,
