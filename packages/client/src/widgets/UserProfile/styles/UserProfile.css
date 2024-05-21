@@ -4,7 +4,7 @@
 
 .info-list-item {
   gap: 16px;
-  background-color: #ffffff;
+  background-color: var(--white-color);
   border: 1px solid var(--primary-color);
   border-radius: 6px;
 }

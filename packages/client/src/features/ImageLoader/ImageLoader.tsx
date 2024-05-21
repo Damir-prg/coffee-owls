@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Avatar, Badge, Button, message, Upload } from 'antd';
 import './ImageLoader.css';
 import { UploadOutlined } from '@ant-design/icons';
@@ -16,7 +16,7 @@ export const ImageLoader: FC = () => {
   /**
    * Метод переопределения загрузки картинки
    * */
-  const uploadImage = async (options: UploadRequestOption) => {
+  const uploadImage = useCallback(async (options: UploadRequestOption) => {
     const { file } = options;
 
     const fmData = new FormData();
@@ -30,14 +30,14 @@ export const ImageLoader: FC = () => {
     } catch (err) {
       message.error('Попробуйте загрузить другое изображение');
     }
-  };
+  }, []);
 
-  const onChangeFile = async (info: UploadChangeParam) => {
+  const onChangeFile = useCallback(async (info: UploadChangeParam) => {
     if (info.file.originFileObj) {
       setUploadedFile(info.file.originFileObj);
       info.fileList = [info.file.originFileObj];
     }
-  };
+  }, []);
 
   return (
     <Badge
