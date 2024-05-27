@@ -1,0 +1,26 @@
+.leaderboard-list {
+  height: calc(100vh - 570px);
+  overflow-y: auto;
+  scrollbar-color: var(--primary-color) transparent;
+  scrollbar-width: thin;
+}
+
+.leaderboard-list > .ant-spin-nested-loading .ant-spin-container {
+  padding-right: 4px;
+}
+
+.leaderboard-list-item {
+  padding: 8px 24px !important;
+}
+
+.ant-list-item-meta {
+  align-items: center !important;
+}
+
+.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
+  margin: 0;
+}
+
+.leaderboard-list-avatar {
+  border: 1px solid var(--primary-color);
+}

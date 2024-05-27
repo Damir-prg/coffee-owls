@@ -52,7 +52,7 @@ function Profile() {
         onChange={onChangeTab}
         defaultActiveKey="preview"
         size="large"
-        className="tabs-wrapper"
+        className="full-width profile-tabs"
         centered
       />
     </Flex>

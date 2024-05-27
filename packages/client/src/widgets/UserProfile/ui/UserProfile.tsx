@@ -14,10 +14,10 @@ export const UserProfile: FC = () => {
 
   const keys = Object.keys(InfoListItems) as ReadonlyArray<TInfoListKey>;
   return (
-    <List size="large" className="info-list" split={false}>
+    <List size="large" className="full-width" split={false}>
       {keys.map((key, index) => {
         return (
-          <List.Item key={index} className="info-list-item">
+          <List.Item key={index}>
             <Title level={3} className="title__primary title_content">
               {InfoListItems[key]}
             </Title>

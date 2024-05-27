@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { EditUserDataForm } from 'features/EditUserData';
-import { Button, Flex,  } from 'antd';
+import { Button, Flex } from 'antd';
 import { USER_EDIT_FORM } from 'features/EditUserData/model/EditUserData.model';
 
 export const UserEdit: FC = () => {
