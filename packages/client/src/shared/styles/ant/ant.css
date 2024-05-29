@@ -1,7 +1,8 @@
 .title__primary,
 .title__primary.ant-typography,
 .title__primary.ant-statistic .ant-statistic-content,
-.title__primary.ant-typography a {
+.title__primary.ant-typography a,
+.text__primary {
   color: var(--primary-color);
 }
 .ant-input {
@@ -48,7 +49,26 @@
   border-radius: 0;
 }
 
-.test {
-  display: flex;
-  justify-content: space-between;
+.ant-tabs-nav::before {
+  border-bottom: none !important;
+}
+
+.ant-tabs-nav-list {
+  width: 100%;
+  gap: 32px;
+}
+
+.ant-tabs-tab {
+  width: 50%;
+  justify-content: center;
+}
+
+.ant-list-item {
+  gap: 16px;
+  background-color: var(--white-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 6px;
+}
+.ant-list-item:not(:first-child) {
+  margin-top: 12px;
 }
