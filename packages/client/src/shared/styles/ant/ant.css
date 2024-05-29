@@ -52,8 +52,15 @@
 .ant-tabs-nav::before {
   border-bottom: none !important;
 }
-.ant-tabs-left > .ant-tabs-content-holder {
-  border-left: none !important;
+
+.ant-tabs-nav-list {
+  width: 100%;
+  gap: 32px;
+}
+
+.ant-tabs-tab {
+  width: 50%;
+  justify-content: center;
 }
 
 .ant-list-item {

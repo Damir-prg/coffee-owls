@@ -4,6 +4,7 @@ export enum EGAME_MODE {
 }
 
 export interface ILeaderBoardData {
+  id: string;
   username: string;
 
   avatar?: string;
@@ -15,10 +16,12 @@ export interface ILeaderBoardData {
   gameType: EGAME_MODE;
 
   // TODO format
-  time?: string;
+  time: string;
 }
+
+export type TRatingFieldName = 'score' | 'time';
 
 export interface ILeaderBoardResponse {
   data: ILeaderBoardData;
-  ratingFieldName: 'score' | 'time';
+  ratingFieldName: TRatingFieldName;
 }

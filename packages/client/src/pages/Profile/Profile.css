@@ -2,13 +2,3 @@
   max-width: 660px;
   width: 100%;
 }
-
-.profile-tabs > .ant-tabs-nav > .ant-tabs-nav-wrap > .ant-tabs-nav-list {
-  width: 100%;
-  gap: 32px;
-}
-
-.profile-tabs > .ant-tabs-nav > .ant-tabs-nav-wrap > .ant-tabs-nav-list > .ant-tabs-tab {
-  width: 50%;
-  justify-content: center;
-}
