@@ -47,7 +47,14 @@ function Profile() {
   return (
     <Flex gap={32} align="center" vertical className="profile-wrapper">
       {$image}
-      <Tabs items={TABS} onChange={onChangeTab} defaultActiveKey="preview" size="large" centered />
+      <Tabs
+        items={TABS}
+        onChange={onChangeTab}
+        defaultActiveKey="preview"
+        size="large"
+        centered
+        className="full-width"
+      />
     </Flex>
   );
 }

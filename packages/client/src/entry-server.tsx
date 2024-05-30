@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { App } from 'antd';
+import HomeSSR from 'pages/Home/HomeSSR';
 
-/** Временное решение использовать App из antd (чтобы отображался проект),
- *  до добавления Router и Redux
- *  Из-за этого есть ошибка анта в консоли про className
+/**
+ * Временное решение до добавления Router и Redux
  *  */
-export const render = () => ReactDOM.renderToString(<App />);
+export const render = () => ReactDOM.renderToString(<HomeSSR />);

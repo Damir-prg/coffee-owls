@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "dev:ssr": "cross-env NODE_ENV=development nodemon ../server/index.ts",
+    "build": "rm -rf dist && tsc && vite build",
+    "build:ssr": "rm -rf dist && tsc && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",

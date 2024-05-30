@@ -1,8 +1,5 @@
 import App from './App';
 import { render, screen, act } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from 'shared/store/store';
 
 const appContent = 'Загрузка..';
 
@@ -15,13 +12,7 @@ jest.mock('shared/api/authApi/authApi', () => ({
 
 test('Example test', async () => {
   act(() => {
-    render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>,
-    );
+    render(<App />);
   });
   expect(screen.getByText(appContent)).toBeDefined();
 });
