@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { ConfigProvider } from 'antd';
 import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
 import WithRoutes from 'widgets/WithRoutes/WithRoutes';
+import { store } from 'shared/store/store';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 function App() {
   useEffect(() => {
@@ -16,11 +19,15 @@ function App() {
   }, []);
 
   return (
-    <ConfigProvider theme={appLightThemeConfig}>
-      <div className="app">
-        <WithRoutes />
-      </div>
-    </ConfigProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ConfigProvider theme={appLightThemeConfig}>
+          <div className="app">
+            <WithRoutes />
+          </div>
+        </ConfigProvider>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

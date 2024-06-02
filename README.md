@@ -6,6 +6,16 @@
 4. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
 5. Выполните команду `yarn dev --scope=server` чтобы запустить только server
 
+## Как запускать SSR 
+Запустить в дев режиме можно следующими командами:
+- через  `"dev"` в `packages/server/package.json`
+- через `"dev:server"`(`"lerna run dev --scope=server"`) в глобальном `package.json`
+- через `"dev:ssr"` в `packages/client/package.json`
+
+Запустить в режиме прода можно следующими командами:
+- через  `"build"` и `"preview` в `packages/server/package.json`
+- через `""build:ssr""` и `"preview:ssr"` в глобальном `package.json`
+
 ### Видео с демонстрацией
 
 https://disk.yandex.ru/i/zY1-u1tAnmuMaA
