@@ -1,43 +1,73 @@
 import { useState, useEffect, useRef } from 'react';
 
-const loadSound = async (audioContext, url) => {
-  const response = await fetch(url);
-  const arrayBuffer = await response.arrayBuffer();
-  return await audioContext.decodeAudioData(arrayBuffer);
+const loadSound = async (audioContext: AudioContext, url: string) => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch audio file: ${response.statusText}`);
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+
+    return await audioContext.decodeAudioData(arrayBuffer);
+  } catch (e) {
+    console.error('Error during decoding audio file', e);
+  }
 };
 
-export const useAudio = url => {
-  const [audioBuffer, setAudioBuffer] = useState(null);
-  const audioContextRef = useRef(null);
+export const useAudio = (url: string) => {
+  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
 
   useEffect(() => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      audioContextRef.current = new window.AudioContext();
     }
 
     const fetchAudio = async () => {
-      const buffer = await loadSound(audioContextRef.current, url);
-      setAudioBuffer(buffer);
+      try {
+        const buffer = await loadSound(audioContextRef.current as AudioContext, url);
+        if (buffer) {
+          setAudioBuffer(buffer);
+        }
+      } catch (e) {
+        console.error('Error fetching audio file', e);
+      }
     };
 
     fetchAudio();
+
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
   }, [url]);
+
+  const playSound = () => {
+    if (audioBuffer && audioContextRef.current && audioContextRef.current.state !== 'closed') {
+      const source = audioContextRef.current.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioContextRef.current.destination);
+      source.start(0);
+    } else {
+      console.error('No audio buffer available to play or audio context is closed');
+    }
+  };
 
   const play = () => {
     if (audioBuffer && audioContextRef.current) {
       if (audioContextRef.current.state === 'suspended') {
-        audioContextRef.current.resume().then(() => {
-          const source = audioContextRef.current.createBufferSource();
-          source.buffer = audioBuffer;
-          source.connect(audioContextRef.current.destination);
-          source.start(0);
-        });
+        audioContextRef.current.resume().then(() => playSound());
+      } else if (audioContextRef.current.state !== 'closed') {
+        playSound();
       } else {
-        const source = audioContextRef.current.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(audioContextRef.current.destination);
-        source.start(0);
+        console.error('Audio context is closed');
       }
+    } else {
+      console.error('Audio context or audio buffer is not available');
     }
   };
 
