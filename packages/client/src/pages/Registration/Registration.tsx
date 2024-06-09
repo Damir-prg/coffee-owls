@@ -46,7 +46,7 @@ function Registration() {
           fields={registrationFormFields}
           button={{ type: 'primary', text: 'Зарегистрироваться' }}
           formError={errorMessage}
-          link={{ text: 'Уже есть аккаует? - Войти', path: EROUTES.SIGN_IN }}
+          link={{ text: 'Уже есть аккаунт? - Войти', path: EROUTES.SIGN_IN }}
           onSubmit={onSubmit}
         />
       </Flex>
