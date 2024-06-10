@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from 'shared/store/user/userActions';
@@ -30,7 +30,7 @@ function WithRoutes() {
 
   const [searchParams] = useSearchParams();
 
-  const handleYandexLogin = async (code: string) => {
+  const handleYandexLogin = useCallback(async (code: string) => {
     const redirectUri = import.meta.env.VITE_YANDEX_REDIRECT_URL;
 
     isLoadingLogin.current = true;
@@ -44,7 +44,7 @@ function WithRoutes() {
     } finally {
       isLoadingLogin.current = false;
     }
-  };
+  }, []);
 
   useEffect(() => {
     const code = searchParams.get('code');

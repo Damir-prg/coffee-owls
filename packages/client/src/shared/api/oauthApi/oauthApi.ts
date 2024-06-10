@@ -7,6 +7,6 @@ export const getYandexServiceId = (redirectUri: string): Promise<TYandexService 
   return api.get(`${yandexAuthUrl}/service-id?redirect_uri=${redirectUri}`);
 };
 
-export const loginYandex = (data: TYandexLoginRequest): Promise<unknown> => {
+export const loginYandex = (data: TYandexLoginRequest): Promise<void | null> => {
   return api.post(yandexAuthUrl, { data });
 };
