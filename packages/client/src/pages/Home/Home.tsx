@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const { Text, Title } = Typography;
 
-function Home() {
+const Home = () => {
   const navigate = useNavigate();
   function handleStartGame() {
     navigate(`/${EROUTES.GAME}`);
@@ -32,6 +32,6 @@ function Home() {
       <Image height={400} width={575} src={homeImg} preview={false} alt="Превью картинки" />
     </Flex>
   );
-}
+};
 
 export default Home;
