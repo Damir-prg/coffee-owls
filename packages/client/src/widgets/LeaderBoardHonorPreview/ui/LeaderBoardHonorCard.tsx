@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ILeaderBoardData } from 'shared/api/leaderBoardApi/leaderBoard.interface';
+import { ILeaderBoardGetResponse } from 'shared/api/leaderBoardApi/leaderBoard.interface';
 import {
   AVATAR_HONOR_PREVIEW_SIZE,
   EHONOR_PREVIEW_PLACE,
@@ -12,7 +12,7 @@ import { UserOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
 export const HonorCard: FC<{
-  data: ILeaderBoardData | null;
+  data: ILeaderBoardGetResponse['data'] | null;
   place: EHONOR_PREVIEW_PLACE;
 }> = ({ data, place }) => {
   if (!data) {

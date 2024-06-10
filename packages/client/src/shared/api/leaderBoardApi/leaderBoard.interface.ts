@@ -1,3 +1,5 @@
+export type TRatingFieldName = 'score' | 'time';
+
 export enum EGAME_MODE {
   FREE = 'free',
   TIME = 'time',
@@ -6,22 +8,23 @@ export enum EGAME_MODE {
 export interface ILeaderBoardData {
   id: string;
   username: string;
-
-  avatar?: string;
-
-  /** Количество набранных очков */
   score: number;
-
-  /** Режим игры */
-  gameType: EGAME_MODE;
-
-  // TODO format
-  time: string;
+  avatar?: string;
+  time?: string;
 }
 
-export type TRatingFieldName = 'score' | 'time';
-
-export interface ILeaderBoardResponse {
+export interface ILeaderBoardGetResponse {
   data: ILeaderBoardData;
-  ratingFieldName: TRatingFieldName;
+}
+
+export interface ILeaderBoardGetRequest {
+  ratingFieldName: string;
+  cursor: number;
+  limit: number;
+}
+
+export interface ILeaderBoardAddRequest {
+  data: ILeaderBoardData;
+  ratingFieldName: string;
+  teamName: string;
 }
