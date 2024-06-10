@@ -10,6 +10,8 @@ import { matchRoutes } from 'react-router-dom';
 import { routes } from 'widgets/WithRoutes/WithRoutes';
 import { setPageHasBeenInitializedOnServer } from 'shared/store/ssr/ssrSlice';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+import { ConfigProvider } from 'antd';
+import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routes);
@@ -52,24 +54,24 @@ export const render = async (req: ExpressRequest) => {
   store.dispatch(setPageHasBeenInitializedOnServer(true));
   const router = createStaticRouter(dataRoutes, context);
 
-  // Создание кэша для стилей Ant Design
   const cache = createCache();
 
   try {
     const html = ReactDOM.renderToString(
       <StyleProvider cache={cache}>
-        <Provider store={store}>
-          <StaticRouterProvider router={router} context={context} />
-        </Provider>
+        <ConfigProvider theme={appLightThemeConfig}>
+          <Provider store={store}>
+            <StaticRouterProvider router={router} context={context} />
+          </Provider>
+        </ConfigProvider>
       </StyleProvider>,
     );
 
-    // Извлечение стилей из кэша
     const styleText = extractStyle(cache);
 
     return {
       html,
-      styleTags: styleText, // Используем извлеченные стили
+      styleTags: styleText,
       initialState: store.getState(),
     };
   } catch (e) {
