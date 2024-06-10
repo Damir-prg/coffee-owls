@@ -2,14 +2,15 @@ import { Typography, Flex } from 'antd';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 import './YandexLoginButton.css';
 import { getYandexServiceId } from 'shared/api/oauthApi/oauthApi';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { getYandexOauthUrl } from 'shared/utils/oauthHelpers';
 
 export function YandexLoginButton() {
   const { Text } = Typography;
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleYandexLogin = async () => {
+  const handleYandexLogin = useCallback(async () => {
     const redirectUri = import.meta.env.VITE_YANDEX_REDIRECT_URL;
 
     if (error) {
@@ -20,12 +21,12 @@ export function YandexLoginButton() {
       const serviceData = await getYandexServiceId(redirectUri);
 
       if (serviceData && redirectUri) {
-        window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceData.service_id}&redirect_uri=${redirectUri}`;
+        window.location.href = getYandexOauthUrl({ clientId: serviceData.service_id, redirectUri });
       }
     } catch (error) {
       setError('Произошла ошибка. Попробуйте позже.');
     }
-  };
+  }, []);
 
   return (
     <Flex vertical align="center" gap={10}>
