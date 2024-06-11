@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { useCallback, useEffect, useRef } from 'react';
+import { Routes, Route, useSearchParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from 'shared/store/user/userActions';
 import type { TRootState, TAppDispatch } from 'shared/store/store';
@@ -17,17 +17,50 @@ import Forum from 'pages/Forum/Forum';
 import Topic from 'pages/Topic/Topic';
 import InternalError from 'pages/InternalError/InternalError';
 import NotFound from 'pages/NotFound/NotFound';
+import { loginYandex } from 'shared/api/oauthApi/oauthApi';
 
 function WithRoutes() {
+  const isLoadingLogin = useRef<boolean>(false);
+
   const { isLoadingUserData } = useSelector((state: TRootState) => state.user);
 
   const dispatch = useDispatch<TAppDispatch>();
 
-  useEffect(() => {
-    dispatch(getUserData());
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const handleYandexLogin = useCallback(async (code: string) => {
+    const redirectUri = import.meta.env.VITE_YANDEX_REDIRECT_URL;
+
+    isLoadingLogin.current = true;
+
+    try {
+      await loginYandex({ code, redirect_uri: redirectUri });
+
+      navigate('/' + EROUTES.HOME);
+    } catch (error) {
+      navigate('/' + EROUTES.SIGN_IN);
+    } finally {
+      isLoadingLogin.current = false;
+    }
   }, []);
 
-  if (isLoadingUserData) {
+  useEffect(() => {
+    const code = searchParams.get('code');
+
+    if (code && !isLoadingLogin.current) {
+      handleYandexLogin(code);
+    }
+  }, [isLoadingLogin.current]);
+
+  useEffect(() => {
+    if (!isLoadingLogin.current) {
+      dispatch(getUserData());
+    }
+  }, [isLoadingLogin.current]);
+
+  if (isLoadingUserData || isLoadingLogin.current) {
     return <Spin>Загрузка..</Spin>;
   }
 

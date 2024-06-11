@@ -1,0 +1,15 @@
+.yandex_login__button__pre-text {
+  font-size: 18px;
+}
+
+.yandex_login__button-text {
+  color: var(--white-color);
+  font-size: 16px;
+}
+
+.yandex__login__error-text {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 16px;
+  line-height: 20px;
+}
