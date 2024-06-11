@@ -1,13 +1,13 @@
 import { Avatar, Flex, Tabs } from 'antd';
-import { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import './Profile.css';
 import { UserProfile } from 'widgets/UserProfile';
 import { UserOutlined } from '@ant-design/icons';
 import { UserEdit } from 'widgets/UserEdit';
 import { BaseUrlApi } from 'shared/config/config';
 import { useSelector } from 'react-redux';
+import { TRootState } from 'shared/store/store';
 import { ImageLoader } from 'features/ImageLoader/ImageLoader';
-import { selectUser } from 'shared/store/user/userSlice';
 
 enum EPROFILE_TAB {
   PREVIEW = 'preview',
@@ -26,9 +26,8 @@ const TABS = [
     children: <UserEdit />,
   },
 ];
-
-const Profile = () => {
-  const user = useSelector(selectUser);
+function Profile() {
+  const user = useSelector((state: TRootState) => state.user.userData);
 
   const [currentTabKey, setCurrentTabKey] = useState<EPROFILE_TAB>(EPROFILE_TAB.PREVIEW);
 
@@ -58,6 +57,6 @@ const Profile = () => {
       />
     </Flex>
   );
-};
+}
 
 export default Profile;

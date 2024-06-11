@@ -51,5 +51,6 @@ export function SortByField({ data, sortDirection, ratingFieldName }: ISortByFie
     result[insertionIndex] = value;
   }
 
+  console.log(result);
   return result;
 }
