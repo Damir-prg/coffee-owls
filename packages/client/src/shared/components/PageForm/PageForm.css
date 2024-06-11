@@ -1,5 +1,6 @@
 .form {
   min-width: 440px;
+  margin-bottom: 12px;
 }
 .form__fields {
   width: 100%;
