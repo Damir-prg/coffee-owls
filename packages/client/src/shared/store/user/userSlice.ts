@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserState } from './user.models';
 import { getUserData, logoutAction } from './userActions';
+import { TRootState } from '../store';
 
 const initialState: IUserState = {
   userData: null,
   isLoadingUserData: false,
-  isLoggedIn: false,
 };
 
 const userSlice = createSlice({
@@ -15,31 +15,26 @@ const userSlice = createSlice({
     setUserData(state, action: PayloadAction<IUserState['userData']>) {
       state.userData = action.payload;
     },
-    setIsLoggedIn(state, action: PayloadAction<IUserState['isLoggedIn']>) {
-      state.isLoggedIn = action.payload;
-    },
   },
   extraReducers: builder => {
     builder
-      .addCase(getUserData.pending, state => {
+      .addCase(getUserData.pending.type, state => {
         state.isLoadingUserData = true;
       })
-      .addCase(getUserData.fulfilled, (state, action: PayloadAction<IUserState['userData']>) => {
+      .addCase(getUserData.fulfilled.type, (state, action: PayloadAction<IUserState['userData']>) => {
         state.userData = action.payload;
-        state.isLoggedIn = true;
         state.isLoadingUserData = false;
       })
-      .addCase(getUserData.rejected, state => {
+      .addCase(getUserData.rejected.type, state => {
         state.userData = null;
-        state.isLoggedIn = false;
         state.isLoadingUserData = false;
       })
-      .addCase(logoutAction.fulfilled, state => {
+      .addCase(logoutAction.fulfilled.type, state => {
         state.userData = null;
-        state.isLoggedIn = false;
       });
   },
 });
 
-export const { setUserData, setIsLoggedIn } = userSlice.actions;
+export const { setUserData } = userSlice.actions;
+export const selectUser = (state: TRootState) => state.user.userData;
 export default userSlice.reducer;

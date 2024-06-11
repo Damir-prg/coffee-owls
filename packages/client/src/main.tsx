@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app/App';
+import { Provider } from 'react-redux';
+import { store } from 'shared/store/store';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { routes } from 'widgets/WithRoutes/WithRoutes';
+import { ConfigProvider } from 'antd';
+import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
+
 import './index.css';
+
+const router = createBrowserRouter(routes);
 
 // Регистрация serviceWorker для оффлайн режима
 if ('serviceWorker' in navigator) {
@@ -16,7 +24,9 @@ if ('serviceWorker' in navigator) {
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ConfigProvider theme={appLightThemeConfig}>
+      <RouterProvider router={router} />
+    </ConfigProvider>
+  </Provider>,
 );

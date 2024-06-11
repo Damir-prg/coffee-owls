@@ -18,7 +18,7 @@ const TABS = [
   },
 ];
 
-function LeaderBoard() {
+const LeaderBoard = () => {
   return (
     <Flex gap={32} vertical align="center">
       <Title className="title__primary">
@@ -31,6 +31,8 @@ function LeaderBoard() {
       <Tabs items={TABS} defaultActiveKey="free" />
     </Flex>
   );
-}
+};
+
+export const initLeaderBoardPage = () => Promise.resolve();
 
 export default LeaderBoard;

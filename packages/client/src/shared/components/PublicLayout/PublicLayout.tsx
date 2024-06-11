@@ -1,9 +1,10 @@
 import './PublicLayout.css';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
-import WithPublic from 'widgets/WithPublic/WithPublic';
+import { usePage } from 'shared/hooks/usePage';
 
-function PublicLayout({ children }: { children?: React.ReactNode }) {
+const PublicLayout = ({ children }: { children?: React.ReactNode }) => {
+  usePage({ initPage: initPublicLayout });
   const { Content } = Layout;
 
   return (
@@ -13,6 +14,8 @@ function PublicLayout({ children }: { children?: React.ReactNode }) {
       <Content className="public-layout__main">{children ?? <Outlet />}</Content>
     </Layout>
   );
-}
+};
 
-export default WithPublic(PublicLayout);
+export const initPublicLayout = () => Promise.resolve();
+
+export default PublicLayout;
