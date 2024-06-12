@@ -4,13 +4,9 @@ import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import PageHeader from '../PageHeader/PageHeader';
 import PageFooter from '../PageFooter/PageFooter';
-import { usePage } from 'shared/hooks/usePage';
-import { getUserData } from 'shared/store/user/userActions';
-import { selectUser } from 'shared/store/user/userSlice';
-import { TPageInitArgs } from 'widgets/WithRoutes/WithRoutes';
+import WithAuth from 'widgets/WithAuth/WithAuth';
 
-const PageLayout = ({ children }: { children?: React.ReactNode }) => {
-  usePage({ initPage: initPageLayout });
+function PageLayout({ children }: { children?: React.ReactNode }) {
   const { Header, Content, Footer } = Layout;
 
   return (
@@ -31,12 +27,6 @@ const PageLayout = ({ children }: { children?: React.ReactNode }) => {
       </Footer>
     </Layout>
   );
-};
+}
 
-export const initPageLayout = async ({ dispatch, state }: TPageInitArgs) => {
-  if (!selectUser(state)) {
-    return dispatch(getUserData());
-  }
-};
-
-export default PageLayout;
+export default WithAuth(PageLayout);

@@ -9,7 +9,7 @@ import { ForumTopicHeader } from 'widgets/ForumTopicHeader';
 
 import './Topic.css';
 
-const Topic = () => {
+export function Topic() {
   const { Paragraph } = Typography;
 
   const [topicInfo, setTopicInfo] = useState<TTopicInfo>(TopicInfo);
@@ -40,6 +40,6 @@ const Topic = () => {
       <ForumTopicComments comments={topicInfo.comments} onAddComment={handleAddComment} />
     </div>
   );
-};
+}
 
 export default Topic;

@@ -10,7 +10,7 @@ import { ForumTopicsTable } from 'widgets/ForumTopicsTable';
 
 import './Forum.css';
 
-const Forum = () => {
+function Forum() {
   const { Title } = Typography;
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -55,6 +55,6 @@ const Forum = () => {
       </Modal>
     </div>
   );
-};
+}
 
 export default Forum;
