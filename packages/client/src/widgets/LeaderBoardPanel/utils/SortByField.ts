@@ -49,6 +49,5 @@ export function SortByField({
     result[insertionIndex] = value;
   }
 
-  console.log(result);
   return result;
 }

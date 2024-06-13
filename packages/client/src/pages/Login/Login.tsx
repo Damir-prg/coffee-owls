@@ -11,6 +11,7 @@ import { TLoginFormFields, loginFormFields } from './Login.models';
 import loginImg from 'images/public-person-img.svg';
 import { login } from 'shared/api/authApi/authApi';
 import getErrorMessage from 'shared/lib/ErrorMessage';
+import { YandexLoginButton } from 'widgets/YandexLoginButton';
 
 function Login() {
   const { Title, Text } = Typography;
@@ -57,6 +58,7 @@ function Login() {
           link={{ text: 'Нет аккаунта? - зарегистрируйся, мы тебя ждём:)', path: EROUTES.SIGN_UP }}
           onSubmit={onSubmit}
         />
+        <YandexLoginButton />
       </Flex>
     </PublicWindow>
   );

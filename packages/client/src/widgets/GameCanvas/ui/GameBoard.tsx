@@ -1,9 +1,13 @@
-import { useRef, useEffect, FC } from 'react';
+import { useRef, useEffect, FC, useContext } from 'react';
 import { Board } from '../lib/board';
 import '../styles/GameBoard.css';
 import { BOARD_CONTROLS } from 'widgets/GameCanvas/types/boardTypes';
+import { GameContextInstance } from 'entities/GameContext';
+import { useFinishGame } from '../hooks/useFinishGame';
 
 export const GameBoard: FC = () => {
+  const { gameMode } = useContext(GameContextInstance);
+  const [finishGame] = useFinishGame(gameMode);
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   const handleFullscreen = async (event: KeyboardEvent) => {
@@ -45,6 +49,7 @@ export const GameBoard: FC = () => {
     }
 
     return () => {
+      finishGame();
       Board.deleteInstance();
     };
   }, []);

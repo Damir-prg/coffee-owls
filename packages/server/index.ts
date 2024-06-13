@@ -1,12 +1,14 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 
-import express from 'express';
+import express, { Request as ExpressRequest } from 'express';
 import path from 'path';
 
 import fs from 'fs/promises';
 import { createServer as createViteServer, ViteDevServer } from 'vite';
+import serialize from 'serialize-javascript';
 
 const port = Number(process.env.SERVER_PORT) || 3001;
 
@@ -19,6 +21,7 @@ const clientPath = path.join(__dirname, `${isDev ? '../' : '../../'}`, 'client')
 
 async function createServer() {
   const app = express();
+  app.use(cookieParser());
   app.use(cors());
 
   let vite: ViteDevServer | undefined;
@@ -33,12 +36,25 @@ async function createServer() {
     app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
   }
 
+  app.get('/user', (_, res) => {
+    res.json({
+      id: 12345,
+      first_name: 'Coffee',
+      second_name: 'Owls',
+      display_name: 'Coffee Owls',
+      login: 'CoffeeOwls',
+      email: 'coffee-owls@yandex.ru',
+      phone: '',
+      avatar: '',
+    });
+  });
+
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl;
 
     try {
       // Создаём переменные
-      let render: () => Promise<string>;
+      let render: (req: ExpressRequest) => Promise<{ html: string; initialState: unknown; styleTags: string }>;
       let template: string;
 
       if (vite) {
@@ -55,8 +71,16 @@ async function createServer() {
         render = (await import(pathToServer)).render;
       }
 
-      const appHtml = await render();
-      const html = template.replace('<!--ssr-outlet-->', appHtml);
+      const { html: appHtml, initialState, styleTags } = await render(req);
+      const html = template
+        .replace('<!--ssr-styles-->', `<style>${styleTags}</style>`)
+        .replace('<!--ssr-outlet-->', appHtml)
+        .replace(
+          '<!--ssr-initial-state-->',
+          `<script>window.APP_INITIAL_STATE = ${serialize(initialState, {
+            isJSON: true,
+          })}</script>`,
+        );
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
