@@ -8,7 +8,7 @@ import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import userSlice from './user/userSlice';
 import ssrSlice from './ssr/ssrSlice';
-
+import boardSlice from './board/boardSlice';
 declare global {
   // отключаю правило для интерфейсов, чтобы обратиться к глобальному типу Window
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -20,6 +20,7 @@ declare global {
 export const reducer = combineReducers({
   user: userSlice,
   ssr: ssrSlice,
+  board: boardSlice,
 });
 
 export const store = configureStore({

@@ -3,7 +3,10 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IBoardState } from './board.models';
 
 const initialState: IBoardState = {
-  score: 0,
+  score: {
+    free: 0,
+    time: 0,
+  },
   time: ':',
 };
 
