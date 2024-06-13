@@ -6,9 +6,9 @@ export enum EGAME_MODE {
 }
 
 export interface ILeaderBoardData {
-  id: string;
-  username: string;
-  score: number;
+  id?: number;
+  username?: string;
+  score?: number;
   avatar?: string;
   time?: string;
 }
