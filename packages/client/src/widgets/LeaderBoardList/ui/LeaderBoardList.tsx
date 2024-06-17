@@ -3,11 +3,11 @@ import { Button, Empty, Flex, List } from 'antd';
 import '../styles/LeaderBoardList.css';
 import { LeaderBoardListItem } from 'widgets/LeaderBoardList/ui/LeaderBoardListItem';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { ILeaderBoardResponse } from 'shared/api/leaderBoardApi/leaderBoard.interface';
+import { ILeaderBoardGetResponse } from 'shared/api/leaderBoardApi/leaderBoard.interface';
 import { TSortDirection } from 'widgets/LeaderBoardPanel/types/LeaderBoardPanel.types';
 
 export const LeaderBoardList: FC<{
-  data: Array<ILeaderBoardResponse>;
+  data: Array<ILeaderBoardGetResponse>;
   filterOnClick: (direction: TSortDirection) => void;
 }> = ({ data, filterOnClick }) => {
   if (data.length < 4) {

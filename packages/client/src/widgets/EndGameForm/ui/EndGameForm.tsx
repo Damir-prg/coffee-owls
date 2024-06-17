@@ -1,17 +1,23 @@
 import { Button, Flex, Typography } from 'antd';
 import { GameContentContainer } from 'entities/GameContentContainer';
 import { GameContextInstance } from 'entities/GameContext';
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import EROUTES from 'shared/lib/RoutesEnum';
 import Link from 'shared/components/Link/Link';
 import { EGAME_SCREEN_VALUES } from 'shared/constants/game';
+import { useFinishGame } from '../hooks/useFinishGame';
 
 const { Title, Text } = Typography;
 
 export const EndGameForm = () => {
-  const { setGameScreen } = useContext(GameContextInstance);
+  const { setGameScreen, gameMode } = useContext(GameContextInstance);
+  const [finishGame] = useFinishGame(gameMode);
 
   const handleStartNewGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.START_GAME), []);
+
+  useEffect(() => {
+    finishGame();
+  }, []);
 
   return (
     <GameContentContainer>

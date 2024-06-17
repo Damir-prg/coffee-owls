@@ -1,28 +1,26 @@
 import '../styles/GameInfo.css';
 import { Alert, Button, List, Typography } from 'antd';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { EGAME_MODE_VALUES, EGAME_SCREEN_VALUES, gameModeTranslate } from 'shared/constants/game';
 import { GameContextInstance } from 'entities/GameContext';
 import { Board } from '../lib/board';
 import { GameTimer } from './GameTimer';
-
+import { useScore } from '../hooks/useScore';
 const HINT_TEXT = 'Для перехода в полноэкранный режим нажмите ENTER';
 
 export const GameInfo = () => {
-  const [score, setScore] = useState<number>(0);
   const { gameMode, setGameScreen } = useContext(GameContextInstance);
+  const { score, currentBestScore, handleScore } = useScore(gameMode);
 
-  const handleScore = useCallback((points: number) => setScore((score: number) => score + points), [setScore]);
   const selectedGameMode = useMemo(() => gameModeTranslate[gameMode].toLowerCase(), [gameMode]);
   const handleFinishGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME), [setGameScreen]);
 
   const dataSource = useMemo(() => {
-    console.log(selectedGameMode);
     if (gameMode === EGAME_MODE_VALUES.FREE_PLAY) {
-      return [selectedGameMode, score, score];
+      return [selectedGameMode, score, currentBestScore];
     }
-    return [selectedGameMode, score, score, <GameTimer />];
-  }, [selectedGameMode, score, gameMode]);
+    return [selectedGameMode, score, currentBestScore, <GameTimer />];
+  }, [selectedGameMode, score, currentBestScore, gameMode]);
 
   const listTitles = useMemo(() => {
     if (gameMode === EGAME_MODE_VALUES.FREE_PLAY) {

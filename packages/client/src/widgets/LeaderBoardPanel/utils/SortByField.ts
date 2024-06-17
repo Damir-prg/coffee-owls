@@ -1,13 +1,17 @@
-import { ILeaderBoardResponse, TRatingFieldName } from 'shared/api/leaderBoardApi/leaderBoard.interface';
+import { ILeaderBoardGetResponse, TRatingFieldName } from 'shared/api/leaderBoardApi/leaderBoard.interface';
 import { TSortDirection } from 'widgets/LeaderBoardPanel/types/LeaderBoardPanel.types';
 
 export interface ISortByFieldParams {
-  data: ReadonlyArray<ILeaderBoardResponse>;
+  data: Array<ILeaderBoardGetResponse>;
   sortDirection: TSortDirection;
   ratingFieldName: TRatingFieldName;
 }
 
-export function SortByField({ data, sortDirection, ratingFieldName }: ISortByFieldParams): Array<ILeaderBoardResponse> {
+export function SortByField({
+  data,
+  sortDirection,
+  ratingFieldName,
+}: ISortByFieldParams): Array<ILeaderBoardGetResponse> {
   const length = data.length;
   if (!length) {
     return [];
@@ -17,23 +21,17 @@ export function SortByField({ data, sortDirection, ratingFieldName }: ISortByFie
 
   for (let i = 1; i < length; i++) {
     const currentIValue: number =
-      ratingFieldName === 'score'
-        ? result[i].data[ratingFieldName]
-        : Number(result[i].data[ratingFieldName].split(':')[0]);
+      ratingFieldName === 'score' ? result[i]?.data?.score : Number(result[i]?.data?.[ratingFieldName]?.split(':')[0]);
 
     /**
      * Находим индекс, на который нужно переместить значение
      * */
     const insertionIndex: number = (() => {
       for (let j = i - 1; j >= 0; j--) {
-        /**
-         * TODO
-         * Так как пока не понятно, в каком формате будет приходить время, то сделала сортировку по минутам
-         * */
         const currentJValue: number =
           ratingFieldName === 'score'
             ? result[j].data[ratingFieldName]
-            : Number(result[j].data[ratingFieldName].split(':')[0]);
+            : Number(result[j]?.data?.[ratingFieldName]?.split(':')[1]);
 
         const condition = sortDirection === 'DESC' ? currentJValue > currentIValue : currentJValue < currentIValue;
         if (condition) {

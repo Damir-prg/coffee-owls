@@ -1,5 +1,5 @@
 import { ILeaderBoardData } from 'shared/api/leaderBoardApi/leaderBoard.interface';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Avatar, Flex, List } from 'antd';
 import { Typography } from 'antd';
 import '../styles/LeaderBoardList.css';
