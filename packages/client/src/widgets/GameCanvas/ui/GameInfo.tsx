@@ -10,7 +10,7 @@ const HINT_TEXT = 'Для перехода в полноэкранный реж�
 
 export const GameInfo = () => {
   const { gameMode, setGameScreen } = useContext(GameContextInstance);
-  const [score, currentBestScore, handleScore] = useScore(gameMode);
+  const { score, currentBestScore, handleScore } = useScore(gameMode);
 
   const selectedGameMode = useMemo(() => gameModeTranslate[gameMode].toLowerCase(), [gameMode]);
   const handleFinishGame = useCallback(() => setGameScreen(EGAME_SCREEN_VALUES.END_GAME), [setGameScreen]);

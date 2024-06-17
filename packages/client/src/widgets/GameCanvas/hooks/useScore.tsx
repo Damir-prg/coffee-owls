@@ -9,7 +9,7 @@ export const useScore = (gameMode: EGAME_MODE_VALUES) => {
   const storeScore = useSelector((state: TRootState) => state.board.score);
   const dispatch = useDispatch();
 
-  const currentBestScore = useMemo(() => {
+  const currentBestScore = useMemo((): number => {
     if (gameMode === EGAME_MODE_VALUES.FREE_PLAY) {
       return storeScore.free;
     }
@@ -32,5 +32,5 @@ export const useScore = (gameMode: EGAME_MODE_VALUES) => {
     [setScore, currentBestScore, gameMode],
   );
 
-  return [score, currentBestScore, handleScore] as const;
+  return { score, currentBestScore, handleScore } as const;
 };
