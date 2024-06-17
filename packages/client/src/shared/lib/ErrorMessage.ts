@@ -14,3 +14,11 @@ export default function getErrorMessage(error: unknown | null): string {
   }
   return ERROR_MESSAGES[errorStatus || 0];
 }
+
+export function getErrorStatus(error: unknown | null): number | undefined {
+  let errorStatus: number | undefined;
+  if (error && typeof error === 'object' && 'status' in error) {
+    errorStatus = (error as { status?: number }).status;
+  }
+  return errorStatus;
+}
