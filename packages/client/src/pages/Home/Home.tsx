@@ -1,16 +1,55 @@
-import { Button, Flex, Image, Typography } from 'antd';
+import { Button, Flex, Image, Spin, Typography } from 'antd';
 import './Home.css';
 import homeImg from 'images/home.jpeg';
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import EROUTES from 'shared/lib/RoutesEnum';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { loginYandex } from 'shared/api/oauthApi/oauthApi';
+import { getErrorStatus } from 'shared/lib/ErrorMessage';
 
 const { Text, Title } = Typography;
 
 const Home = () => {
+  const isLoadingLogin = useRef<boolean>(false);
+
   const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const handleYandexLogin = useCallback(async (code: string) => {
+    const redirectUri = import.meta.env.VITE_YANDEX_REDIRECT_URL;
+
+    isLoadingLogin.current = true;
+
+    try {
+      await loginYandex({ code, redirect_uri: redirectUri });
+
+      navigate('/' + EROUTES.HOME);
+    } catch (error) {
+      if (getErrorStatus(error) === 400) {
+        navigate('/' + EROUTES.HOME);
+      } else {
+        navigate('/' + EROUTES.SIGN_IN);
+      }
+    } finally {
+      isLoadingLogin.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
+    const code = searchParams.get('code');
+
+    if (code && !isLoadingLogin.current) {
+      handleYandexLogin(code);
+    }
+  }, [isLoadingLogin.current]);
+
   function handleStartGame() {
     navigate(`/${EROUTES.GAME}`);
+  }
+
+  if (isLoadingLogin.current) {
+    return <Spin>Загрузка..</Spin>;
   }
 
   return (
