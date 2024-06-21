@@ -2,14 +2,19 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import Forum from 'pages/Forum/Forum';
+import { Provider } from 'react-redux';
+import { store } from 'shared/store/store';
 
 describe('Страница форума', () => {
   beforeEach(() => {
     act(() => {
       render(
-        <BrowserRouter>
-          <Forum />
-        </BrowserRouter>,
+        <Provider store={store}>
+          <BrowserRouter>
+            <Forum />
+          </BrowserRouter>
+          ,
+        </Provider>,
       );
     });
   });
