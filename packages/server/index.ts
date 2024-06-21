@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { createClientAndConnect } from './db';
+
 dotenv.config();
 
 import express, { Request as ExpressRequest } from 'express';
@@ -20,6 +22,8 @@ const isDev = process.env.NODE_ENV === 'development';
 const clientPath = path.join(__dirname, `${isDev ? '../' : '../../'}`, 'client');
 
 async function createServer() {
+  await createClientAndConnect();
+
   const app = express();
   app.use(cookieParser());
   app.use(cors());
