@@ -7,7 +7,7 @@ function PageFooter() {
 
   return (
     <>
-      <Image width={64} src={footerImg} preview={false} alt="Логотип команды"></Image>
+      <Image width={64} src={footerImg} preview={false} alt="Логотип команды" className="team-logo"></Image>
       <Text className="footer__copy" strong>
         &copy;Coffee Owls, {new Date().getFullYear()}
       </Text>

@@ -27,3 +27,8 @@
 .ant-menu-item-icon {
   margin: 0 8px 0 0;
 }
+
+.theme-button {
+  position: absolute;
+  left: 150px;
+}

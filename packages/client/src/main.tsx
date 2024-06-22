@@ -1,15 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from 'shared/store/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { routes } from 'widgets/WithRoutes/WithRoutes';
 import { ConfigProvider } from 'antd';
-import { appLightThemeConfig } from 'shared/styles/ant/ant.config';
+import { appLightThemeConfig, appDarkThemeConfig } from 'shared/styles/ant/ant.config';
+import { TRootState } from 'shared/store/store';
+import { loadTheme } from 'shared/store/themeSlice';
+import { ETHEME } from 'shared/enums/theme';
 
 import './index.css';
 
 const router = createBrowserRouter(routes);
+
+const App = () => {
+  const dispatch = useDispatch();
+  const theme = useSelector((state: TRootState) => state.theme.theme);
+
+  React.useEffect(() => {
+    dispatch(loadTheme());
+  }, [dispatch]);
+
+  return (
+    <ConfigProvider theme={theme === ETHEME.Light ? appLightThemeConfig : appDarkThemeConfig}>
+      <RouterProvider router={router} />
+    </ConfigProvider>
+  );
+};
 
 // Регистрация serviceWorker для оффлайн режима
 if ('serviceWorker' in navigator) {
@@ -25,8 +43,6 @@ if ('serviceWorker' in navigator) {
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <Provider store={store}>
-    <ConfigProvider theme={appLightThemeConfig}>
-      <RouterProvider router={router} />
-    </ConfigProvider>
+    <App />
   </Provider>,
 );
