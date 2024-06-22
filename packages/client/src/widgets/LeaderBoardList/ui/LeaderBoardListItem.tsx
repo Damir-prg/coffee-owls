@@ -18,7 +18,7 @@ export const LeaderBoardListItem: FC<{ data: ILeaderBoardData; index: number }> 
       <List.Item.Meta title={username} avatar={<AvatarItem avatar={avatar} />} />
       <Flex gap={16} vertical={false}>
         <InfoBlock title="Время" value={time} />
-        <InfoBlock title="Очки" value={score.toString()} />
+        {score && <InfoBlock title="Очки" value={score.toString()} />}
       </Flex>
     </List.Item>
   );

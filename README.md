@@ -6,14 +6,17 @@
 4. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
 5. Выполните команду `yarn dev --scope=server` чтобы запустить только server
 
-## Как запускать SSR 
+## Как запускать SSR
+
 Запустить в дев режиме можно следующими командами:
-- через  `"dev"` в `packages/server/package.json`
+
+- через `"dev"` в `packages/server/package.json`
 - через `"dev:server"`(`"lerna run dev --scope=server"`) в глобальном `package.json`
 - через `"dev:ssr"` в `packages/client/package.json`
 
 Запустить в режиме прода можно следующими командами:
-- через  `"build"` и `"preview` в `packages/server/package.json`
+
+- через `"build"` и `"preview` в `packages/server/package.json`
 - через `""build:ssr""` и `"preview:ssr"` в глобальном `package.json`
 
 ### Видео с демонстрацией
@@ -63,3 +66,12 @@ https://disk.yandex.ru/i/zY1-u1tAnmuMaA
 
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
 Если очень-очень нужно пропустить проверки, используйте `--no-verify` (но не злоупотребляйте :)
+
+## Docker
+
+Для сборки образа приложения и запуска контейнеров использовать:
+
+`docker-compose build`
+`docker-compose up`
+
+При локальной разработке веб-приложения иcпользовать для POSTGRES_HOST значение localhost, при тестовом билде докер контейнера postgres_db, также необходимо заполнить остальные переменные окружения для работы с postgres и pgadmin

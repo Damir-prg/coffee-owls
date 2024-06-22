@@ -21,7 +21,9 @@ export function SortByField({
 
   for (let i = 1; i < length; i++) {
     const currentIValue: number =
-      ratingFieldName === 'score' ? result[i]?.data?.score : Number(result[i]?.data?.[ratingFieldName]?.split(':')[0]);
+      ratingFieldName === 'score'
+        ? result[i]?.data?.score ?? 0
+        : Number(result[i]?.data?.[ratingFieldName]?.split(':')[0]);
 
     /**
      * Находим индекс, на который нужно переместить значение
@@ -30,7 +32,7 @@ export function SortByField({
       for (let j = i - 1; j >= 0; j--) {
         const currentJValue: number =
           ratingFieldName === 'score'
-            ? result[j].data[ratingFieldName]
+            ? result[j].data[ratingFieldName] ?? 0
             : Number(result[j]?.data?.[ratingFieldName]?.split(':')[1]);
 
         const condition = sortDirection === 'DESC' ? currentJValue > currentIValue : currentJValue < currentIValue;
