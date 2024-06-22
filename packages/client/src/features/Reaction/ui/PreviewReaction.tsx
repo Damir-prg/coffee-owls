@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TRootState } from 'shared/store/store';
 import { updateReaction, getSelectedComment } from 'shared/store/forum/forumSlice';
 import { TopicContext } from 'pages/Topic/Topic';
+import { delay } from 'shared/utils/delay';
 
 export const PreviewReaction = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export const PreviewReaction = () => {
 
   const removeReaction = useCallback(async (selectedReaction: EREACTION) => {
     /** Для отрисовки анимации клика */
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await delay(800);
     dispatch(
       updateReaction({
         topicID,

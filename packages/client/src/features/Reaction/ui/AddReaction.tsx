@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useMemo } from 'react';
+import React, { FC, useCallback, useContext } from 'react';
 import { Popover } from 'antd';
 import { EREACTION } from 'features/Reaction/types/AddReaction.types';
 import '../styles/Reaction.css';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { updateReaction } from 'shared/store/forum/forumSlice';
 import { TopicContext } from 'pages/Topic/Topic';
 
-export const AddReaction: FC<{ children?: React.ReactNode }> = ({ children }) => {
+export const AddReaction: FC<{ children?: React.ReactNode }> = React.memo(({ children }) => {
   const dispatch = useDispatch();
   const topicID = useContext(TopicContext) || 0;
   const commentID = useContext(CommentContext) || 0;
@@ -24,17 +24,14 @@ export const AddReaction: FC<{ children?: React.ReactNode }> = ({ children }) =>
     );
   }, []);
 
-  return useMemo(
-    () => (
-      <Popover
-        content={<ReactionList reactions={Object.values(EREACTION)} onClick={addReaction} />}
-        placement="rightTop"
-        trigger="contextMenu"
-        className="add-reaction"
-        overlayClassName="add-reaction-modal">
-        {children}
-      </Popover>
-    ),
-    [],
+  return (
+    <Popover
+      content={<ReactionList reactions={Object.values(EREACTION)} onClick={addReaction} />}
+      placement="rightTop"
+      trigger="contextMenu"
+      className="add-reaction"
+      overlayClassName="add-reaction-modal">
+      {children}
+    </Popover>
   );
-};
+});
