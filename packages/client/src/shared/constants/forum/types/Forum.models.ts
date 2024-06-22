@@ -1,9 +1,14 @@
-export type TForumItem = {
-  key: string;
-  color: string;
+import { TAuthor, TTopicComment } from 'shared/constants/forum';
+
+export interface IForumTopic {
+  id: number;
   title: string;
-  comments: number;
-};
+  description: string;
+  color: string;
+  author: TAuthor;
+  created_at: string;
+  comments: TTopicComment[];
+}
 
 export type TAddTopicFormValues = {
   title: string;
