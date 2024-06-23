@@ -1,17 +1,9 @@
-import { TAuthor, TTopicComment } from 'shared/constants/forum';
+import { TTopicComment } from 'shared/constants/forum';
+import { ITopicDetails } from 'shared/api/forumApi/forumApi.interface';
 
-export interface IForumTopic {
-  id: number;
-  title: string;
-  description: string;
+export interface IForumTopic extends ITopicDetails {
   color: string;
-  author: TAuthor;
-  created_at: string;
   comments: TTopicComment[];
 }
-
-export type TAddTopicFormValues = {
-  title: string;
-};
 
 export const ADD_FORUM_FORM_ID = 'add-topic-form';

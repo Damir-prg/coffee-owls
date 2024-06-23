@@ -1,42 +1,42 @@
 import { IUser } from '../authApi/auth.interface';
 
 export interface IID {
-  id?: number;
+  id: number;
 }
 
 interface IDateCreate {
-  createdAt?: string;
+  createdAt: string;
 }
 
 interface IDateUpdate {
-  updatedAt?: string;
+  updatedAt: string;
 }
 
 interface ITopicAuthor {
-  author?: Partial<IUser>;
+  author: IUser;
 }
 
 export interface ICreateTopic {
-  title?: string;
-  content?: string;
-  authorId?: number;
+  title: string;
+  content: string;
+  authorId: number;
 }
 
 export interface ITopicComment extends IID, IDateCreate, IDateUpdate, ITopicAuthor {
-  text?: string;
+  text: string;
 }
 
 export interface ICreateComment {
-  text?: string;
-  userId?: number;
+  text: string;
+  userId: number;
 }
 
 export interface ITopicItem extends IID, IDateCreate {
-  title?: string;
-  commentCount?: string;
+  title: string;
+  commentCount: string;
 }
 
 export interface ITopicDetails extends ITopicItem, ITopicAuthor, IDateUpdate {
-  description?: string;
-  comments?: Array<ITopicComment>;
+  description: string;
+  comments: Array<ITopicComment>;
 }

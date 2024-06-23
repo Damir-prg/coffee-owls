@@ -33,12 +33,12 @@ export function ForumTopicComments({ comments, onAddComment }: TProps) {
                 <Flex align="center" gap={16}>
                   <Avatar shape="circle" size={36} icon={<UserOutlined />} />
                   <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
-                    <Paragraph className="topic__info-text">{comment.author.username}</Paragraph>
-                    <Paragraph className="topic__info-text">{comment.created_at}</Paragraph>
+                    <Paragraph className="topic__info-text">{comment.author.display_name}</Paragraph>
+                    <Paragraph className="topic__info-text">{comment.createdAt}</Paragraph>
                   </Flex>
                 </Flex>
                 <Flex justify="space-between" align="flex-end" gap={8}>
-                  <Paragraph className="topic__comments-content">{comment.content}</Paragraph>
+                  <Paragraph className="topic__comments-content">{comment.text}</Paragraph>
                   <PreviewReaction />
                 </Flex>
               </AddReaction>

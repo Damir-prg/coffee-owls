@@ -1,14 +1,6 @@
 import { EREACTION } from 'features/Reaction/types/AddReaction.types';
+import { ITopicComment } from 'shared/api/forumApi/forumApi.interface';
 
-export type TAuthor = {
-  username: string;
-  avatar: string;
-};
-
-export type TTopicComment = {
-  id: number;
-  content: string;
-  author: TAuthor;
-  created_at: string;
+export type TTopicComment = ITopicComment & {
   reactions: Array<EREACTION>;
 };
