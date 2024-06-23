@@ -1,11 +1,11 @@
 import { Form, Input } from 'antd';
-import { ADD_FORUM_FORM_ID, TAddTopicFormValues } from 'shared/constants/forum';
+import { ADD_FORUM_FORM_ID } from 'shared/constants/forum';
 
 import './AddTopicForm.css';
 import { ICreateTopic } from 'shared/api/forumApi/forumApi.interface';
 
 type TProps = {
-  onAddTopic: (values: TAddTopicFormValues) => void;
+  onAddTopic: (values: Omit<ICreateTopic, 'authorId'>) => void;
 };
 
 export const AddTopicForm = ({ onAddTopic }: TProps) => {
