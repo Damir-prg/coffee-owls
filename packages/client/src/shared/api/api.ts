@@ -1,4 +1,3 @@
-import { BaseUrlApi } from 'shared/config/config';
 import { EMETHOD, defaultOptions } from './types';
 import type { TOptions, TRequestFunction } from './types';
 
@@ -21,7 +20,7 @@ const apiRequest = async <TResult>(url: string, options: TOptions = defaultOptio
   }
 
   try {
-    const response = await fetch(BaseUrlApi + url, requestOptions);
+    const response = await fetch(url, requestOptions);
     return handleResponse(response, responseType);
   } catch (err) {
     console.error(err);

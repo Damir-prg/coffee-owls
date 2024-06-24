@@ -4,60 +4,64 @@ import { generateRandomColor } from 'shared/utils/RandomColorGenerator';
 import { EREACTION } from 'features/Reaction/types/AddReaction.types';
 import { IForumTopic } from 'shared/constants/forum/types/Forum.models';
 
+const getMockUser = (id: number): IForumTopic['author'] => {
+  return {
+    avatar: '',
+    id: id,
+    display_name: `user${id}`,
+    email: `user${id}`,
+    first_name: `user${id}`,
+    login: `user${id}`,
+    phone: `user${id}`,
+    second_name: `user${id}`,
+  };
+};
+
 export const TEST_TOPICS: Array<IForumTopic> = [
   {
     id: 0,
     title: 'Стратегия',
     description: 'Описание стратегий',
     color: generateRandomColor(),
-    author: {
-      username: 'user01',
-      avatar: '',
-    },
-    created_at: '12.02.2021',
+    author: getMockUser(1),
+    createdAt: '12.02.2021',
     comments: [],
+    commentCount: '0',
+    updatedAt: '12.02.2021',
   },
   {
-    id: 1,
-    title: 'Новые Стратегии игры',
-    description: 'Опишите свои стратегии игры...',
+    id: 2,
+    title: 'Стратегия',
+    description: 'Описание стратегий',
     color: generateRandomColor(),
-    author: {
-      username: 'user01',
-      avatar: '',
-    },
-    created_at: '12.02.2021',
+    author: getMockUser(2),
+    createdAt: '12.02.2021',
+    commentCount: '0',
+    updatedAt: '12.02.2021',
     comments: [
       {
         id: 0,
-        content: 'Hello, Test',
-        author: {
-          username: 'user02',
-          avatar: '',
-        },
-        created_at: '12.02.2024',
-        reactions: [],
+        author: getMockUser(3),
+        createdAt: '12.02.2021',
+        reactions: [EREACTION.LOVE, EREACTION.FIRE, EREACTION.EYES],
+        text: 'Hello, Test',
+        updatedAt: '12.02.2021',
       },
       {
         id: 1,
-        content: 'Hello, Test',
-        author: {
-          username: 'burbur',
-          avatar: '',
-        },
-        created_at: '13.02.2024',
+        author: getMockUser(3),
+        createdAt: '12.02.2021',
         reactions: [],
+        text: 'Hello, Test 2',
+        updatedAt: '12.02.2021',
       },
       {
         id: 2,
-        content:
-          'Hello, Test.  A simple popup menu to provide extra information or operations. A simple popup menu to provide extra information or operations. A simple popup menu to provide extra information or operations.A simple popup menu to provide extra information or operations.',
-        author: {
-          username: 'name',
-          avatar: '',
-        },
-        created_at: '16.02.2024',
-        reactions: [EREACTION.LOVE, EREACTION.FIRE],
+        author: getMockUser(4),
+        createdAt: '12.02.2021',
+        reactions: [EREACTION.LOVE, EREACTION.FIRE, EREACTION.EYES],
+        text: 'Hello, Test 3',
+        updatedAt: '12.02.2021',
       },
     ],
   },

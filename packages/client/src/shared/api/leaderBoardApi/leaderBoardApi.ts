@@ -6,8 +6,9 @@ import {
   ILeaderBoardAddRequest,
 } from './leaderBoard.interface';
 import api from '../api';
+import { BaseUrlApi } from 'shared/config/config';
 
-const leaderBoardUrl = '/leaderboard';
+const leaderBoardUrl = BaseUrlApi + '/leaderboard';
 
 export const leaderBoardApiGet = (
   type: EGAME_MODE,

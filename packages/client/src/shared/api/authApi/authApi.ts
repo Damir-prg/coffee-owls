@@ -1,8 +1,9 @@
 import { ILoginRequest, IRegistrationRequest } from 'shared/interfaces/IAuthData';
 import api from '../api';
 import { IUser } from 'shared/api/authApi/auth.interface';
+import { BaseUrlApi } from 'shared/config/config';
 
-const authUrl = '/auth';
+const authUrl = BaseUrlApi + '/auth';
 
 export const getUser = (): Promise<IUser | null> => {
   return api.get(`${authUrl}/user`);

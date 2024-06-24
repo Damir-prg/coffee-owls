@@ -11,6 +11,7 @@ import { addComment, getSelectedTopic } from 'shared/store/forum/forumSlice';
 import { TRootState } from 'shared/store/store';
 import { useLocation } from 'react-router-dom';
 import { selectUser } from 'shared/store/user/userSlice';
+import { createComment } from 'shared/api/forumApi/forumApi';
 
 /** Храним id топика */
 export const TopicContext = createContext<number | null>(null);
@@ -25,19 +26,29 @@ const Topic = () => {
   const topic = useSelector(state => getSelectedTopic(topicID)(state as TRootState));
   const dispatch = useDispatch();
 
-  const handleAddComment = useCallback((message: string) => {
-    const date = new Date();
+  const handleAddComment = useCallback(async (message: string) => {
+    if (!user) {
+      return console.error('User id is not available');
+    }
+
+    const createdComment = await createComment(topicID, { text: message, userId: user?.id as number });
+
+    if (!createdComment) {
+      return console.error('Error during adding comment');
+    }
+
+    const createDate = new Date(createdComment.createdAt);
+    const updateDate = new Date(createdComment.updatedAt);
+
     dispatch(
       addComment({
         topicID,
         comment: {
-          id: topic?.comments.length || 0,
-          content: message,
-          created_at: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
-          author: {
-            username: user?.display_name || '',
-            avatar: user?.avatar || '',
-          },
+          updatedAt: `${updateDate.getDay()}.${updateDate.getMonth()}.${updateDate.getFullYear()}`,
+          id: createdComment.id,
+          text: createdComment.text,
+          createdAt: `${createDate.getDay()}.${createDate.getMonth()}.${createDate.getFullYear()}`,
+          author: createdComment.author,
           reactions: [],
         },
       }),
@@ -56,8 +67,8 @@ const Topic = () => {
         <Flex className="topic__info-header" align="center" gap={16}>
           <Avatar shape="circle" size={48} icon={<UserOutlined />} />
           <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
-            <Paragraph className="topic__info-text">{topic.author.username}</Paragraph>
-            <Paragraph className="topic__info-text">{topic.created_at}</Paragraph>
+            <Paragraph className="topic__info-text">{topic.author.display_name}</Paragraph>
+            <Paragraph className="topic__info-text">{topic.createdAt}</Paragraph>
           </Flex>
           <div style={{ backgroundColor: topic.color }} className="topic__info-tag" />
         </Flex>
