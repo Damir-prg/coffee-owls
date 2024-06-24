@@ -2,19 +2,25 @@ import { Typography, Flex, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useCallback, useState } from 'react';
 
-import { ADD_FORUM_FORM_ID, TAddTopicFormValues, TForumItem } from 'shared/constants/forum';
+import { ADD_FORUM_FORM_ID, TAddTopicFormValues } from 'shared/constants/forum';
 import { AddTopicForm } from 'features/AddForumTopic';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 import { generateRandomColor } from 'shared/utils/RandomColorGenerator';
 import { ForumTopicsTable } from 'widgets/ForumTopicsTable';
 
 import './Forum.css';
+import { addTopics, getTopics } from 'shared/store/forum/forumSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from 'shared/store/user/userSlice';
 
 const Forum = () => {
   const { Title } = Typography;
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [topics, setTopics] = useState<TForumItem[]>([]);
+
+  const user = useSelector(selectUser);
+  const topics = useSelector(getTopics);
+  const dispatch = useDispatch();
 
   const handleOpenModal = useCallback(() => setIsModalOpen(true), []);
 
@@ -22,8 +28,24 @@ const Forum = () => {
 
   const handleAddTopic = ({ title }: TAddTopicFormValues) => {
     const randomColor = generateRandomColor();
+    const date = new Date();
 
-    setTopics(current => [...current, { key: current.length.toString(), color: randomColor, title, comments: 0 }]);
+    dispatch(
+      addTopics([
+        {
+          id: topics.length,
+          color: randomColor,
+          title,
+          description: '',
+          created_at: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
+          author: {
+            username: user?.display_name || '',
+            avatar: user?.avatar || '',
+          },
+          comments: [],
+        },
+      ]),
+    );
   };
 
   return (

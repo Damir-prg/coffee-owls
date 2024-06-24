@@ -1,11 +1,10 @@
 import { Flex, Form, Input } from 'antd';
-import { TTopicComment } from 'shared/constants/forum';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
 
 import './AddTopicCommentForm.css';
 
 type TProps = {
-  onAddComment: (coment: TTopicComment) => void;
+  onAddComment: (message: string) => void;
 };
 
 export function AddTopicCommentForm({ onAddComment }: TProps) {
@@ -13,15 +12,7 @@ export function AddTopicCommentForm({ onAddComment }: TProps) {
 
   const handleSubmit = ({ message }: { message: string }) => {
     if (message) {
-      onAddComment({
-        id: 1,
-        content: message,
-        author: {
-          username: 'user1',
-          avatar: '',
-        },
-        created_at: '10.02.2021',
-      });
+      onAddComment(message);
       form.resetFields();
     }
   };
