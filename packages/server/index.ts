@@ -2,6 +2,10 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { createClientAndConnect } from './db';
+import { dbConnect } from './init';
+import { createUser, getUserById } from './controllers/user.controller';
+import { mockUser } from './mocks';
+import { router } from './routes';
 
 dotenv.config();
 
@@ -24,9 +28,25 @@ const clientPath = path.join(__dirname, `${isDev ? '../' : '../../'}`, 'client')
 async function createServer() {
   await createClientAndConnect();
 
+  dbConnect().then(async () => {
+    /* Проверка на наличие пользователя в базе */
+    try {
+      const currentUser = await getUserById(mockUser.id);
+      if (currentUser) {
+        console.log('User finded: ', currentUser);
+      } else {
+        await createUser(mockUser);
+        console.log('User created: ', mockUser);
+      }
+    } catch (error) {
+      console.error('Error in database operation:', error);
+    }
+  });
+
   const app = express();
   app.use(cookieParser());
   app.use(cors());
+  app.use(express.json());
 
   let vite: ViteDevServer | undefined;
   if (isDev) {
@@ -40,17 +60,10 @@ async function createServer() {
     app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
   }
 
+  app.use('/api', router);
+
   app.get('/user', (_, res) => {
-    res.json({
-      id: 12345,
-      first_name: 'Coffee',
-      second_name: 'Owls',
-      display_name: 'Coffee Owls',
-      login: 'CoffeeOwls',
-      email: 'coffee-owls@yandex.ru',
-      phone: '',
-      avatar: '',
-    });
+    res.json(mockUser);
   });
 
   app.get('*', async (req, res, next) => {

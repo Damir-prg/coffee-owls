@@ -17,6 +17,9 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "pg": "^8.8.0",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6",
     "serialize-javascript": "^6.0.2",
     "vite": "^3.0.7"
   },

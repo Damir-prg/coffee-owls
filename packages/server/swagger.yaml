@@ -1,0 +1,254 @@
+openapi: 3.0.3
+info:
+  title: Coffee Owls API
+  description: Сваггер команды Coffee Owls
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/IVANKOSTYULIN/CoffeeOwles/1.0.0
+  - url: http://localhost:3001/
+tags:
+  - name: Topic
+    description: Темы форума
+  - name: Comment
+    description: Комментарии в теме
+paths:
+  /topics:
+    get:
+      tags:
+        - Topic
+      summary: Get topics list
+      operationId: getTopics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicList'
+        '403':
+          description: Unauthorized
+    post:
+      tags:
+        - Topic
+      summary: Create topic
+      operationId: createTopic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTopic'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Id'
+        '403':
+          description: Unauthorized
+  /topics/{id}:
+    get:
+      tags:
+        - Topic
+      summary: Get topic detail by Id
+      operationId: getTopic
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Topic Id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicDetail'
+        '403':
+          description: Unauthorized
+  /topics/{id}/comments:
+    post:
+      tags:
+        - Comment
+      summary: Add comment to topic
+      operationId: addComment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Topic Id
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateComment'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: Unauthorized
+  /comments/{commentId}:
+    put:
+      tags:
+        - Comment
+      summary: Update comment by ID
+      operationId: updateComment
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          description: Comment ID
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateComment'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Unauthorized   
+    
+    delete:
+      tags:
+        - Comment
+      summary: Delete comment by ID
+      operationId: deleteComment
+      parameters:
+        - name: commentId
+          in: path
+          required: true
+          description: Comment ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Unauthorized      
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 7
+        first_name:
+          type: string
+          example: user
+        second_name:
+          type: string
+          example: test
+        display_name:
+          type: string
+          example: Coffee Owls
+        email:
+          type: string
+          example: coffee-owls@yandex.ru
+        avatar:
+          type: string
+          example: /avatars/img.png  
+    Id:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+    TopicList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TopicItem'
+    TopicItem:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Стратегии игры
+        commentsCount:
+          type: integer
+          example: 10  
+    TopicDetail:
+      type: object
+      properties:
+        id: 
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Стратегии игры
+        description:
+          type: string
+          example: Опишите свои стратегии игры...
+        author:
+          $ref: '#/components/schemas/User'
+        comments: 
+          $ref: '#/components/schemas/CommentList'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreateTopic:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Стратегии игры
+        description:
+          type: string
+          example: Опишите свои стратегии игры...
+    CommentList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Comment'      
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 15
+        text:
+          type: string
+          example: Клац, клац, клац и готово!
+        author:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CreateComment:
+      type: object
+      properties:
+        text:
+          type: string
+          example: Клац, клац, клац и готово!
+    UpdateComment:
+      type: object
+      properties:
+        text:
+          type: string
+          example: Ну вот теперь точно!
+          
