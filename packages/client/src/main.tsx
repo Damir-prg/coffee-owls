@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from 'shared/store/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { routes } from 'widgets/WithRoutes/WithRoutes';
@@ -10,22 +10,12 @@ import { TRootState } from 'shared/store/store';
 import { ETHEME } from 'shared/enums/theme';
 
 import './index.css';
-import { setTheme } from 'shared/store/themeSlice';
+import ThemeProvider from 'shared/components/ThemeProvider/ThemeProvider';
 
 const router = createBrowserRouter(routes);
 
 const App = () => {
-  const dispatch = useDispatch();
   const theme = useSelector((state: TRootState) => state.theme.theme);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as ETHEME.Light | ETHEME.Dark;
-    if (savedTheme) {
-      dispatch(setTheme(savedTheme));
-    } else {
-      localStorage.setItem('theme', theme);
-    }
-  }, [dispatch]);
 
   return (
     <ConfigProvider theme={theme === ETHEME.Light ? appLightThemeConfig : appDarkThemeConfig}>
@@ -48,6 +38,8 @@ if ('serviceWorker' in navigator) {
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <Provider store={store}>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </Provider>,
 );
