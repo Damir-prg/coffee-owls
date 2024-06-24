@@ -73,6 +73,8 @@ function PageHeader() {
   const onSwitchTheme = () => {
     const newTheme = theme === ETHEME.Light ? ETHEME.Dark : ETHEME.Light;
     dispatch(setTheme(newTheme));
+
+    localStorage.setItem('theme', newTheme);
   };
 
   return (
