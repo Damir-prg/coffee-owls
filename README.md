@@ -23,6 +23,10 @@
 
 https://disk.yandex.ru/i/zY1-u1tAnmuMaA
 
+### Видео с демонстрацией 2
+
+https://disk.yandex.ru/i/20Rx_I_fr7OuDA
+
 ### Как добавить зависимости?
 
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
