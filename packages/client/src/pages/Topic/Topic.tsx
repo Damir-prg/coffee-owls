@@ -40,7 +40,7 @@ const Topic = () => {
         comments: response.comments,
       }),
     );
-  }, []);
+  }, [topicID]);
 
   const handleAddComment = useCallback(async (message: string) => {
     if (!user) {

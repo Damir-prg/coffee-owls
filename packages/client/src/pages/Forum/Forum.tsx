@@ -2,7 +2,7 @@ import { Typography, Flex, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
 
-import { getTopics as getTopicsApi, createTopic, getTopicById } from 'shared/api/forumApi/forumApi';
+import { getTopics as getTopicsApi, createTopic } from 'shared/api/forumApi/forumApi';
 import { ICreateTopic } from 'shared/api/forumApi/forumApi.interface';
 
 import { ADD_FORUM_FORM_ID } from 'shared/constants/forum';
@@ -40,13 +40,7 @@ const Forum = () => {
     if (!user) {
       return console.error('User id is not available');
     }
-    const createdTopicId = await createTopic({ title, description });
-
-    if (!createdTopicId?.id) {
-      return console.error('Error during adding topic');
-    }
-
-    const createdTopic = await getTopicById(createdTopicId?.id);
+    const createdTopic = await createTopic({ title, description });
 
     if (!createdTopic?.id) {
       return console.error('Error during load created topic');
