@@ -5,20 +5,27 @@ import '../styles/Reaction.css';
 import { ReactionList } from 'features/Reaction/ui/ReactionList';
 import { CommentContext } from 'widgets/ForumTopicComments/ui/ForumTopicComments';
 import { useDispatch } from 'react-redux';
-import { updateReaction } from 'shared/store/forum/forumSlice';
-import { TopicContext } from 'pages/Topic/Topic';
+import { addReaction } from 'shared/api/forumApi/forumApi';
+import { updateReaction } from 'shared/store/topic/topicSlice';
 
 export const AddReaction: FC<{ children?: React.ReactNode }> = React.memo(({ children }) => {
   const dispatch = useDispatch();
-  const topicID = useContext(TopicContext) || 0;
   const commentID = useContext(CommentContext) || 0;
 
-  const addReaction = useCallback((selectedReaction: EREACTION) => {
+  const handleAddReaction = useCallback(async (selectedReaction: EREACTION) => {
+    const reaction = await addReaction({
+      commentId: commentID,
+      reaction: selectedReaction,
+    });
+
+    if (!reaction) {
+      return console.error('Error during adding comment');
+    }
+
     dispatch(
       updateReaction({
-        topicID,
         commentID,
-        reaction: selectedReaction,
+        reaction,
         isAdd: true,
       }),
     );
@@ -26,7 +33,7 @@ export const AddReaction: FC<{ children?: React.ReactNode }> = React.memo(({ chi
 
   return (
     <Popover
-      content={<ReactionList reactions={Object.values(EREACTION)} onClick={addReaction} />}
+      content={<ReactionList reactions={Object.values(EREACTION)} onClick={handleAddReaction} />}
       placement="rightTop"
       trigger="contextMenu"
       className="add-reaction"

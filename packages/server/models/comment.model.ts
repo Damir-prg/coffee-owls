@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Table, Column, Model, ForeignKey, BelongsTo, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, ForeignKey, BelongsTo, DataType, HasMany } from 'sequelize-typescript';
 import { User } from './user.model';
 import { Topic } from './topic.model';
 
 import type { Optional } from 'sequelize';
 import type { IComment } from './types';
+import { Reaction } from './reaction.model';
 
 type TCommentCreationAttributes = Optional<IComment, 'id'>;
 
@@ -26,4 +27,7 @@ export class Comment extends Model<IComment, TCommentCreationAttributes> {
 
   @BelongsTo(() => Topic)
   topic!: Topic;
+
+  @HasMany(() => Reaction, 'commentId')
+  reactions!: Reaction[];
 }

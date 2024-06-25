@@ -41,7 +41,23 @@ export const TEST_TOPICS: Array<IForumTopic> = [
         id: 0,
         author: getMockUser(3),
         createdAt: '12.02.2021',
-        reactions: [EREACTION.LOVE, EREACTION.FIRE, EREACTION.EYES],
+        reactions: [
+          {
+            commentId: -2,
+            id: 0,
+            reaction: EREACTION.LOVE,
+          },
+          {
+            commentId: -2,
+            id: 1,
+            reaction: EREACTION.FIRE,
+          },
+          {
+            commentId: -2,
+            id: 2,
+            reaction: EREACTION.EYES,
+          },
+        ],
         text: 'Hello, Test',
         updatedAt: '12.02.2021',
       },
@@ -57,7 +73,23 @@ export const TEST_TOPICS: Array<IForumTopic> = [
         id: 2,
         author: getMockUser(4),
         createdAt: '12.02.2021',
-        reactions: [EREACTION.LOVE, EREACTION.FIRE, EREACTION.EYES],
+        reactions: [
+          {
+            commentId: 2,
+            id: 0,
+            reaction: EREACTION.LOVE,
+          },
+          {
+            commentId: 2,
+            id: 1,
+            reaction: EREACTION.FIRE,
+          },
+          {
+            commentId: 2,
+            id: 2,
+            reaction: EREACTION.EYES,
+          },
+        ],
         text: 'Hello, Test 3',
         updatedAt: '12.02.2021',
       },

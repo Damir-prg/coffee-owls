@@ -1,4 +1,5 @@
 import { IUser } from '../authApi/auth.interface';
+import { EREACTION } from 'features/Reaction/types/AddReaction.types';
 
 export interface IID {
   id?: number;
@@ -18,6 +19,7 @@ interface ITopicAuthor {
 
 export interface ITopicComment extends IID, IDateCreate, IDateUpdate, ITopicAuthor {
   text?: string;
+  reactions: Array<IReactionModel>;
 }
 
 export interface ICreateComment {
@@ -37,4 +39,15 @@ export interface ITopicItem extends IID {
 
 export interface ITopicDetails extends ITopicItem, ITopicAuthor, IDateCreate {
   comments?: Array<ITopicComment>;
+}
+
+export interface IReactionData {
+  commentId: number;
+  reaction: EREACTION;
+}
+
+export interface IReactionModel {
+  commentId: number;
+  reaction: EREACTION;
+  id: number;
 }

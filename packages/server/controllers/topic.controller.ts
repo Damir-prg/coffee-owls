@@ -5,6 +5,7 @@ import { Comment } from '../models/comment.model';
 import { mockUser } from '../mocks';
 
 import type { Request, Response } from 'express';
+import { Reaction } from '../models/reaction.model';
 
 export async function getTopics(_: Request, res: Response) {
   try {
@@ -81,6 +82,9 @@ export async function getTopicDetail(req: Request, res: Response) {
             {
               model: User,
               attributes: ['id', 'first_name', 'second_name', 'display_name', 'avatar'],
+            },
+            {
+              model: Reaction,
             },
           ],
         },

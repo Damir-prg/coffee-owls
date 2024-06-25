@@ -1,5 +1,13 @@
 import api from '../api';
-import { ICreateComment, ICreateTopic, ITopicComment, ITopicDetails, ITopicItem } from './forumApi.interface';
+import {
+  IReactionData,
+  ICreateComment,
+  ICreateTopic,
+  IReactionModel,
+  ITopicComment,
+  ITopicDetails,
+  ITopicItem,
+} from './forumApi.interface';
 const forumUrl = 'http://localhost:3001/api';
 
 export const getTopics = (): Promise<Array<ITopicItem> | null> => {
@@ -16,4 +24,12 @@ export const getTopicById = (id: number): Promise<ITopicDetails | null> => {
 
 export const createComment = (id: number, data: ICreateComment): Promise<ITopicComment | null> => {
   return api.post(`${forumUrl}/topics/${id}/comments`, { data });
+};
+
+export const addReaction = (data: IReactionData): Promise<IReactionModel | null> => {
+  return api.post(`${forumUrl}/reaction`, { data });
+};
+
+export const deleteReaction = (data: IReactionData): Promise<null | 'deleted'> => {
+  return api.delete(`${forumUrl}/reaction`, { data });
 };

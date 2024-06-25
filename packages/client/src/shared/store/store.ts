@@ -11,6 +11,7 @@ import ssrSlice from './ssr/ssrSlice';
 import boardSlice from './board/boardSlice';
 import themeSlice from './themeSlice';
 import forumSlice from 'shared/store/forum/forumSlice';
+import topicSlice from 'shared/store/topic/topicSlice';
 declare global {
   // отключаю правило для интерфейсов, чтобы обратиться к глобальному типу Window
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -24,6 +25,7 @@ export const reducer = combineReducers({
   ssr: ssrSlice,
   board: boardSlice,
   forum: forumSlice,
+  topic: topicSlice,
   theme: themeSlice,
 });
 

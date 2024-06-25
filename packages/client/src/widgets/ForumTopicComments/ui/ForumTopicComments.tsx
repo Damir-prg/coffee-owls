@@ -2,17 +2,17 @@ import { Avatar, Flex, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
 import { AddTopicCommentForm } from 'features/AddForumTopicComment';
-import { TTopicComment } from 'shared/constants/forum';
 
 import './ForumTopicComments.css';
 import React, { createContext } from 'react';
 import { AddReaction, PreviewReaction } from 'features/Reaction';
+import { ITopicComment } from 'shared/api/forumApi/forumApi.interface';
 
 /** ID текущего комментария */
 export const CommentContext = createContext<number | null>(null);
 
 type TProps = {
-  comments: TTopicComment[];
+  comments: ITopicComment[];
   onAddComment: (message: string) => void;
 };
 
