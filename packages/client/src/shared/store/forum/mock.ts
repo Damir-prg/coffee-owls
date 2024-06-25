@@ -27,17 +27,15 @@ export const TEST_TOPICS: Array<IForumTopic> = [
     createdAt: '12.02.2021',
     comments: [],
     commentCount: '0',
-    updatedAt: '12.02.2021',
   },
   {
-    id: 2,
+    id: -2,
     title: 'Стратегия',
     description: 'Описание стратегий',
     color: generateRandomColor(),
     author: getMockUser(2),
     createdAt: '12.02.2021',
     commentCount: '0',
-    updatedAt: '12.02.2021',
     comments: [
       {
         id: 0,

@@ -27,11 +27,11 @@ const TABLE_COLUMNS: TableProps['columns'] = [
   },
   {
     title: <CommentOutlined />,
-    dataIndex: 'comments',
-    key: 'comments',
+    dataIndex: 'commentsCount',
+    key: 'commentsCount',
     align: 'center',
     width: 100,
-    render: comments => <div className="forum__table__cell-comments">{comments.length} ответов</div>,
+    render: commentsCount => <div className="forum__table__cell-comments">{commentsCount} ответов</div>,
   },
 ];
 
