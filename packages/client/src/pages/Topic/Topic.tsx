@@ -30,7 +30,9 @@ const Topic = () => {
   const loadComments = useCallback(async () => {
     const response = await getTopicById(topicID);
 
-    if (!response) return;
+    if (!response?.comments) {
+      return console.error('Error during load comments');
+    }
 
     dispatch(
       addComments({
@@ -45,7 +47,7 @@ const Topic = () => {
       return console.error('User id is not available');
     }
 
-    const createdComment = await createComment(topicID, { text: message, userId: user?.id as number });
+    const createdComment = await createComment(topicID, { text: message });
 
     if (!createdComment) {
       return console.error('Error during adding comment');
@@ -75,8 +77,8 @@ const Topic = () => {
         <Flex className="topic__info-header" align="center" gap={16}>
           <Avatar shape="circle" size={48} icon={<UserOutlined />} />
           <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
-            <Paragraph className="topic__info-text">{topic.author.display_name}</Paragraph>
-            <Paragraph className="topic__info-text">{topic.createdAt}</Paragraph>
+            <Paragraph className="topic__info-text">{topic?.author?.display_name}</Paragraph>
+            <Paragraph className="topic__info-text">{topic?.createdAt}</Paragraph>
           </Flex>
           <div style={{ backgroundColor: topic.color }} className="topic__info-tag" />
         </Flex>

@@ -13,7 +13,7 @@ interface IDateUpdate {
 }
 
 interface ITopicAuthor {
-  author?: IUser;
+  author?: Partial<IUser>;
 }
 
 export interface ITopicComment extends IID, IDateCreate, IDateUpdate, ITopicAuthor {
@@ -32,9 +32,9 @@ export interface ICreateTopic {
 export interface ITopicItem extends IID {
   title?: string;
   description?: string;
-  commentCount?: string;
+  commentsCount?: string;
 }
 
-export interface ITopicDetails extends ITopicItem {
+export interface ITopicDetails extends ITopicItem, ITopicAuthor, IDateCreate {
   comments?: Array<ITopicComment>;
 }
