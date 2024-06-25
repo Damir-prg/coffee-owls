@@ -31,7 +31,7 @@ const TABLE_COLUMNS: TableProps['columns'] = [
     key: 'commentsCount',
     align: 'center',
     width: 100,
-    render: commentsCount => <div className="forum__table__cell-comments">{commentsCount} ответов</div>,
+    render: commentsCount => <div className="forum__table__cell-comments">{commentsCount || 0} ответов</div>,
   },
 ];
 
