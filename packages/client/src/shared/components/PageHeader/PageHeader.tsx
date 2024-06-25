@@ -1,13 +1,15 @@
 import './PageHeader.css';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from 'shared/store/user/userActions';
-import type { TAppDispatch } from 'shared/store/store';
+import type { TAppDispatch, TRootState } from 'shared/store/store';
 import EROUTES from 'shared/lib/RoutesEnum';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PlayCircleOutlined, HomeOutlined, TrophyOutlined, UserOutlined, TeamOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu, Button, Typography } from 'antd';
+import { setTheme } from 'shared/store/themeSlice';
+import { ETHEME } from 'shared/enums/theme';
 
 const items: MenuProps['items'] = [
   {
@@ -47,6 +49,7 @@ function PageHeader() {
   const [currentKey, setCurrentKey] = useState('key');
 
   const dispatch = useDispatch<TAppDispatch>();
+  const theme = useSelector((state: TRootState) => state.theme.theme);
 
   async function onLogout() {
     setLogoutError(false);
@@ -67,11 +70,21 @@ function PageHeader() {
     };
   }, [pathname]);
 
+  const onSwitchTheme = () => {
+    const newTheme = theme === ETHEME.Light ? ETHEME.Dark : ETHEME.Light;
+    dispatch(setTheme(newTheme));
+
+    localStorage.setItem('theme', newTheme);
+  };
+
   return (
     <nav className="header__nav">
       <Menu onClick={onClick} selectedKeys={[currentKey]} mode="horizontal" items={items} />
       <Button onClick={onLogout} className="header__logout" type="primary">
         ВЫЙТИ
+      </Button>
+      <Button onClick={onSwitchTheme} type="primary" className="theme-button">
+        СМЕНИТЬ ТЕМУ
       </Button>
       {logoutError && <Text className="header__error">К сожалению, произошла ошибка</Text>}
     </nav>
