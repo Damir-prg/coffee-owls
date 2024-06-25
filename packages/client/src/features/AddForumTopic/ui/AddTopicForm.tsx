@@ -11,9 +11,9 @@ type TProps = {
 export const AddTopicForm = ({ onAddTopic }: TProps) => {
   const [form] = Form.useForm();
 
-  const handleSubmit = ({ title, content }: Omit<ICreateTopic, 'authorId'>) => {
+  const handleSubmit = ({ title, description }: Omit<ICreateTopic, 'authorId'>) => {
     if (title) {
-      onAddTopic({ title, content });
+      onAddTopic({ title, description });
       form.resetFields();
     }
   };
@@ -23,7 +23,7 @@ export const AddTopicForm = ({ onAddTopic }: TProps) => {
       <Form.Item name="title">
         <Input placeholder="Выберите название" className="add__topic__form-field" />
       </Form.Item>
-      <Form.Item name="content">
+      <Form.Item name="description">
         <Input placeholder="Выберите описание" className="add__topic__form-field" />
       </Form.Item>
     </Form>

@@ -18,7 +18,7 @@ interface ITopicAuthor {
 
 export interface ICreateTopic {
   title: string;
-  content: string;
+  description: string;
   authorId: number;
 }
 
@@ -31,12 +31,12 @@ export interface ICreateComment {
   userId: number;
 }
 
-export interface ITopicItem extends IID, IDateCreate {
+export interface ITopicItem extends IID, IDateCreate, ITopicAuthor {
   title: string;
+  description: string;
   commentCount: string;
 }
 
-export interface ITopicDetails extends ITopicItem, ITopicAuthor, IDateUpdate {
-  description: string;
+export interface ITopicDetails extends ITopicItem {
   comments: Array<ITopicComment>;
 }

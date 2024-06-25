@@ -8,14 +8,12 @@ import { ICreateTopic } from 'shared/api/forumApi/forumApi.interface';
 import { ADD_FORUM_FORM_ID } from 'shared/constants/forum';
 import { AddTopicForm } from 'features/AddForumTopic';
 import { ButtonSecondary } from 'shared/components/ButtonSecondary/ButtonSecondary';
-import { generateRandomColor } from 'shared/utils/RandomColorGenerator';
 import { ForumTopicsTable } from 'widgets/ForumTopicsTable';
 
 import './Forum.css';
 import { addTopics, getTopics } from 'shared/store/forum/forumSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from 'shared/store/user/userSlice';
-import { IForumTopic } from 'shared/constants/forum/types/Forum.models';
 
 const Forum = () => {
   const { Title } = Typography;
@@ -35,42 +33,40 @@ const Forum = () => {
 
     if (!response) return;
 
-    dispatch(addTopics(response.map(topic => ({ ...topic, color: generateRandomColor() } as IForumTopic))));
+    dispatch(addTopics(response));
   }, []);
 
-  const handleAddTopic = async ({ title, content }: Omit<ICreateTopic, 'authorId'>) => {
-    const randomColor = generateRandomColor();
-
+  const handleAddTopic = async ({ title, description }: Omit<ICreateTopic, 'authorId'>) => {
     if (!user) {
       return console.error('User id is not available');
     }
-    const createdTopic = await createTopic({ title, content, authorId: user?.id as number });
+    const createdTopic = await createTopic({ title, description, authorId: user?.id as number });
 
     if (!createdTopic) {
       return console.error('Error during adding topic');
     }
 
-    const date = new Date(createdTopic.createdAt);
+    // TODO
+    // const date = new Date(createdTopic.createdAt);
 
     dispatch(
       addTopics([
         {
           ...createdTopic,
           id: createdTopic.id,
-          color: randomColor,
           title: createdTopic.title,
           description: createdTopic.description,
-          createdAt: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
-          author: createdTopic.author,
-          comments: [],
+          // createdAt: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
+          // author: createdTopic.author,
+          // comments: [],
         },
       ]),
     );
   };
 
   useEffect(() => {
-    loadTopics();
-  });
+    void loadTopics();
+  }, []);
 
   return (
     <div className="forum__container">

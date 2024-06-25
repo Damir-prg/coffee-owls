@@ -9,7 +9,12 @@ import type { Request, Response } from 'express';
 export async function getTopics(_: Request, res: Response) {
   try {
     const topics = await Topic.findAll({
-      attributes: ['id', 'title', [Sequelize.fn('COUNT', Sequelize.col('comments.id')), 'commentsCount']],
+      attributes: [
+        'id',
+        'title',
+        'description',
+        [Sequelize.fn('COUNT', Sequelize.col('comments.id')), 'commentsCount'],
+      ],
       include: [
         {
           model: Comment,
@@ -18,9 +23,12 @@ export async function getTopics(_: Request, res: Response) {
       ],
       group: ['Topic.id'],
     });
+
+    // TODO вытащить дату и пользователя
     const topicWithCommentsCount = topics.map(topic => ({
       id: topic.id,
       title: topic.title,
+      description: topic.description,
       commentsCount: topic.get('commentsCount'),
     }));
     res.send(topicWithCommentsCount);
@@ -45,7 +53,7 @@ export async function createTopic(req: Request, res: Response) {
     };
 
     const topic = await Topic.create(data);
-    res.send(topic.id);
+    res.send(topic.id.toString());
   } catch (e) {
     res.status(500).send(e);
   }

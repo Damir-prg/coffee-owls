@@ -1,17 +1,17 @@
 import { Flex, Typography, Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { createContext, useCallback } from 'react';
+import { createContext, useCallback, useEffect } from 'react';
 
 import { ForumTopicComments } from 'widgets/ForumTopicComments';
 import { ForumTopicHeader } from 'widgets/ForumTopicHeader';
 
 import './Topic.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addComment, getSelectedTopic } from 'shared/store/forum/forumSlice';
+import { addComments, getSelectedTopic } from 'shared/store/forum/forumSlice';
 import { TRootState } from 'shared/store/store';
 import { useLocation } from 'react-router-dom';
 import { selectUser } from 'shared/store/user/userSlice';
-import { createComment } from 'shared/api/forumApi/forumApi';
+import { createComment, getTopicById } from 'shared/api/forumApi/forumApi';
 
 /** Храним id топика */
 export const TopicContext = createContext<number | null>(null);
@@ -26,6 +26,20 @@ const Topic = () => {
   const topic = useSelector(state => getSelectedTopic(topicID)(state as TRootState));
   const dispatch = useDispatch();
 
+  // TODO возможно стоит сюда добавить также доработку перезагрузки
+  const loadComments = useCallback(async () => {
+    const response = await getTopicById(topicID);
+
+    if (!response) return;
+
+    dispatch(
+      addComments({
+        topicID,
+        comments: response.comments,
+      }),
+    );
+  }, []);
+
   const handleAddComment = useCallback(async (message: string) => {
     if (!user) {
       return console.error('User id is not available');
@@ -37,22 +51,16 @@ const Topic = () => {
       return console.error('Error during adding comment');
     }
 
-    const createDate = new Date(createdComment.createdAt);
-    const updateDate = new Date(createdComment.updatedAt);
-
     dispatch(
-      addComment({
+      addComments({
         topicID,
-        comment: {
-          updatedAt: `${updateDate.getDay()}.${updateDate.getMonth()}.${updateDate.getFullYear()}`,
-          id: createdComment.id,
-          text: createdComment.text,
-          createdAt: `${createDate.getDay()}.${createDate.getMonth()}.${createDate.getFullYear()}`,
-          author: createdComment.author,
-          reactions: [],
-        },
+        comments: [createdComment],
       }),
     );
+  }, []);
+
+  useEffect(() => {
+    void loadComments();
   }, []);
 
   if (!topic) {
