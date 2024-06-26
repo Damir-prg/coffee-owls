@@ -6,7 +6,7 @@ export const getTopics = (): Promise<Array<ITopicItem> | null> => {
   return api.get(`${forumUrl}/topics`);
 };
 
-export const createTopic = (data: ICreateTopic): Promise<ITopicDetails | null> => {
+export const createTopic = (data: ICreateTopic): Promise<ITopicItem | null> => {
   return api.post(`${forumUrl}/topics`, { data });
 };
 

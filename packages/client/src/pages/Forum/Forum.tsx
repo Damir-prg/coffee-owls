@@ -40,14 +40,11 @@ const Forum = () => {
     if (!user) {
       return console.error('User id is not available');
     }
-    const createdTopic = await createTopic({ title, description, authorId: user?.id as number });
+    const createdTopic = await createTopic({ title, description });
 
-    if (!createdTopic) {
-      return console.error('Error during adding topic');
+    if (!createdTopic?.id) {
+      return console.error('Error during load created topic');
     }
-
-    // TODO
-    // const date = new Date(createdTopic.createdAt);
 
     dispatch(
       addTopics([
@@ -56,9 +53,7 @@ const Forum = () => {
           id: createdTopic.id,
           title: createdTopic.title,
           description: createdTopic.description,
-          // createdAt: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`,
-          // author: createdTopic.author,
-          // comments: [],
+          commentsCount: createdTopic.commentsCount,
         },
       ]),
     );

@@ -8,7 +8,7 @@ import EROUTES from 'shared/lib/RoutesEnum';
 import './ForumTopicHeader.css';
 
 type TProps = {
-  title: string;
+  title?: string;
 };
 
 export function ForumTopicHeader({ title }: TProps) {

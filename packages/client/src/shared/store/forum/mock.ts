@@ -26,7 +26,7 @@ export const TEST_TOPICS: Array<IForumTopic> = [
     author: getMockUser(1),
     createdAt: '12.02.2021',
     comments: [],
-    commentCount: '0',
+    commentsCount: '0',
   },
   {
     id: -2,
@@ -35,7 +35,7 @@ export const TEST_TOPICS: Array<IForumTopic> = [
     color: generateRandomColor(),
     author: getMockUser(2),
     createdAt: '12.02.2021',
-    commentCount: '0',
+    commentsCount: '0',
     comments: [
       {
         id: 0,

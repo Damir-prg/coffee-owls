@@ -53,7 +53,7 @@ export async function createTopic(req: Request, res: Response) {
     };
 
     const topic = await Topic.create(data);
-    res.send(topic.id.toString());
+    res.send(topic);
   } catch (e) {
     res.status(500).send(e);
   }
