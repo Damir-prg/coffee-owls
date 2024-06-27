@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coffee-owls-v1.0.2';
+const CACHE_NAME = 'coffee-owls-v1.0.1';
 
 const URLS = ['/', '/profile', '/game', '/sign-in', '/sign-up', 'rating', '/forum', '/internal-error'];
 
