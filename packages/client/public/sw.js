@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coffee-owls-v1.0.0';
+const CACHE_NAME = 'coffee-owls-v1.0.2';
 
 const URLS = ['/', '/profile', '/game', '/sign-in', '/sign-up', 'rating', '/forum', '/internal-error'];
 
@@ -13,9 +13,11 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', async event => {
-  caches.match(event.request).then(response => {
-    if (response && import.meta.env.PROD) {
-      return response;
+  if (event.request.method !== 'GET') return;
+
+  caches.match(event.request).then(cacheResponse => {
+    if (cacheResponse) {
+      return cacheResponse;
     }
 
     const fetchRequest = event.request.clone();
