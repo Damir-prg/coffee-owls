@@ -5,22 +5,30 @@ import { CommentContext } from 'widgets/ForumTopicComments/ui/ForumTopicComments
 import { ReactionList } from 'features/Reaction/ui/ReactionList';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRootState } from 'shared/store/store';
-import { updateReaction, getSelectedComment } from 'shared/store/forum/forumSlice';
-import { TopicContext } from 'pages/Topic/Topic';
 import { delay } from 'shared/utils/delay';
+import { getSelectedComment, updateReaction } from 'shared/store/topic/topicSlice';
+import { deleteReaction } from 'shared/api/forumApi/forumApi';
 
 export const PreviewReaction = () => {
   const dispatch = useDispatch();
-  const topicID = useContext(TopicContext) || 0;
   const commentID = useContext(CommentContext) || 0;
-  const comment = useSelector((state: TRootState) => getSelectedComment(topicID, commentID)(state));
+  const comment = useSelector((state: TRootState) => getSelectedComment(commentID)(state));
 
   const removeReaction = useCallback(async (selectedReaction: EREACTION) => {
     /** Для отрисовки анимации клика */
     await delay(800);
+
+    const deletedReaction = await deleteReaction({
+      commentId: commentID,
+      reaction: selectedReaction,
+    });
+
+    if (!deletedReaction) {
+      return console.error('Error during deleting comment');
+    }
+
     dispatch(
       updateReaction({
-        topicID,
         commentID,
         reaction: selectedReaction,
       }),

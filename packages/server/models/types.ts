@@ -22,3 +22,10 @@ export interface IComment {
   authorId: number;
   topicId: number;
 }
+
+export type TReaction = 'love' | 'cry' | 'eyes' | 'fire' | 'laugh';
+export interface IReaction {
+  id: number;
+  commentId: number;
+  reaction: TReaction;
+}

@@ -2,6 +2,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { User } from '../models/user.model';
 import { Topic } from '../models/topic.model';
 import { Comment } from '../models/comment.model';
+import { Reaction } from '../models/reaction.model';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } = process.env;
 
@@ -17,7 +18,7 @@ const sequelizeOptions: SequelizeOptions = {
 // Создаем инстанс Sequelize
 export const sequelize = new Sequelize(sequelizeOptions);
 
-sequelize.addModels([User, Topic, Comment]);
+sequelize.addModels([User, Topic, Comment, Reaction]);
 
 export async function dbConnect() {
   try {
