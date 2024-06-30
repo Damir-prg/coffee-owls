@@ -28,7 +28,15 @@ const App = () => {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      await navigator.serviceWorker.register('/sw.js', { type: 'module' });
+      if (import.meta.env.PROD) {
+        await navigator.serviceWorker.register('/sw.js');
+      } else {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+
+        for (const registration of registrations) {
+          registration.unregister();
+        }
+      }
     } catch (error) {
       console.log('ServiceWorker registration failed: ', error);
     }

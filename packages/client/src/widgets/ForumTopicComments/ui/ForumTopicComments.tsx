@@ -28,12 +28,12 @@ export function ForumTopicComments({ comments, onAddComment }: TProps) {
       {comments.length ? (
         comments.map(comment => {
           return (
-            <CommentContext.Provider value={comment.id} key={comment.id}>
+            <CommentContext.Provider value={comment.id ?? null} key={comment.id}>
               <AddReaction>
                 <Flex align="center" gap={16}>
                   <Avatar shape="circle" size={36} icon={<UserOutlined />} />
                   <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
-                    <Paragraph className="topic__info-text">{comment.author.display_name}</Paragraph>
+                    <Paragraph className="topic__info-text">{comment.author?.display_name}</Paragraph>
                     <Paragraph className="topic__info-text">{comment.createdAt}</Paragraph>
                   </Flex>
                 </Flex>
