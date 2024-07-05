@@ -25,6 +25,9 @@ export const topicSlice = createSlice({
       if (!state.topic) {
         return;
       }
+      if (!state.topic.comments) {
+        state.topic.comments = [];
+      }
       state.topic.comments.push(payload.comment);
     },
     updateReaction: (
@@ -41,7 +44,7 @@ export const topicSlice = createSlice({
       if (!topic) {
         return;
       }
-      const comment = topic.comments.find(({ id }) => id === payload.commentID);
+      const comment = (topic.comments || []).find(({ id }) => id === payload.commentID);
       if (!comment) {
         return;
       }
@@ -67,6 +70,6 @@ export const getSelectedComment = (commentID: number) => (state: TRootState) => 
   if (!topic) {
     return null;
   }
-  return topic.comments.find(({ id }) => id === commentID) || null;
+  return (topic.comments || []).find(({ id }) => id === commentID) || null;
 };
 export default topicSlice.reducer;
