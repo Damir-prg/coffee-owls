@@ -1,0 +1,4 @@
+.game__board {
+  border: 8px solid var(--white-color);
+  border-radius: 10px;
+}

@@ -1,0 +1,20 @@
+.image-loader-avatar {
+  background-color: var(--hover-color);
+}
+.ant-badge .ant-scroll-number-custom-component {
+  right: 0;
+  top: 56px;
+  transform: none;
+}
+.image-loader-button {
+  width: 44px !important;
+  height: 44px;
+  background-color: var(--light-background-color);
+  border: 2px solid var(--primary-color);
+}
+.ant-btn-icon {
+  color: var(--primary-color);
+}
+.ant-btn-icon:hover {
+  color: var(--light-background-color);
+}

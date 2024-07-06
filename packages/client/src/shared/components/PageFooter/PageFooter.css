@@ -1,0 +1,8 @@
+.footer__copy {
+  margin: 24px 0 0;
+  color: var(--primary-color);
+}
+
+.team-logo {
+  border-radius: 999px;
+}

@@ -1,0 +1,24 @@
+.page-layout__header {
+  display: flex;
+  align-items: center;
+}
+.page-layout__main {
+  padding: 24px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page-layout__error {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.page-layout__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0 14px;
+}

@@ -1,0 +1,28 @@
+.topic__comments {
+  margin-top: 24px;
+  padding-left: 8px;
+}
+
+.topic__comments-title.ant-typography {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.topic__comments-content {
+  width: 100%;
+  font-size: 16px;
+  max-height: 100px;
+  overflow-y: auto;
+  margin-top: 12px;
+  margin-bottom: 0 !important;
+  flex: 1;
+}
+
+.topic__info-text.ant-typography {
+  margin-bottom: 0;
+  line-height: 14px;
+  font-size: 16px;
+}
+.topic__comments-reaction-wrapper {
+  flex: 0;
+}
