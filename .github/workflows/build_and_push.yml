@@ -23,15 +23,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push client image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: Dockerfile.client
-          push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/${{ github.event.repository.name }}/client:${{ github.sha }}
-
       - name: Build and push server image
         uses: docker/build-push-action@v2
         with:
