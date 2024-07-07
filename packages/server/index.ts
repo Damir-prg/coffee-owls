@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import cspMiddleware from './middlewares/csp.middleware';
 import { createClientAndConnect } from './db';
 import { dbConnect } from './init';
 import { createUser, getUserById } from './controllers/user.controller';
@@ -44,6 +45,7 @@ async function createServer() {
   });
 
   const app = express();
+  app.use(cspMiddleware());
   app.use(cookieParser());
   app.use(cors());
   app.use(express.json());
