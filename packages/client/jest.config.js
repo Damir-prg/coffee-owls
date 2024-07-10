@@ -17,7 +17,12 @@ export default {
             path: 'ts-jest-mock-import-meta',
             options: {
               metaObjectReplacement: () => ({
-                env: { VITE_YANDEX_REDIRECT_URL: 'http://localhost:3000', PROD: false, DEV: true },
+                env: {
+                  VITE_YANDEX_REDIRECT_URL: 'http://localhost:3000',
+                  VITE_SERVER_URL: 'http://localhost:3000',
+                  PROD: false,
+                  DEV: true,
+                },
               }),
             },
           },
