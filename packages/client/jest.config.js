@@ -19,7 +19,6 @@ export default {
               metaObjectReplacement: () => ({
                 env: {
                   VITE_YANDEX_REDIRECT_URL: 'http://localhost:3000',
-                  VITE_SERVER_URL: 'http://localhost:3000',
                   PROD: false,
                   DEV: true,
                 },

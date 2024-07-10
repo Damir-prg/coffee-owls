@@ -8,7 +8,7 @@ import {
   ITopicDetails,
   ITopicItem,
 } from './forumApi.interface';
-const forumUrl = `${import.meta.env.VITE_SERVER_URL}/api`;
+const forumUrl = '/api';
 
 export const getTopics = (): Promise<Array<ITopicItem> | null> => {
   return api.get(`${forumUrl}/topics`);

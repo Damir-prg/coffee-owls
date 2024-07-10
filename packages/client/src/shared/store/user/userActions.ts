@@ -7,7 +7,7 @@ import { logout } from 'shared/api/authApi/authApi';
 export const getUserData = createAsyncThunk<IUserState['userData'], void, { rejectValue: string }>(
   'user/fetchUserThunk',
   async (_, { rejectWithValue }) => {
-    const url = `${import.meta.env.VITE_SERVER_URL}/user`;
+    const url = '/user';
     try {
       return await fetch(url).then(res => res.json());
     } catch (error) {
