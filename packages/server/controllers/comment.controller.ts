@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { mockUser } from '../mocks';
 
 import type { Request, Response } from 'express';
+import { Reaction } from '../models/reaction.model';
 
 export async function createComment(req: Request, res: Response) {
   try {
@@ -36,6 +37,9 @@ export async function createComment(req: Request, res: Response) {
         {
           model: User,
           attributes: ['id', 'first_name', 'second_name', 'display_name', 'avatar'],
+        },
+        {
+          model: Reaction,
         },
       ],
     });

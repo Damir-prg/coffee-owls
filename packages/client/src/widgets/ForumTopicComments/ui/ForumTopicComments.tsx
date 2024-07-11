@@ -7,6 +7,7 @@ import './ForumTopicComments.css';
 import React, { createContext } from 'react';
 import { AddReaction, PreviewReaction } from 'features/Reaction';
 import { ITopicComment } from 'shared/api/forumApi/forumApi.interface';
+import { getFormattedDate } from 'shared/utils/getFormattedDate';
 
 /** ID текущего комментария */
 export const CommentContext = createContext<number | null>(null);
@@ -34,7 +35,9 @@ export function ForumTopicComments({ comments, onAddComment }: TProps) {
                   <Avatar shape="circle" size={36} icon={<UserOutlined />} />
                   <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
                     <Paragraph className="topic__info-text">{comment.author?.display_name}</Paragraph>
-                    <Paragraph className="topic__info-text">{comment.createdAt}</Paragraph>
+                    <Paragraph className="topic__info-text">
+                      {getFormattedDate(comment.createdAt || '', true)}
+                    </Paragraph>
                   </Flex>
                 </Flex>
                 <Flex justify="space-between" align="flex-end" gap={8}>

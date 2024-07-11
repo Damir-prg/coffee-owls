@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { selectUser } from 'shared/store/user/userSlice';
 import { createComment, getTopicById } from 'shared/api/forumApi/forumApi';
 import { addComment, getTopic, initTopic, resetTopic } from 'shared/store/topic/topicSlice';
+import { getFormattedDate } from 'shared/utils/getFormattedDate';
 
 /** Храним id топика */
 export const TopicContext = createContext<number | null>(null);
@@ -46,7 +47,6 @@ const Topic = () => {
       return console.error('Error during adding comment');
     }
 
-    createdComment.reactions = [];
     dispatch(addComment({ comment: createdComment }));
   }, []);
 
@@ -70,7 +70,7 @@ const Topic = () => {
           <Avatar shape="circle" size={48} icon={<UserOutlined />} />
           <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
             <Paragraph className="topic__info-text">{topic?.author?.display_name}</Paragraph>
-            <Paragraph className="topic__info-text">{topic?.createdAt}</Paragraph>
+            <Paragraph className="topic__info-text">{getFormattedDate(topic?.createdAt || '')}</Paragraph>
           </Flex>
         </Flex>
         <Paragraph className="topic__info-description">{topic.description}</Paragraph>

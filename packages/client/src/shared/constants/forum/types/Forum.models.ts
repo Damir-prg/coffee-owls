@@ -1,6 +1,6 @@
-import { ITopicDetails } from 'shared/api/forumApi/forumApi.interface';
+import { ITopicPreviewItem } from 'shared/api/forumApi/forumApi.interface';
 
-export interface IForumTopic extends ITopicDetails {
+export interface IForumTopic extends ITopicPreviewItem {
   color: string;
 }
 
