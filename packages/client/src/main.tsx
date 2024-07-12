@@ -10,7 +10,6 @@ import { TRootState } from 'shared/store/store';
 import { ETHEME } from 'shared/enums/theme';
 
 import './index.css';
-import ThemeProvider from 'shared/components/ThemeProvider/ThemeProvider';
 
 const router = createBrowserRouter(routes);
 
@@ -46,8 +45,6 @@ if ('serviceWorker' in navigator) {
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <Provider store={store}>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <App />
   </Provider>,
 );

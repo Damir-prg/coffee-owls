@@ -8,7 +8,7 @@ import {
   ITopicDetails,
   ITopicItem,
 } from './forumApi.interface';
-const forumUrl = 'http://localhost:3001/api';
+const forumUrl = '/api';
 
 export const getTopics = (): Promise<Array<ITopicItem> | null> => {
   return api.get(`${forumUrl}/topics`);
