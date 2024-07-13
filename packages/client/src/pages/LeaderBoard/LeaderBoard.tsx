@@ -20,7 +20,7 @@ const TABS = [
 
 const LeaderBoard = () => {
   return (
-    <Flex gap={32} vertical align="center">
+    <Flex gap={32} vertical align="center" style={{ width: '900px' }}>
       <Title className="title__primary">
         <Flex gap={16} vertical={false}>
           <TrophyOutlined size={46} />
@@ -28,7 +28,7 @@ const LeaderBoard = () => {
           <TrophyOutlined size={46} />
         </Flex>
       </Title>
-      <Tabs items={TABS} defaultActiveKey="free" />
+      <Tabs items={TABS} defaultActiveKey="free" centered className="full-width" />
     </Flex>
   );
 };
