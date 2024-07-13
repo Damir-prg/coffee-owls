@@ -1,4 +1,5 @@
 export const appLightThemeConfig = {
+  hashed: false,
   token: {
     colorPrimary: '#F65E3B',
     colorText: '#333333',
@@ -49,6 +50,7 @@ export const appLightThemeConfig = {
 };
 
 export const appDarkThemeConfig = {
+  hashed: false,
   token: {
     colorPrimary: '#F65E3B',
     colorText: '#9e6969',
