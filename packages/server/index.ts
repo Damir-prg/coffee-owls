@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import cspMiddleware from './middlewares/csp.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 import { createClientAndConnect } from './db';
 import { dbConnect } from './init';
-import { createUser, getUserById } from './controllers/user.controller';
 import { mockUser } from './mocks';
 import { router } from './routes';
 
@@ -28,27 +28,20 @@ const clientPath = path.join(__dirname, `${isDev ? '../' : '../../'}`, 'client')
 
 async function createServer() {
   await createClientAndConnect();
-
-  dbConnect().then(async () => {
-    /* Проверка на наличие пользователя в базе */
-    try {
-      const currentUser = await getUserById(mockUser.id);
-      if (currentUser) {
-        console.log('User finded: ', currentUser);
-      } else {
-        await createUser(mockUser);
-        console.log('User created: ', mockUser);
-      }
-    } catch (error) {
-      console.error('Error in database operation:', error);
-    }
-  });
+  await dbConnect();
 
   const app = express();
   app.use(cspMiddleware());
   app.use(cookieParser());
-  app.use(cors());
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
   app.use(express.json());
+
+  // Логирование всех заголовков и кук
+  app.use((req, _, next) => {
+    console.log('Received Headers:', req.headers);
+    console.log('Received Cookies:', req.headers.cookie);
+    next();
+  });
 
   let vite: ViteDevServer | undefined;
   if (isDev) {
@@ -62,10 +55,35 @@ async function createServer() {
     app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
   }
 
-  app.use('/api', router);
+  app.use('/api', authMiddleware, router);
 
   app.get('/user', (_, res) => {
     res.json(mockUser);
+  });
+
+  app.get('/proxy', async (req, res) => {
+    const externalApiUrl = 'https://ya-praktikum.tech/api/v2/auth/user';
+
+    const headers: { [key: string]: string } = {
+      'Content-Type': 'application/json',
+    };
+
+    if (req.headers.cookie) {
+      headers.Cookie = req.headers.cookie;
+    }
+
+    try {
+      const response = await fetch(externalApiUrl, {
+        method: 'GET',
+        headers: headers,
+      });
+
+      const data = await response.json();
+      res.status(response.status).json(data);
+    } catch (error) {
+      console.error('Error proxying request:', error);
+      res.status(500).send('Internal Server Error');
+    }
   });
 
   app.get('*', async (req, res, next) => {
