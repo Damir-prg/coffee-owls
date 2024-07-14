@@ -1,8 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getUserData } from 'shared/store/user/userActions';
-import type { TAppDispatch } from 'shared/store/store';
 import { Flex } from 'antd';
 import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
@@ -13,8 +10,6 @@ import getErrorMessage from 'shared/lib/ErrorMessage';
 
 function Registration() {
   const navigate = useNavigate();
-
-  const dispatch = useDispatch<TAppDispatch>();
 
   const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
 
@@ -31,7 +26,6 @@ function Registration() {
     try {
       await registration(registrationData);
       navigate('/' + EROUTES.HOME);
-      await dispatch(getUserData());
     } catch (err) {
       setErrorMessage({ isShow: true, text: getErrorMessage(err) });
     }

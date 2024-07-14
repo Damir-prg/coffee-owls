@@ -18,18 +18,18 @@ const userSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getUserData.pending.type, state => {
+      .addCase(getUserData.pending, state => {
         state.isLoadingUserData = true;
       })
-      .addCase(getUserData.fulfilled.type, (state, action: PayloadAction<IUserState['userData']>) => {
+      .addCase(getUserData.fulfilled, (state, action: PayloadAction<IUserState['userData']>) => {
         state.userData = action.payload;
         state.isLoadingUserData = false;
       })
-      .addCase(getUserData.rejected.type, state => {
+      .addCase(getUserData.rejected, state => {
         state.userData = null;
         state.isLoadingUserData = false;
       })
-      .addCase(logoutAction.fulfilled.type, state => {
+      .addCase(logoutAction.fulfilled, state => {
         state.userData = null;
       });
   },
