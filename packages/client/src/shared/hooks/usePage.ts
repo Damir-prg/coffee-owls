@@ -5,7 +5,8 @@ import { TPageInitContext, TPageInitArgs } from 'widgets/WithRoutes/WithRoutes';
 import { getCookie } from 'shared/utils/cookieUtils';
 
 const createContext = (): TPageInitContext => ({
-  clientToken: getCookie('token'),
+  authCookie: getCookie('authCookie'),
+  uuid: getCookie('uuid'),
 });
 
 type TPageProps = {

@@ -3,6 +3,7 @@ import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
 
 import type { Response } from 'express';
+import { Reaction } from '../models/reaction.model';
 import type { IAuthenticatedRequest } from '../models/types';
 
 export async function createComment(req: IAuthenticatedRequest, res: Response) {
@@ -37,6 +38,9 @@ export async function createComment(req: IAuthenticatedRequest, res: Response) {
           {
             model: User,
             attributes: ['id', 'first_name', 'second_name', 'display_name', 'avatar'],
+          },
+          {
+            model: Reaction,
           },
         ],
       });

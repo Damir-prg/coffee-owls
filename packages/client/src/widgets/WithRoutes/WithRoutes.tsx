@@ -73,7 +73,8 @@ export const routes = [
 ];
 
 export type TPageInitContext = {
-  clientToken?: string;
+  authCookie?: string;
+  uuid?: string;
 };
 
 export type TPageInitArgs = {

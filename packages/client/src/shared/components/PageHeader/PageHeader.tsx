@@ -1,5 +1,5 @@
 import './PageHeader.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from 'shared/store/user/userActions';
 import type { TAppDispatch, TRootState } from 'shared/store/store';
@@ -51,13 +51,18 @@ function PageHeader() {
   const dispatch = useDispatch<TAppDispatch>();
   const theme = useSelector((state: TRootState) => state.theme.theme);
 
-  async function onLogout() {
+  const onLogout = useCallback(async () => {
     setLogoutError(false);
-    const resultAction = await dispatch(logoutAction());
-    if (logoutAction.rejected.match(resultAction)) {
+    try {
+      const resultAction = await dispatch(logoutAction());
+      if (logoutAction.fulfilled.match(resultAction)) {
+        navigate('/' + EROUTES.SIGN_IN);
+      }
+    } catch (error) {
+      console.error(error);
       setLogoutError(true);
     }
-  }
+  }, []);
 
   const onClick: MenuProps['onClick'] = e => {
     navigate('/' + e.key);

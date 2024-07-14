@@ -48,17 +48,17 @@ async function createServer() {
   }
 
   app.get('/set-cookie', (_, res) => {
-    res.cookie('authCookie', 'cf4e01ac517f63cf758aebe0a56d64ad4e7696c4:1720891444', {
+    res.cookie('authCookie', '61f43625eedcaf1e5be4467b4e689a990afc7d23:1720963020', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',
     });
-    res.cookie('uuid', '26b2a13a-6a45-4cf7-9f36-3cd303f27b98', {
+    res.cookie('uuid', '6a9004d6-50df-4fec-b8da-32154d9d0887', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',
     });
-    res.send('Cookie has been set');
+    res.send('Куки установлены!');
   });
 
   app.use('/api', authMiddleware, router);
