@@ -2,12 +2,11 @@ import { Sequelize } from 'sequelize';
 import { Topic } from '../models/topic.model';
 import { User } from '../models/user.model';
 import { Comment } from '../models/comment.model';
-import { mockUser } from '../mocks';
-
-import type { Request, Response } from 'express';
+import type { IAuthenticatedRequest } from '../models/types';
+import type { Response } from 'express';
 import { Reaction } from '../models/reaction.model';
 
-export async function getTopics(_: Request, res: Response) {
+export async function getTopics(_: IAuthenticatedRequest, res: Response) {
   try {
     const topics = await Topic.findAll({
       attributes: [
@@ -38,7 +37,7 @@ export async function getTopics(_: Request, res: Response) {
   }
 }
 
-export async function createTopic(req: Request, res: Response) {
+export async function createTopic(req: IAuthenticatedRequest, res: Response) {
   try {
     const { title, description } = req.body;
 
@@ -47,20 +46,21 @@ export async function createTopic(req: Request, res: Response) {
       return;
     }
 
-    const data = {
-      title,
-      description,
-      authorId: mockUser.id,
-    };
-
-    const topic = await Topic.create(data);
-    res.send(topic);
+    if (req.authUser && req.authUser.id) {
+      const data = {
+        title,
+        description,
+        authorId: req.authUser.id,
+      };
+      const topic = await Topic.create(data);
+      res.send(topic);
+    }
   } catch (e) {
     res.status(500).send(e);
   }
 }
 
-export async function getTopicDetail(req: Request, res: Response) {
+export async function getTopicDetail(req: IAuthenticatedRequest, res: Response) {
   try {
     const { topicId } = req.params;
 

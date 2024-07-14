@@ -40,6 +40,7 @@ const Forum = () => {
     if (!user) {
       return console.error('User id is not available');
     }
+
     const createdTopic = await createTopic({ title, description });
 
     if (!createdTopic?.id) {

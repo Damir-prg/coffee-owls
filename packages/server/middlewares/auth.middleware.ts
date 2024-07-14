@@ -1,38 +1,35 @@
-import type { Request, Response, NextFunction } from 'express';
+import axios from 'axios';
+import type { Response, NextFunction } from 'express';
+import { getUserById, createUser } from '../controllers/user.controller';
+import type { IAuthenticatedRequest } from '../models/types';
 
 const AUTH_URL = 'https://ya-praktikum.tech/api/v2/auth/user';
 
-const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+const authMiddleware = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    const cookie = req.headers.cookie;
+    const cookie = req.headers['cookie'];
 
     if (!cookie) {
-      throw new Error('Нет куки');
-    }
-
-    const response = await fetch(AUTH_URL, { headers: { cookie } });
-
-    if (response.status !== 200) {
       throw new Error('Пользователь не авторизован');
     }
 
-    /*
-    req.user = await response.json();
+    const { data } = await axios.get(AUTH_URL, {
+      headers: { cookie: cookie },
+    });
 
-    if (!user || !user.id) {
+    if (!data) {
       res.status(403).send({ reason: 'Пользователь не найден' });
       return;
     }
 
-    const userDB = await getUserById(user.id);
-    if (!userDB) {
-      const newUser = await createUser(user);
-      req.user = newUser;
-    } else {
-      req.user = userDB;
-    }
+    const userDB = await getUserById(data.id);
 
-    */
+    if (!userDB) {
+      const newUser = await createUser(data);
+      req.authUser = newUser;
+    } else {
+      req.authUser = userDB;
+    }
 
     next();
   } catch (e) {

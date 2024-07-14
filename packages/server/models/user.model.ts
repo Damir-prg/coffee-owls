@@ -13,7 +13,7 @@ export class User extends Model<IUser> {
   @Column({ type: DataType.STRING, allowNull: false })
   second_name!: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   display_name!: string;
 
   @Column({ type: DataType.STRING, allowNull: false })

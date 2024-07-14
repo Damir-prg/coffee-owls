@@ -5,7 +5,6 @@ import cspMiddleware from './middlewares/csp.middleware';
 import authMiddleware from './middlewares/auth.middleware';
 import { createClientAndConnect } from './db';
 import { dbConnect } from './init';
-import { mockUser } from './mocks';
 import { router } from './routes';
 
 dotenv.config();
@@ -36,13 +35,6 @@ async function createServer() {
   app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
   app.use(express.json());
 
-  // Логирование всех заголовков и кук
-  app.use((req, _, next) => {
-    console.log('Received Headers:', req.headers);
-    console.log('Received Cookies:', req.headers.cookie);
-    next();
-  });
-
   let vite: ViteDevServer | undefined;
   if (isDev) {
     vite = await createViteServer({
@@ -55,36 +47,21 @@ async function createServer() {
     app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
   }
 
+  app.get('/set-cookie', (_, res) => {
+    res.cookie('authCookie', 'cf4e01ac517f63cf758aebe0a56d64ad4e7696c4:1720891444', {
+      httpOnly: false,
+      secure: false,
+      sameSite: 'lax',
+    });
+    res.cookie('uuid', '26b2a13a-6a45-4cf7-9f36-3cd303f27b98', {
+      httpOnly: false,
+      secure: false,
+      sameSite: 'lax',
+    });
+    res.send('Cookie has been set');
+  });
+
   app.use('/api', authMiddleware, router);
-
-  app.get('/user', (_, res) => {
-    res.json(mockUser);
-  });
-
-  app.get('/proxy', async (req, res) => {
-    const externalApiUrl = 'https://ya-praktikum.tech/api/v2/auth/user';
-
-    const headers: { [key: string]: string } = {
-      'Content-Type': 'application/json',
-    };
-
-    if (req.headers.cookie) {
-      headers.Cookie = req.headers.cookie;
-    }
-
-    try {
-      const response = await fetch(externalApiUrl, {
-        method: 'GET',
-        headers: headers,
-      });
-
-      const data = await response.json();
-      res.status(response.status).json(data);
-    } catch (error) {
-      console.error('Error proxying request:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  });
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl;
