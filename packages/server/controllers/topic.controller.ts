@@ -24,7 +24,6 @@ export async function getTopics(_: IAuthenticatedRequest, res: Response) {
       group: ['Topic.id'],
     });
 
-    // TODO вытащить дату и пользователя
     const topicWithCommentsCount = topics.map(topic => ({
       id: topic.id,
       title: topic.title,
