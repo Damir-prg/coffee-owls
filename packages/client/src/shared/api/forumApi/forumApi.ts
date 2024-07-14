@@ -2,19 +2,20 @@ import api from '../api';
 import {
   IReactionData,
   ICreateComment,
-  ICreateTopic,
   IReactionModel,
   ITopicComment,
   ITopicDetails,
-  ITopicItem,
+  ITopicPreviewItem,
+  ITopicInfo,
+  ITopicCreateResponse,
 } from './forumApi.interface';
 const forumUrl = '/api';
 
-export const getTopics = (): Promise<Array<ITopicItem> | null> => {
+export const getTopics = (): Promise<Array<ITopicPreviewItem> | null> => {
   return api.get(`${forumUrl}/topics`);
 };
 
-export const createTopic = (data: ICreateTopic): Promise<ITopicItem | null> => {
+export const createTopic = (data: ITopicInfo): Promise<ITopicCreateResponse | null> => {
   return api.post(`${forumUrl}/topics`, { data });
 };
 

@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useState } from 'react';
 import { EGAME_MODE } from 'shared/api/leaderBoardApi/leaderBoard.interface';
 import { Empty, Flex, Spin } from 'antd';
-import '../styles/LeaderBoardPanel.css';
 import { LeaderBoardHonorPreview } from 'widgets/LeaderBoardHonorPreview';
 import { TSortDirection } from 'widgets/LeaderBoardPanel/types/LeaderBoardPanel.types';
 import { LeaderBoardList } from 'widgets/LeaderBoardList';
@@ -38,7 +37,7 @@ export const LeaderBoardPanel: FC<{
 
   const sortedData = sortLeaderBoardList(data, type);
   return (
-    <Flex gap={8} vertical className="leaderboard-wrapper">
+    <Flex gap={8} vertical className="full-width">
       <LeaderBoardHonorPreview data={sortedData[sortDirection]} />
       <LeaderBoardList data={sortedData[sortDirection]} filterOnClick={handleFilterClick} />
     </Flex>
