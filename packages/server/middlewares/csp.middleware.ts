@@ -6,7 +6,7 @@ const cspMiddleware = () => {
     res.setHeader(
       'Content-Security-Policy',
       // eslint-disable-next-line quotes
-      "font-src 'self'; img-src 'self' blob:; frame-src 'self'; media-src 'self'",
+      "font-src 'self'; img-src 'self' blob: https://ya-praktikum.tech; frame-src 'self'; media-src 'self'",
     );
     next();
   };
