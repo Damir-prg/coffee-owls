@@ -1,13 +1,15 @@
 import React, { FC, useCallback } from 'react';
 import { Form, message } from 'antd';
 import { TUserFormData, USER_EDIT_FORM } from 'features/EditUserData/model/EditUserData.model';
-import { changePassword } from 'shared/api/userApi/userApi';
-import { useSelector } from 'react-redux';
+import { changePassword, updateProfileData } from 'shared/api/userApi/userApi';
+import { useDispatch, useSelector } from 'react-redux';
 import { TRootState } from 'shared/store/store';
 import { EditUserDataFormFields } from 'features/EditUserData/ui/EditUserDataFormFields';
+import { setUserData } from 'shared/store/user/userSlice';
 
 export const EditUserDataForm: FC = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: TRootState) => state.user.userData);
   if (!user) {
@@ -15,8 +17,7 @@ export const EditUserDataForm: FC = () => {
   }
 
   const handleSubmit = useCallback(async (data: TUserFormData) => {
-    console.log(data);
-    const { oldPassword, newPassword } = data;
+    const { oldPassword, newPassword, ...userData } = data;
     try {
       if (newPassword) {
         await changePassword({
@@ -24,6 +25,10 @@ export const EditUserDataForm: FC = () => {
           newPassword,
         });
         message.success('Пароль успешно изменён');
+      }
+      const updatedUser = await updateProfileData(userData);
+      if (updatedUser) {
+        dispatch(setUserData(updatedUser));
       }
     } catch (err) {
       message.error('Что-то пошло не так, повторите попытку позже');
