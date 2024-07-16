@@ -8,7 +8,8 @@ export const createUrl = (req: ExpressRequest) => {
 };
 
 export const createContext = (req: ExpressRequest): TPageInitContext => ({
-  clientToken: req.cookies.token,
+  authCookie: req.cookies.authCookie,
+  uuid: req.cookies.uuid,
 });
 
 export const createFetchRequest = (req: ExpressRequest) => {
