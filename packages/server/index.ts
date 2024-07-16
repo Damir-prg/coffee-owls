@@ -2,10 +2,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import cspMiddleware from './middlewares/csp.middleware';
+import authMiddleware from './middlewares/auth.middleware';
 import { createClientAndConnect } from './db';
 import { dbConnect } from './init';
-import { createUser, getUserById } from './controllers/user.controller';
-import { mockUser } from './mocks';
 import { router } from './routes';
 
 dotenv.config();
@@ -28,26 +27,12 @@ const clientPath = path.join(__dirname, `${isDev ? '../' : '../../'}`, 'client')
 
 async function createServer() {
   await createClientAndConnect();
-
-  dbConnect().then(async () => {
-    /* Проверка на наличие пользователя в базе */
-    try {
-      const currentUser = await getUserById(mockUser.id);
-      if (currentUser) {
-        console.log('User finded: ', currentUser);
-      } else {
-        await createUser(mockUser);
-        console.log('User created: ', mockUser);
-      }
-    } catch (error) {
-      console.error('Error in database operation:', error);
-    }
-  });
+  await dbConnect();
 
   const app = express();
   app.use(cspMiddleware());
   app.use(cookieParser());
-  app.use(cors());
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
   app.use(express.json());
 
   let vite: ViteDevServer | undefined;
@@ -62,11 +47,21 @@ async function createServer() {
     app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }));
   }
 
-  app.use('/api', router);
-
-  app.get('/user', (_, res) => {
-    res.json(mockUser);
+  app.get('/set-cookie', (_, res) => {
+    res.cookie('authCookie', '61f43625eedcaf1e5be4467b4e689a990afc7d23:1720963020', {
+      httpOnly: false,
+      secure: false,
+      sameSite: 'lax',
+    });
+    res.cookie('uuid', '6a9004d6-50df-4fec-b8da-32154d9d0887', {
+      httpOnly: false,
+      secure: false,
+      sameSite: 'lax',
+    });
+    res.send('Куки установлены!');
   });
+
+  app.use('/api', authMiddleware, router);
 
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl;

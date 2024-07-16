@@ -4,13 +4,16 @@ import type { IUser } from './types';
 
 @Table({ modelName: 'User', tableName: 'Users', timestamps: true })
 export class User extends Model<IUser> {
+  @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
+  override id!: number;
+
   @Column({ type: DataType.STRING, allowNull: false })
   first_name!: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
   second_name!: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({ type: DataType.STRING, allowNull: true })
   display_name!: string;
 
   @Column({ type: DataType.STRING, allowNull: false })

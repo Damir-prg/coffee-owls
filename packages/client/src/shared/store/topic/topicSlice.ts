@@ -17,6 +17,9 @@ export const topicSlice = createSlice({
   reducers: {
     initTopic: (state, { payload }: PayloadAction<ITopicState['topic']>) => {
       state.topic = payload;
+      if (state.topic) {
+        (state.topic.comments || []).sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      }
     },
     resetTopic: state => {
       state.topic = null;

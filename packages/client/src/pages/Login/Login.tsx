@@ -1,8 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getUserData } from 'shared/store/user/userActions';
-import type { TAppDispatch } from 'shared/store/store';
 import { Flex, Divider, Image, Typography } from 'antd';
 import EROUTES from 'shared/lib/RoutesEnum';
 import PublicWindow from 'shared/components/PublicWindow/PublicWindow';
@@ -17,8 +14,6 @@ function Login() {
   const { Title, Text } = Typography;
   const navigate = useNavigate();
 
-  const dispatch = useDispatch<TAppDispatch>();
-
   const [errorMessage, setErrorMessage] = useState({ isShow: false, text: '' });
 
   const onSubmit = useCallback(async (formData: Record<string, string>) => {
@@ -30,7 +25,6 @@ function Login() {
     try {
       await login(loginData);
       navigate('/' + EROUTES.HOME);
-      await dispatch(getUserData());
     } catch (err) {
       setErrorMessage({ isShow: true, text: getErrorMessage(err) });
     }

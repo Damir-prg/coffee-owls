@@ -1,7 +1,8 @@
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
 import { Reaction } from '../models/reaction.model';
+import type { IAuthenticatedRequest } from '../models/types';
 
-export async function addReaction(req: Request, res: Response) {
+export async function addReaction(req: IAuthenticatedRequest, res: Response) {
   try {
     const { reaction: selectedReaction, commentId } = req.body;
 
@@ -33,7 +34,7 @@ export async function addReaction(req: Request, res: Response) {
   }
 }
 
-export async function deleteReaction(req: Request, res: Response) {
+export async function deleteReaction(req: IAuthenticatedRequest, res: Response) {
   try {
     const { reaction: selectedReaction, commentId } = req.body;
 

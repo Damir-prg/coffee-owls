@@ -1,11 +1,12 @@
 import { Topic } from '../models/topic.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
-import { mockUser } from '../mocks';
 
-import type { Request, Response } from 'express';
+import type { Response } from 'express';
+import { Reaction } from '../models/reaction.model';
+import type { IAuthenticatedRequest } from '../models/types';
 
-export async function createComment(req: Request, res: Response) {
+export async function createComment(req: IAuthenticatedRequest, res: Response) {
   try {
     const { topicId } = req.params;
     const { text } = req.body;
@@ -22,30 +23,35 @@ export async function createComment(req: Request, res: Response) {
       return;
     }
 
-    const data = {
-      text,
-      topicId: Number(topicId),
-      authorId: mockUser.id,
-    };
+    if (req.authUser && req.authUser.id) {
+      const data = {
+        text,
+        topicId: Number(topicId),
+        authorId: req.authUser.id,
+      };
 
-    const comment = await Comment.create(data);
+      const comment = await Comment.create(data);
 
-    const commentWithAuthor = await Comment.findByPk(comment.id, {
-      attributes: ['id', 'text', 'createdAt', 'updatedAt'],
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'first_name', 'second_name', 'display_name', 'avatar'],
-        },
-      ],
-    });
-    res.send(commentWithAuthor);
+      const commentWithAuthor = await Comment.findByPk(comment.id, {
+        attributes: ['id', 'text', 'createdAt', 'updatedAt'],
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'first_name', 'second_name', 'display_name', 'avatar'],
+          },
+          {
+            model: Reaction,
+          },
+        ],
+      });
+      res.send(commentWithAuthor);
+    }
   } catch (e) {
     res.status(500).send(e);
   }
 }
 
-export async function updateComment(req: Request, res: Response) {
+export async function updateComment(req: IAuthenticatedRequest, res: Response) {
   try {
     const { commentId } = req.params;
     const { text } = req.body;
@@ -62,20 +68,22 @@ export async function updateComment(req: Request, res: Response) {
       return;
     }
 
-    if (comment.authorId !== mockUser.id) {
-      res.status(403).send('Forbidden');
-      return;
+    if (req.authUser && req.authUser.id) {
+      if (comment.authorId !== req.authUser.id) {
+        res.status(403).send('Forbidden');
+        return;
+      }
+
+      await comment.update({ text });
+
+      res.status(200).send();
     }
-
-    await comment.update({ text });
-
-    res.status(200).send();
   } catch (e) {
     res.status(500).send(e);
   }
 }
 
-export async function deleteComment(req: Request, res: Response) {
+export async function deleteComment(req: IAuthenticatedRequest, res: Response) {
   try {
     const { commentId } = req.params;
 
@@ -91,14 +99,16 @@ export async function deleteComment(req: Request, res: Response) {
       return;
     }
 
-    if (comment.authorId !== mockUser.id) {
-      res.status(403).send('Forbidden');
-      return;
+    if (req.authUser && req.authUser.id) {
+      if (comment.authorId !== req.authUser.id) {
+        res.status(403).send('Forbidden');
+        return;
+      }
+
+      await comment.destroy();
+
+      res.status(200).send();
     }
-
-    await comment.destroy();
-
-    res.status(200).send();
   } catch (e) {
     res.status(500).send(e);
   }

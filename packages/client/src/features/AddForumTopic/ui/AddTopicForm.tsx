@@ -2,20 +2,21 @@ import { Form, Input } from 'antd';
 import { ADD_FORUM_FORM_ID } from 'shared/constants/forum';
 
 import './AddTopicForm.css';
-import { ICreateTopic } from 'shared/api/forumApi/forumApi.interface';
+import { ITopicInfo } from 'shared/api/forumApi/forumApi.interface';
 
 type TProps = {
-  onAddTopic: (values: Omit<ICreateTopic, 'authorId'>) => void;
+  onAddTopic: (values: ITopicInfo) => void;
 };
 
 export const AddTopicForm = ({ onAddTopic }: TProps) => {
   const [form] = Form.useForm();
 
-  const handleSubmit = ({ title, description }: Omit<ICreateTopic, 'authorId'>) => {
-    if (title) {
-      onAddTopic({ title, description });
-      form.resetFields();
+  const handleSubmit = ({ title, description }: Partial<ITopicInfo>) => {
+    if (title === undefined || description === undefined) {
+      return;
     }
+    onAddTopic({ title, description });
+    form.resetFields();
   };
 
   return (
