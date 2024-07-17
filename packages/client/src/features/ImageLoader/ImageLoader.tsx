@@ -3,7 +3,7 @@ import { Avatar, Badge, Button, message, Upload } from 'antd';
 import './ImageLoader.css';
 import { UploadOutlined } from '@ant-design/icons';
 import { UploadChangeParam } from 'antd/es/upload/interface';
-import { changeAvatar } from 'shared/api/userApi/userApi';
+import { changeAvatar, updateUser } from 'shared/api/userApi/userApi';
 import { setUserData } from 'shared/store/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
@@ -25,6 +25,7 @@ export const ImageLoader: FC = () => {
       const user = await changeAvatar(fmData);
       if (user) {
         dispatch(setUserData(user));
+        await updateUser(user);
         message.success('Аватар успешно изменён');
       }
     } catch (err) {
