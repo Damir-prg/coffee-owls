@@ -53,12 +53,12 @@ async function createServer() {
   }
 
   app.get('/set-cookie', (_, res) => {
-    res.cookie('authCookie', '8ec451f1206a50e50b6475636676c7d5bbdf5d0f:1721209626', {
+    res.cookie('authCookie', 'eaf397ab28412203ff27c7d2c0704cddd198adc1:1721211739', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',
     });
-    res.cookie('uuid', '256e24d8-c2c6-4cb3-af9d-8a316d9ad1c1', {
+    res.cookie('uuid', 'af069d87-c107-4c2d-b9a7-88f03df80585', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',
