@@ -32,7 +32,12 @@ async function createServer() {
   const app = express();
   app.use(cspMiddleware());
   app.use(cookieParser());
-  app.use(cors());
+  app.use(
+    cors({
+      origin: ['http://localhost:3001', 'https://coffee-owls.ya-praktikum.tech'],
+      credentials: true,
+    }),
+  );
   app.use(express.json());
 
   let vite: ViteDevServer | undefined;
@@ -48,12 +53,12 @@ async function createServer() {
   }
 
   app.get('/set-cookie', (_, res) => {
-    res.cookie('authCookie', '61f43625eedcaf1e5be4467b4e689a990afc7d23:1720963020', {
+    res.cookie('authCookie', 'eaf397ab28412203ff27c7d2c0704cddd198adc1:1721211739', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',
     });
-    res.cookie('uuid', '6a9004d6-50df-4fec-b8da-32154d9d0887', {
+    res.cookie('uuid', 'af069d87-c107-4c2d-b9a7-88f03df80585', {
       httpOnly: false,
       secure: false,
       sameSite: 'lax',

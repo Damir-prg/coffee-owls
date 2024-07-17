@@ -8,6 +8,7 @@ import React, { createContext } from 'react';
 import { AddReaction, PreviewReaction } from 'features/Reaction';
 import { ITopicComment } from 'shared/api/forumApi/forumApi.interface';
 import { getFormattedDate } from 'shared/utils/getFormattedDate';
+import { BaseUrlApi } from 'shared/config/config';
 
 /** ID текущего комментария */
 export const CommentContext = createContext<number | null>(null);
@@ -32,7 +33,12 @@ export function ForumTopicComments({ comments, onAddComment }: TProps) {
             <CommentContext.Provider value={comment.id ?? null} key={comment.id}>
               <AddReaction>
                 <Flex align="center" gap={16}>
-                  <Avatar shape="circle" size={36} icon={<UserOutlined />} />
+                  <Avatar
+                    shape="circle"
+                    size={36}
+                    icon={<UserOutlined />}
+                    src={comment?.author?.avatar ? `${BaseUrlApi}/resources/${comment.author.avatar}` : ''}
+                  />
                   <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
                     <Paragraph className="topic__info-text">{comment.author?.display_name}</Paragraph>
                     <Paragraph className="topic__info-text">
