@@ -12,6 +12,10 @@ export const updateProfileData = (data: IUpdateProfileData): Promise<IUser | nul
   return api.put(`${userUrl}/profile`, { data });
 };
 
+export const updateUser = (data: IUser): Promise<IUser | null> => {
+  return api.patch('/api/user/update', { data });
+};
+
 export const changeAvatar = (data: FormData): Promise<IUser | null> => {
   return api.put(`${userUrl}/profile/avatar`, { data });
 };
