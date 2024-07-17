@@ -12,6 +12,7 @@ import { selectUser } from 'shared/store/user/userSlice';
 import { createComment, getTopicById } from 'shared/api/forumApi/forumApi';
 import { addComment, getTopic, initTopic, resetTopic } from 'shared/store/topic/topicSlice';
 import { getFormattedDate } from 'shared/utils/getFormattedDate';
+import { BaseUrlApi } from 'shared/config/config';
 
 /** Храним id топика */
 export const TopicContext = createContext<number | null>(null);
@@ -67,7 +68,12 @@ const Topic = () => {
 
       <div className="topic__info">
         <Flex className="topic__info-header" align="center" gap={16}>
-          <Avatar shape="circle" size={48} icon={<UserOutlined />} />
+          <Avatar
+            shape="circle"
+            size={48}
+            icon={<UserOutlined />}
+            src={topic?.author?.avatar ? `${BaseUrlApi}/resources/${topic.author.avatar}` : ''}
+          />
           <Flex vertical align="flex-start" justify="center" gap={10} className="topic__info-title">
             <Paragraph className="topic__info-text">{topic?.author?.display_name}</Paragraph>
             <Paragraph className="topic__info-text">{getFormattedDate(topic?.createdAt || '')}</Paragraph>
